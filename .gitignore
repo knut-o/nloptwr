@@ -1,0 +1,12 @@
+*.o
+*.exe
+build
+*.bak
+*.so
+*~
+.kdev4
+.kdev3
+*.kdev3
+*.kdev4
+*.kate-swp
+
