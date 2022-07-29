@@ -9,11 +9,10 @@ Initially it was started a an experiment to use the Program **NLOPT** more easyl
 
 The program has the folowing functionalities:
 
-<ol start="1">
-  <li>C++ API</li>
-  <li>rule based selection of algoritms</li>
-  <li>numerical calculation of gradients in parallel with **OpenMP** if needed</li>
-</ol>
+1. ***C++ API***  
+2. ***rule based selection of algoritms***  
+3. ***numerical calculation of gradients*** in parallel with **OpenMP** if needed</li>
+
 
 Because of numerical calculation of gradients a lot of algorithms is available.
 In case of many parameters the calculation in parallel efficient.
@@ -29,14 +28,14 @@ For less implementation the derived class ***oif::OptFknClass*** can be derived.
 The remaining following functions have to be implementd:
 
 <ol start="1">
-  <li>virtual double optFktn ( const std::vector<double>& x, std::vector<double>& c )
+  <li>virtual <b>double optFktn ( const std::vector<double>& x, std::vector<double>& c )</b>
      override; 
     // target function
 </li>
-  <li>virtual void initialize ( double lb, double ub, double xInit ); 
+  <li>virtual <b>void initialize ( double lb, double ub, double xInit )</b>; 
     // initialize function
 </li>
-<li>virtual oif::OptFknBase* clone() const 
+<li>virtual <b>oif::OptFknBase* clone() const</b> 
     override; 
     // clone method
 </li>
@@ -56,19 +55,21 @@ The class ***PDemo01*** in the file "nloptwr_test1.cpp" in a example.
 
 An instance of parameter class ***nloptwr::NLOptWrSStrat*** can be used to select the search methods.
 The constructor of this class has three arguments:
-<ol start="1">
-  <li>nloptwr::SEARCH_STRATEGY // enum of search strategies</li>
-  <li>useGrad  // usage of gradient methods (default=true)</li>
-  <li>useAugLagBeforeMlsl // prefer Augmented Lagrangian before MLSL (default=true)</li>
-</ol>
- 
-The emun nloptwr::SEARCH_STRATEGY" can have following valid values:
 
- * L = Local search strategy is prefered
- * G = Global search strategy is choosen
- * R = Random serach strategy is choosen
- * GM = Global meta search strategy is choosen
- * LM = Local meta search strategy is choosen (sometimes a global search strategy is selected)
+1. ***nloptwr::SSTRAT***  
+        // enum of search strategies
+2. ***useGrad***  
+        // usage of gradient methods (default=true)
+3. ***useAugLagBeforeMlsl***   
+        // prefer Augmented Lagrangian before MLSL (default=true)
+ 
+The emun class <b>nloptwr::SSTRAT</b> can have following valid values:
+
+ * ***L*** = Local search strategy is prefered
+ * ***G*** = Global search strategy is choosen
+ * ***R*** = Random search strategy is choosen (NLOPT has no accelertion with gradient at all)
+ * ***GM*** = Global meta search strategy is choosen
+ * ***LM*** = Local meta search strategy is choosen (sometimes a global search strategy is selected)
 
 The selected methods also depends on the number of parameters (see ***nloptwr::NLOptWrSearchAlgoParam3*** and ***nloptwr::NLOptWrParamFactory***). 
 
@@ -137,18 +138,19 @@ The class "opttest::PDemo01" in the file "nloptwr_test1.cpp" is an expample of s
 
 In the same file the usage of the is explained:
 
-* deturmine some parameters (number of threads, time limit, limit of calculations, initial result)
-* create instance of search strategy (nloptwr::NLOptWrSStrat)
+1. deturmine some parameters (number of threads, time limit, limit of calculations, initial result)
 
-* create an instance of class with target function (opttest::PDemo01)
+2. create instance of search strategy (nloptwr::NLOptWrSStrat)
 
-* create an instance of nloptwr::NLOptWrapper
+3. create an instance of class with target function (opttest::PDemo01)
 
-* start optimization
+4. create an instance of nloptwr::NLOptWrapper
 
-* get the solution
+5. start optimization
 
-* other tasks (display the result, check the result, print the selected algorithms)
+6. get the solution
+
+7. other tasks (display the result, check the result, print the selected algorithms)
 
 ## Help
 
@@ -188,6 +190,4 @@ This project is licensed under the [GNU AFFERO GENERAL PUBLIC LICENSE, Version 3
 
                        
 ## Acknowledgments
-
-
 

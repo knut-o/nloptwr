@@ -25,7 +25,7 @@ public:
      * @param hasConstr has contraints flag
      * @param useGrad use gradient flag
      */
-    NLOptWrSearchAlgoParam ( SEARCH_STRATEGY searchStrat, bool hasConstr, bool useGrad=true );
+    NLOptWrSearchAlgoParam (SSTRAT searchStrat, bool hasConstr, bool useGrad=true );
 
     /// default constructor
     NLOptWrSearchAlgoParam();
@@ -40,7 +40,7 @@ public:
     bool operator < ( const NLOptWrSearchAlgoParam& rhs ) const;
 
     /// get search strategy
-    SEARCH_STRATEGY getSearchStrategy() const;
+    SSTRAT getSearchStrategy() const;
 
     /// get has contraints flag
     bool getHasContraints() const;
@@ -61,12 +61,12 @@ public:
     std::string toStringShort() const;
 
     /// set search strategy
-    void setSearchStrategy ( SEARCH_STRATEGY val );
+    void setSearchStrategy (SSTRAT val );
 
 protected:
 
     /// search strategy
-    SEARCH_STRATEGY searchStrategy;
+    SSTRAT searchStrategy;
 
     /// has constrauints flag
     bool hasContraints;

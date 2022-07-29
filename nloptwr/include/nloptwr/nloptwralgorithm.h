@@ -4,6 +4,8 @@
 
 #include "nlopt.hpp"
 
+#include <string>
+
 namespace nloptwr
 {
 
@@ -16,7 +18,8 @@ namespace nloptwr
  * GM = Global meta saerch strategy
  * LM = Local meta search strategy
  */
-enum SEARCH_STRATEGY {
+// enum SEARCH_STRATEGY {
+ enum class SSTRAT : int {
     GM = -2,
     LM = -1,
     N = 0,
@@ -30,42 +33,42 @@ enum SEARCH_STRATEGY {
  * @param meta search strategy
  * @return search strategy
  */
-SEARCH_STRATEGY getMetaSearchStrategy ( SEARCH_STRATEGY strat ) ;
+ SSTRAT getMetaSearchStrategy (SSTRAT strat ) ;
 
 /**
  * get non meta search strategy of strategy
  * @param meta search strategy
  * @return non search strategy
  */
-SEARCH_STRATEGY getNonMetaSearchStrategy ( SEARCH_STRATEGY strat );
+ SSTRAT getNonMetaSearchStrategy (SSTRAT strat );
 
 /**
  * test if is a local or global or meta search strategy of strategy
  * @param strat search strategy
  * @return result (true means local or global or meta search strategy)
  */
-bool isSearchStrategyLGM ( SEARCH_STRATEGY strat );
+bool isSearchStrategyLGM (SSTRAT strat );
 
 /**
  * test if is a local or global search strategy of strategy
  * @param strat search strategy
  * @return result (true means local or global search strategy)
  */
-bool isSearchStrategyLG ( SEARCH_STRATEGY strat );
+bool isSearchStrategyLG (SSTRAT strat );
 
 /**
  * test if is a meta search strategy of strategy
  * @param strat search strategy
  * @return result (true means meta search strategy)
  */
-bool isMetaSearchStrategy ( SEARCH_STRATEGY strat );
+bool isMetaSearchStrategy (SSTRAT strat );
 
 /**
  * test if is a stochastic strategy of strategy
  * @param strat search strategy
  * @return result (true means stocastic search strategy)
  */
-bool isSearchStrategyR ( SEARCH_STRATEGY strat );
+bool isSearchStrategyR (SSTRAT strat );
 
 /**
  * test if the algoritm is a local or global
@@ -73,13 +76,18 @@ bool isSearchStrategyR ( SEARCH_STRATEGY strat );
  * @param searchLocalOrGlobal flag (true if it is local or global search)
  * @return result (true means local or global search strategy)
  */
-bool  isP4pAlgLocalOrGlobal ( SEARCH_STRATEGY strat, bool searchLocalOrGlobal );
+bool  isP4pAlgLocalOrGlobal (SSTRAT strat, bool searchLocalOrGlobal );
 
 /**
  * get string representation of search strategy
  * @return result string representation of search strategy
  */
-std::string getStrategyAsString ( SEARCH_STRATEGY strat );
+std::string getStrategyAsString (SSTRAT strat );
+
+/**
+ * 
+ */
+SSTRAT getStrategyFromString(const std::string& src, SSTRAT sstratDefault=SSTRAT::G);
 
 /**
  * @class NLOptWrAlgorithm
@@ -106,7 +114,7 @@ public:
     NLOptWrAlgorithm (
         nlopt::algorithm a,
         const std::string& n,
-        SEARCH_STRATEGY rgl,
+        SSTRAT rgl,
         bool hasGrad,
         bool neC,
         bool nSubopt,
@@ -115,7 +123,7 @@ public:
     );
 
     /// default constructor
-    NLOptWrAlgorithm();
+    NLOptWrAlgorithm()=delete;
 
     /// copy constructor
     NLOptWrAlgorithm ( const NLOptWrAlgorithm& src );
@@ -143,7 +151,7 @@ public:
      * get the ability to handle stochastic problems
      * @return ability to handle stochastic problems (boolean)
      */
-    SEARCH_STRATEGY getSearchStrategy() const;
+    SSTRAT getSearchStrategy() const;
 
     /**
      * get use gradient flag
@@ -251,7 +259,7 @@ private:
     std::string name;
 
     /// ability to handle stochastic problems
-    SEARCH_STRATEGY pRGL;
+    SSTRAT pRGL;
 
     /// is gradient method
     bool hasGradient;

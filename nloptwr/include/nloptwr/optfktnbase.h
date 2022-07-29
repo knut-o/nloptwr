@@ -39,6 +39,23 @@ public:
      */
     virtual double optFktn ( const std::vector<double>& x, std::vector<double>& c ) = 0;
 
+
+    /**
+     * (abstract) target function
+     * @param x vector of arguments
+     * @param c vector of nonequal constraints (c_i <= 0.0)
+     * @return value of target function
+     */
+    virtual double optF ( const std::vector<double>& x ) = 0;
+
+    /**
+     * (abstract) target function
+     * @param x vector of arguments
+     * @param c vector of nonequal constraints (c_i <= 0.0)
+     * @return value of target function
+     */
+    virtual void optC ( const std::vector<double>& x, std::vector<double>& c ) = 0;
+
     /**
      * (abstract) get number of arguments x
      * @return number of arguments x

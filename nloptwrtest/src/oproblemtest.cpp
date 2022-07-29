@@ -44,7 +44,7 @@ int oproblemtest ( bool log, int dim )
   
   cout << "TEST" << endl;
 
-  unsigned long ulSize = oProblem.getUpperBounds().size();
+  unsigned long ulSize = static_cast<unsigned long>(oProblem.getUpperBounds().size());
   cout << "### oProblem.getUpperBounds()=" << ulSize << endl;
 
   cout << "TEST0" << endl;
@@ -57,11 +57,7 @@ int oproblemtest ( bool log, int dim )
   // vector<double> sub_initial_step (dim, 0.1);
   // vector<double> tol(dim, 1.0e-8);
 
-  double minf=1.0e33; // the minimum objective value, upon return
-
   nloptwr::NLOptWrapper optWr ( oProblem, nThr );
-  
-  optWr.setNewDerivMethod(true);
   
   optWr.setXTolRel(0.00000003);
   optWr.setXTolAbs(0.000001);
@@ -69,26 +65,15 @@ int oproblemtest ( bool log, int dim )
   // optWr.setTolerance(0.001);
   
 
-  // TODO: Prefered Algorithms do not use derivations
-  
-  optWr.setPreferedAlgorithm( nlopt::LD_MMA, 0, 1000 );
-  // optWr.setPreferedAlgorithm( nlopt::LD_CCSAQ, 0, 1000 );
-  // optWr.setPreferedAlgorithm( nlopt::LD_TNEWTON_PRECOND_RESTART, 0, 0 );
-  // optWr.setPreferedAlgorithm( nlopt::LD_TNEWTON_PRECOND_RESTART, 0, 1000 );
-  // optWr.setPreferedAlgorithm( nlopt::GD_STOGO_RAND, 0, 50);
-  // optWr.setPreferedAlgorithm( nlopt::LD_MMA, 0, 1000);
-  // optWr.setPreferedAlgorithm( nlopt::GN_AGS, 0, 5 );
-  optWr.setPreferedAlgorithm( nlopt::LN_SBPLX, 0, 15);
-  
-  // TODO: Non-Gradient methods do not need a numerical derivation!!!!!!
+  // NOTE: Non-Gradient methods do not need a numerical derivation!!!!!!
   bool useGrad=true;
   bool useAugLagBeforeMlsl=true;
   
-  nloptwr::NLOptWrSStrat sStratL ( nloptwr::L,  useGrad, useAugLagBeforeMlsl );
-  nloptwr::NLOptWrSStrat sStratLM( nloptwr::LM, useGrad, useAugLagBeforeMlsl );
-  nloptwr::NLOptWrSStrat sStratR ( nloptwr::R,  useGrad, useAugLagBeforeMlsl );
-  nloptwr::NLOptWrSStrat sStratGM( nloptwr::GM, useGrad, useAugLagBeforeMlsl );
-  nloptwr::NLOptWrSStrat sStratG ( nloptwr::G,  useGrad, useAugLagBeforeMlsl );
+  nloptwr::NLOptWrSStrat sStratL ( nloptwr::SSTRAT::L,  useGrad, useAugLagBeforeMlsl );
+  nloptwr::NLOptWrSStrat sStratLM( nloptwr::SSTRAT::LM, useGrad, useAugLagBeforeMlsl );
+  nloptwr::NLOptWrSStrat sStratR ( nloptwr::SSTRAT::R,  useGrad, useAugLagBeforeMlsl );
+  nloptwr::NLOptWrSStrat sStratGM( nloptwr::SSTRAT::GM, useGrad, useAugLagBeforeMlsl );
+  nloptwr::NLOptWrSStrat sStratG ( nloptwr::SSTRAT::G,  useGrad, useAugLagBeforeMlsl );
 
   nloptwr::NLOptWrSStrat& sStrat = sStratL;
   
@@ -105,19 +90,17 @@ int oproblemtest ( bool log, int dim )
   cout << " } " << endl;
 
 if (true) {  
-  // TODO (loop)
-  if (sStrat.getSearchStrategy()!=nloptwr::R) optWr.setNewDerivMethod(false);
   // if (sStrat.getSearchStrategy()==nloptwr::R) 
   optWr.calculateInitialStep(1.3);
 
   nlopt::result opt_stat = optWr.optimize (
-                             minf,
                              sStrat, // isStochastic, isAugLag, useGrad,
                              maxTimeSec,
                              maxEvals
                            );
 
-  
+  double minf = optWr.getLastOptimumValue();
+
   std::vector<nloptwr::NLOptWrAlgorithm> algs = optWr.getSelectedAlgorithms ( sStrat );
   cout << endl << "optWr.getSelectedAlgorithms( " << sStrat.toString() << ") = { ";
   for ( size_t i=0; i<algs.size(); i++ ) {
@@ -125,9 +108,6 @@ if (true) {
       cout << algs.at ( i ).getName();
     }
   cout << " } " << endl;
-  
-  // std::vector<double> c(oProblem.getSizeOfX());
-  // double minf2 = oProblem.optFktn(x, c);
 
   x = optWr.getX();
 

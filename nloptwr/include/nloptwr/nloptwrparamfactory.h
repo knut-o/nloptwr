@@ -52,7 +52,7 @@ public:
      * @param useAugLagBeforeMlsl use Augmented Lagrangian before MLSL
      * @param xDim dimension of parameter x
      */
-    std::vector<NLOptWrAlgorithm> getAlgorithm ( SEARCH_STRATEGY searchStrategy, bool hasConstraints, bool useGradient, bool useAugLagBeforeMlsl, std::size_t xDim ) const;
+    std::vector<NLOptWrAlgorithm> getAlgorithm (SSTRAT searchStrategy, bool hasConstraints, bool useGradient, bool useAugLagBeforeMlsl, std::size_t xDim ) const;
 
     /**
      * get a set of agorithms

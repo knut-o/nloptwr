@@ -3,8 +3,6 @@
 
 set(NLOPWR_INCLUDE_FILES 
     include/nloptwr/omphelper.h
-    include/nloptwr/gauss.h
-    include/nloptwr/lregx.h
     include/nloptwr/nloptwralgorithm.h
     include/nloptwr/nloptwrsearchalgoparam.h
     include/nloptwr/nloptwrsearchalgoparam2.h
@@ -22,8 +20,6 @@ set(NLOPWR_INCLUDE_FILES
 # compile all cpp files
 set( nloptwr_SRCS 
     src/omphelper.cpp
-    src/gauss.cpp
-    src/lregx.cpp
     src/nloptwralgorithm.cpp
     src/nloptwrsearchalgoparam.cpp
     src/nloptwrsearchalgoparam2.cpp
@@ -69,6 +65,8 @@ target_include_directories(nloptwr
         PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_DIR}>
+        # $<INSTALL_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
+        $<INSTALL_INTERFACE:include>
         )
 
 TARGET_LINK_LIBRARIES( 
@@ -92,7 +90,8 @@ install(
   INCLUDES  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
-# install(FILES nloptwr-config.cmake DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(FILES nloptwr-config.cmake DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
 install(FILES ${NLOPWR_INCLUDE_FILES} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nloptwr COMPONENT devel)
 
 # =========================================================================

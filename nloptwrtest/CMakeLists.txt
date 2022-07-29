@@ -5,6 +5,7 @@
 set( nloptwrtest_SRCS
     src/odisplay.cpp
 	src/oproblem.cpp
+	src/chainwithweights.cpp
 	src/oproblemtest.cpp
     src/vcompare.cpp
     src/griewank.cpp
@@ -54,7 +55,16 @@ set(NLOPTWR_BIN_02 nloptwr_test02)
 set(NLOPTWR_BIN_03 nloptwr_test03)
 set(NLOPTWR_BIN_04 nloptwr_test04)
 set(NLOPTWR_BIN_05 nloptwr_test05)
-set(NLOPTWR_BIN_06 selalg_test)
+set(NLOPTWR_BIN_06 nloptwr_test06)
+set(NLOPTWR_BIN_a1 selalg_test)
+
+set(NLOPTWR_DESC_01 "parabola")
+set(NLOPTWR_DESC_02 "constr_and_rosenb.")
+set(NLOPTWR_DESC_03 "griewank")
+set(NLOPTWR_DESC_04 "griewank")
+set(NLOPTWR_DESC_05 "rastrigin")
+set(NLOPTWR_DESC_06 "chain_weights")
+set(NLOPTWR_DESC_a1 "sel_algorithms")
 
 # =========================================================================
 
@@ -63,7 +73,8 @@ add_executable(${NLOPTWR_BIN_02} src/nloptwr_test2.cpp)
 add_executable(${NLOPTWR_BIN_03} src/nloptwr_test3.cpp)
 add_executable(${NLOPTWR_BIN_04} src/nloptwr_test4.cpp)
 add_executable(${NLOPTWR_BIN_05} src/nloptwr_test5.cpp)
-add_executable(${NLOPTWR_BIN_06} src/selalgtest.cpp)
+add_executable(${NLOPTWR_BIN_06} src/nloptwr_test6.cpp)
+add_executable(${NLOPTWR_BIN_a1} src/selalgtest.cpp)
 
 # =========================================================================
 
@@ -73,6 +84,7 @@ target_compile_features(${NLOPTWR_BIN_03} PRIVATE cxx_std_${CMAKE_CXX_STANDARD} 
 target_compile_features(${NLOPTWR_BIN_04} PRIVATE cxx_std_${CMAKE_CXX_STANDARD} )
 target_compile_features(${NLOPTWR_BIN_05} PRIVATE cxx_std_${CMAKE_CXX_STANDARD} )
 target_compile_features(${NLOPTWR_BIN_06} PRIVATE cxx_std_${CMAKE_CXX_STANDARD} )
+target_compile_features(${NLOPTWR_BIN_a1} PRIVATE cxx_std_${CMAKE_CXX_STANDARD} )
 
 # =========================================================================
 
@@ -121,8 +133,18 @@ TARGET_LINK_LIBRARIES(
         ${NLOPTCXX_LIBS}
 )
 
+
 TARGET_LINK_LIBRARIES( 
         ${NLOPTWR_BIN_06}
+        # PRIVATE
+        nloptwrtest
+        nloptwr
+        OpenMP::OpenMP_CXX
+        ${NLOPTCXX_LIBS}
+)
+
+TARGET_LINK_LIBRARIES( 
+        ${NLOPTWR_BIN_a1}
         PRIVATE
         nloptwrtest
         nloptwr
@@ -140,6 +162,7 @@ install(
         ${NLOPTWR_BIN_04} 
         ${NLOPTWR_BIN_05} 
         ${NLOPTWR_BIN_06} 
+        ${NLOPTWR_BIN_a1} 
         nloptwr 
         # nloptwrtest
   RUNTIME   DESTINATION ${CMAKE_INSTALL_BINDIR}
@@ -153,12 +176,22 @@ install(
 
 ENABLE_TESTING()
 #
-ADD_TEST(NAME ${NLOPTWR_BIN_01} COMMAND ${NLOPTWR_BIN_01}  )
-ADD_TEST(NAME ${NLOPTWR_BIN_02} COMMAND ${NLOPTWR_BIN_02}  )
-ADD_TEST(NAME ${NLOPTWR_BIN_03} COMMAND ${NLOPTWR_BIN_03}  )
-ADD_TEST(NAME ${NLOPTWR_BIN_04} COMMAND ${NLOPTWR_BIN_04}  )
-ADD_TEST(NAME ${NLOPTWR_BIN_05} COMMAND ${NLOPTWR_BIN_05}  )
-ADD_TEST(NAME ${NLOPTWR_BIN_06} COMMAND ${NLOPTWR_BIN_06}  )
+ADD_TEST(NAME ${NLOPTWR_DESC_01}_L-G      WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/nloptwrtest COMMAND ${NLOPTWR_BIN_01} 1 L 10)
+ADD_TEST(NAME ${NLOPTWR_DESC_01}_L-N    WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/nloptwrtest COMMAND ${NLOPTWR_BIN_01} 0 L 10)
+ADD_TEST(NAME ${NLOPTWR_DESC_01}_G-G    WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/nloptwrtest COMMAND ${NLOPTWR_BIN_01} 1 G 20)
+
+ADD_TEST(NAME "${NLOPTWR_DESC_02}_L-G"    WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/nloptwrtest COMMAND ${NLOPTWR_BIN_02}  )
+ADD_TEST(NAME "${NLOPTWR_DESC_03}_L-G"    WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/nloptwrtest COMMAND ${NLOPTWR_BIN_03}  )
+ADD_TEST(NAME "${NLOPTWR_DESC_04}_G-G"    WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/nloptwrtest COMMAND ${NLOPTWR_BIN_04}  )
+ADD_TEST(NAME ${NLOPTWR_DESC_05}_G-G   WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/nloptwrtest COMMAND ${NLOPTWR_BIN_05}  2  50 G  )
+ADD_TEST(NAME ${NLOPTWR_DESC_05}_GM-G   WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/nloptwrtest COMMAND ${NLOPTWR_BIN_05}  2 50 GM  )
+ADD_TEST(NAME ${NLOPTWR_DESC_05}_R-N   WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/nloptwrtest COMMAND ${NLOPTWR_BIN_05}  2  50 R  )
+# ADD_TEST(NAME ${NLOPTWR_BIN_05}_G-G WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/nloptwrtest COMMAND ${NLOPTWR_BIN_05} 30 600 G  )
+
+ADD_TEST(NAME ${NLOPTWR_DESC_06}_LM-G   WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/nloptwrtest COMMAND ${NLOPTWR_BIN_06}  13 1  )
+ADD_TEST(NAME ${NLOPTWR_DESC_06}_LM-N   WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/nloptwrtest COMMAND ${NLOPTWR_BIN_06}  13 0  )
+
+ADD_TEST(NAME ${NLOPTWR_DESC_a1}     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/nloptwrtest COMMAND ${NLOPTWR_BIN_a1}  )
 
 # =========================================================================
 

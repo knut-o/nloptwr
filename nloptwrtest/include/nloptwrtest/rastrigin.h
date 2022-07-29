@@ -60,6 +60,9 @@ private:
     /// dimension of x-vector
     int nDim;
 
+    ///  constant PI/2
+    static const double Pi2;
+
 };
 
 } // namespace opttest

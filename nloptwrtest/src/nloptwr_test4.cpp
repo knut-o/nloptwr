@@ -18,8 +18,6 @@ int opttest4()
     int rc=0;
 
 
-    nlopt::result opt_stat=nlopt::result::FAILURE;
-
     int dim=10;
 
     // number of threads ("0" means autodetect)
@@ -32,8 +30,6 @@ int opttest4()
 
     bool useGrad=true;
     bool useAugLagBeforeMlsl=true;
-
-    double minf=1.0e33; // the minimum objective value, upon return
 
     // a target function
     Griewank oGriewank( dim ); 
@@ -59,18 +55,34 @@ int opttest4()
     cout << "Start of optimization..." << endl;
         
     // select strategy: "L", "LM", "GM", "G" an "R"
-    nloptwr::NLOptWrSStrat sStrat( nloptwr::GM, useGrad, useAugLagBeforeMlsl );
+    nloptwr::NLOptWrSStrat sStrategy( nloptwr::SSTRAT::GM, useGrad, useAugLagBeforeMlsl );
 
-    // optimization
-    opt_stat = optWr.optimize(minf, sStrat, maxTimeSec, maxEvals);
+    nlopt::result opt_stat = nlopt::result::FAILURE; 
     
+    try {
+        // start opptimization
+        opt_stat = optWr.optimize(sStrategy, maxTimeSec, maxEvals);
+    } catch (runtime_error eRt) {
+        cerr << "ERROR: runtime_error : " << eRt.what() << endl; cerr.flush();
+    } catch (exception e) {
+        cerr << "ERROR: exception : " << e.what() << endl; cerr.flush();
+        throw exception(e);
+    }
+
+
+    // get the optimized value
+    double minf = optWr.getLastOptimumValue();
+
+    // =====================================================
+
     // display the results
-    rc = opttest::display(optWr, sStrat, opt_stat, minf);
+    rc = opttest::display(optWr, sStrategy, opt_stat, minf);
     
-    bool isOk=opttest::vcompare(optWr.getX(), 0.0, 0.0005);
+    // test
+    bool isOk = opttest::fvcompare(minf, 0.0, optWr.getX(), 0.0);
     if (!isOk) {
         rc=1;
-        cerr << "The 2nd optimization has failed!" << endl;
+        cerr << "The optimization has failed!" << endl;
     }
 
 return rc;

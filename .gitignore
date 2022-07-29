@@ -9,4 +9,7 @@ build
 *.kdev3
 *.kdev4
 *.kate-swp
+*.sln
+*.vcxproj*
+*.vscode
 

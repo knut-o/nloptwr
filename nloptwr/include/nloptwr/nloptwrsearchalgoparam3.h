@@ -23,13 +23,15 @@ namespace nloptwr
         /**
          * constructor
          */
-        NLOptWrSearchAlgoParam3(nloptwr::SEARCH_STRATEGY strat, bool constr, bool grad, bool uaugl, size_t d );
-        
-        
+        NLOptWrSearchAlgoParam3(nloptwr::SSTRAT strat, bool constr, bool grad, bool uaugl, size_t d );
+               
         /**
          * constructor
          */
         NLOptWrSearchAlgoParam3(const NLOptWrSearchAlgoParam2& alg, size_t d );
+
+        /// default constructor
+        NLOptWrSearchAlgoParam3() = delete;
         
         /// destructor
         virtual ~NLOptWrSearchAlgoParam3();

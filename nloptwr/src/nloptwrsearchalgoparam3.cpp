@@ -13,7 +13,7 @@ using namespace std;
 namespace nloptwr
 {
 
-    NLOptWrSearchAlgoParam3::NLOptWrSearchAlgoParam3(nloptwr::SEARCH_STRATEGY strat, bool constr, bool grad, bool uaugl, size_t d )
+    NLOptWrSearchAlgoParam3::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT strat, bool constr, bool grad, bool uaugl, size_t d )
             :
         NLOptWrSearchAlgoParam2(strat, constr, grad, uaugl), dim(d)
         { }
@@ -37,7 +37,7 @@ std::string NLOptWrSearchAlgoParam3::toString() const
 
   ss
       << "NLOptWrSearchAlgoParam3( "
-      << "searchStrategy=" << left << setw ( 2 ) << getStrategyAsString ( getSearchStrategy() )
+      << "searchStrategy=nloptwr::SSTRAT::" << left << setw ( 2 ) << getStrategyAsString ( getSearchStrategy() )
       << ", hasContraints=" << getHasContraints()
       << ", useGrad=" << getUseGradient()
       << ", useAugLagBeforeMLSL=" << getUseAugLagBeforeMLSL()
@@ -54,7 +54,7 @@ std::string NLOptWrSearchAlgoParam3::toString2() const
 
   ss
       << "nloptwr::NLOptWrSearchAlgoParam3( "
-      << "nloptwr::"<< left << setw ( 2 ) << getStrategyAsString ( getSearchStrategy() )
+      << "nloptwr::SSTRAT::"<< left << setw ( 2 ) << getStrategyAsString ( getSearchStrategy() )
       << ", " << (getHasContraints()? "true " : "false")
       << ", " << (getUseGradient()? "true " : "false")
       << ", " << (getUseAugLagBeforeMLSL()? "true " : "false")

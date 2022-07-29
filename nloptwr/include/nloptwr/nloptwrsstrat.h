@@ -25,7 +25,7 @@ public:
      * @param useGrad use gradient flag
      * @param useAugLagBeforeMlsl use Augmented Lagrangian befor MLSL flag
      */
-    NLOptWrSStrat ( SEARCH_STRATEGY searchStrat, bool useGrad=true, bool useAugLagBeforeMlsl=true );
+    NLOptWrSStrat (SSTRAT searchStrat, bool useGrad=true, bool useAugLagBeforeMlsl=true );
 
     /// default constructor
     NLOptWrSStrat() = delete;
@@ -40,7 +40,7 @@ public:
      * get search strategy
      * @ return search strategy
      */
-    SEARCH_STRATEGY getSearchStrategy() const;
+    SSTRAT getSearchStrategy() const;
 
     /**
      * get use gradient flag
@@ -70,12 +70,12 @@ public:
      * set search strategy
      * @param val search strategy
      */
-    void setSearchStrategy ( SEARCH_STRATEGY val );
+    void setSearchStrategy (SSTRAT val );
 
 protected:
 
     /// search strategy
-    SEARCH_STRATEGY searchStrategy;
+    SSTRAT searchStrategy;
 
     /// use gradient flag
     bool useGradient;

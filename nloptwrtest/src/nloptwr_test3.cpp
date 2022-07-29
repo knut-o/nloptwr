@@ -15,9 +15,6 @@ int opttest3()
 {
     int rc=0;
 
-    // the result variable
-    nlopt::result opt_stat=nlopt::result::FAILURE;
-
     int dim=3000;
 
     // number of threads ("0" means autodetect)
@@ -35,9 +32,6 @@ int opttest3()
     // other parameter
     bool useAugLagBeforeMlsl=true;
 
-    // the minimum objective value, upon return
-    double minf=1.0e33; 
-
     // =====================================================
 
     // a target function
@@ -47,7 +41,7 @@ int opttest3()
     oGriewank.initialize ( -15.0, 15.0, 2.0 );
 
     // it is used a local search (because of the speed)
-    nloptwr::NLOptWrSStrat sStrat2( nloptwr::L, useGrad, useAugLagBeforeMlsl );
+    nloptwr::NLOptWrSStrat sStrategy( nloptwr::SSTRAT::L, useGrad, useAugLagBeforeMlsl );
 
     // =====================================================
 
@@ -60,16 +54,28 @@ int opttest3()
     // parallel evaluations need less time
     if (useGrad) maxTimeSec /= static_cast<int>(optWr.getNThreads());
     
-    // optimize it
-    opt_stat = optWr.optimize(minf, sStrat2, maxTimeSec, maxEvals);
+    nlopt::result opt_stat = nlopt::result::FAILURE; 
+    
+    try {
+        // start opptimization
+        opt_stat = optWr.optimize(sStrategy, maxTimeSec, maxEvals);
+    } catch (runtime_error eRt) {
+        cerr << "ERROR: runtime_error : " << eRt.what() << endl; cerr.flush();
+    } catch (exception e) {
+        cerr << "ERROR: exception : " << e.what() << endl; cerr.flush();
+        throw exception(e);
+    }
+
+    // get the optimized value
+    double minf = optWr.getLastOptimumValue();
 
     // =====================================================
     
     // display the result
-    rc = opttest::display(optWr, sStrat2, opt_stat, minf);
+    rc = opttest::display(optWr, sStrategy, opt_stat, minf);
     
     // check the results
-    bool isOk=opttest::vcompare(optWr.getX(), 0.0, 0.0005);
+    bool isOk = opttest::fvcompare(minf, 0.0, optWr.getX(), 0.0);
     if (!isOk) {
         rc=1;
         cerr << "The 2nd optimization has failed!" << endl;

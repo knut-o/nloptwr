@@ -11,13 +11,13 @@ using namespace std;
 namespace nloptwr
 {
 
-NLOptWrSearchAlgoParam::NLOptWrSearchAlgoParam ( SEARCH_STRATEGY searchStrat, bool hasConstr, bool useGrad )
+NLOptWrSearchAlgoParam::NLOptWrSearchAlgoParam ( SSTRAT searchStrat, bool hasConstr, bool useGrad )
   :
   searchStrategy ( searchStrat ),
   hasContraints ( hasConstr ),
   useGradient ( useGrad )
 {
-  if ( R == searchStrat )
+  if (SSTRAT::R == searchStrat )
     {
       useGradient=false;
     }
@@ -56,12 +56,12 @@ bool NLOptWrSearchAlgoParam::operator < ( const NLOptWrSearchAlgoParam& rhs ) co
   return result;
 }
 
-SEARCH_STRATEGY NLOptWrSearchAlgoParam::getSearchStrategy() const
+SSTRAT NLOptWrSearchAlgoParam::getSearchStrategy() const
 {
   return searchStrategy;
 }
 
-void NLOptWrSearchAlgoParam::setSearchStrategy ( SEARCH_STRATEGY val )
+void NLOptWrSearchAlgoParam::setSearchStrategy ( SSTRAT val )
 {
   searchStrategy=val;
 }

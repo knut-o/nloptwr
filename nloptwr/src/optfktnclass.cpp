@@ -25,6 +25,8 @@ namespace oif {
         lB=shared_ptr< vector<double> >(new vector<double>(dim, lb));
         uB=shared_ptr< vector<double> >(new vector<double>(dim, ub)); 
         xInitial=shared_ptr< vector<double> >(new vector<double>(dim, xInit));
+        // 
+        if (c.size()!=mDim) c.resize(mDim);
     }
     
 // virtual 
@@ -104,5 +106,17 @@ OptFknClass::~OptFknClass() {}
         return *xInitial;
     }
 
+    
+    // ===========================================================
+    
+    // virtual 
+    double OptFknClass::optF ( const std::vector<double>& x ) {
+        return  optFktn ( x, c );
+    }
+
+    // virtual 
+    void OptFknClass::optC ( const std::vector<double>& x, std::vector<double>& c ) {
+        if (!c.empty()) optFktn ( x, c );
+    }
 }
 

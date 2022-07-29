@@ -1,5 +1,5 @@
 
-#include "nloptwrtest/odisplay.h"
+#include "nloptwrtest/vcompare.h"
 
 #include <cmath>
 #include <vector>
@@ -7,6 +7,23 @@
 using namespace std;
 
 namespace opttest {
+
+    bool fvcompare(double f1, double f2, const std::vector<double>& src1, double src2, double eps) {
+        bool result = (fabs(f1 - f2) < fabs(eps));
+        if (result) {
+            result = vcompare(src1, src2, eps);
+        }
+        return result;
+    }
+
+
+    bool fvcompare(double f1, double f2, const std::vector<double>& src1, const std::vector<double>& src2, double eps) {
+        bool result = (fabs(f1 - f2) < fabs(eps));
+        if (result) {
+            result = vcompare(src1, src2, eps);
+        }
+        return result;
+    }
 
 
 

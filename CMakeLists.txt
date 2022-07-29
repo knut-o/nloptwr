@@ -3,24 +3,25 @@ cmake_minimum_required(VERSION 3.0)
 
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 
+### TODO
+SET(CMAKE_BUILD_TYPE Debug)
+
 # =========================================================================
 
-set(VCPKG_FLAG BOOL false)
-if (DEFINED $ENV{CMAKE_TOOLCHAIN_FILE} )
+set(VCPKG_FLAG BOOL OFF)
+if (DEFINED ENV{CMAKE_TOOLCHAIN_FILE} )
     SET (CMAKE_TOOLCHAIN_FILE $ENV{CMAKE_TOOLCHAIN_FILE} )
     MESSAGE("CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}")
-    SET(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake )
-    set(VCPKG_FLAG BOOL true)
+    set(VCPKG_FLAG BOOL ON)
 elseif (DEFINED ENV{VCPKG_ROOT})
-    SET(VCPKG_ROOT $ENV{VCPKG_ROOT} )
-    SET(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake )
-    MESSAGE("VCPKG_ROOT=${VCPKG_ROOT}")
+    SET(VCPKG_ROOT_VAR $ENV{VCPKG_ROOT} )
+    SET(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT_VAR}/scripts/buildsystems/vcpkg.cmake )
+    MESSAGE("VCPKG_ROOT=${VCPKG_ROOT_VAR}")
     MESSAGE("CMAKE_TOOLCHAIN_FILE:= ${CMAKE_TOOLCHAIN_FILE}")
-    # MESSAGE("VCPKG_INSTALLED_DIR:  ${VCPKG_INSTALLED_DIR}")
-    set(VCPKG_FLAG BOOL true)
+    set(VCPKG_FLAG BOOL ON)
+else()
+    MESSAGE("VCPKG not found..")
 endif()
-
-MESSAGE("VCPKG found: ${VCPKG_FLAG}")
 
 # =========================================================================
 
@@ -33,12 +34,28 @@ option(BUILD_DOC "Build documentation" ON)
 
 # =========================================================================
 
+if(DEFINED ENV{VCPKG_DEFAULT_TRIPLET} AND NOT DEFINED VCPKG_TARGET_TRIPLET)
+  set(VCPKG_TARGET_TRIPLET "$ENV{VCPKG_DEFAULT_TRIPLET}" CACHE STRING "")
+endif()
+
+if (VCPKG_FLAG)
+    MESSAGE("VCPKG found.")
+    # include(${CMAKE_TOOLCHAIN_FILE})
+else()
+    MESSAGE("VCPKG not found.")
+endif()
+
+# =========================================================================
+
 # Compile with C++11 standard
 SET(CMAKE_CXX_STANDARD 11)
 
 # SET(CMAKE_BUILD_TYPE Debug)
-SET(CMAKE_BUILD_TYPE RelWithDebInfo)
-# SET(CMAKE_CONFIGURATION_TYPES "Debug" CACHE STRING "" FORCE)
+if (NOT DEFINED CMAKE_BUILD_TYPE)
+# SET(CMAKE_BUILD_TYPE Release)
+# SET(CMAKE_BUILD_TYPE RelWithDebInfo)
+SET(CMAKE_BUILD_TYPE Debug)
+endif()
 
 # =========================================================================
 
@@ -52,6 +69,7 @@ endif()
 
 if (VCPKG_FLAG)
     # use vcpkg
+	message("VCPKG_FLAG=${VCPKG_FLAG}")
 
     find_package(NLopt CONFIG REQUIRED)
 	message("NLOPT_LIBRARIES (vcpkg):      NLopt::nlopt ")
@@ -59,7 +77,7 @@ if (VCPKG_FLAG)
     # target_link_libraries(main PRIVATE NLopt::nlopt)
     SET(NLOPTCXX_LIBS NLopt::nlopt )
     
-    MESSAGE("VCPKG_INSTALLED_DIR:  ${VCPKG_INSTALLED_DIR}")
+    # MESSAGE("VCPKG_INSTALLED_DIR:  ${VCPKG_INSTALLED_DIR}")
     set(VCPKG_INCL "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/include")
     MESSAGE("VCPKG_INSTALLED_DIR/VCPKG_TARGET_TRIPLET/include:  ${VCPKG_INCL}")
     

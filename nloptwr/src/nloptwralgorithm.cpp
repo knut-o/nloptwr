@@ -6,72 +6,93 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
-
+#include <cctype>
 
 using namespace std;
 
 namespace nloptwr {
     
-    SEARCH_STRATEGY getMetaSearchStrategy(SEARCH_STRATEGY strat) {
+    SSTRAT getMetaSearchStrategy(SSTRAT strat) {
         if (static_cast<int>(strat) > 0) {
-            if (strat == R) strat=N; 
-            if (strat == L) strat=LM; 
-            if (strat == G) strat=GM; 
+            if (strat == SSTRAT::R) strat= SSTRAT::N;
+            if (strat == SSTRAT::L) strat= SSTRAT::LM;
+            if (strat == SSTRAT::G) strat= SSTRAT::GM;
         }
         return strat;  
     }
     
-    SEARCH_STRATEGY getNonMetaSearchStrategy(SEARCH_STRATEGY strat) {
+    SSTRAT getNonMetaSearchStrategy(SSTRAT strat) {
         if (static_cast<int>(strat) < 0) {
-            if (strat == LM) strat=L; 
-            if (strat == GM) strat=G; 
+            if (strat == SSTRAT::LM) strat= SSTRAT::L;
+            if (strat == SSTRAT::GM) strat= SSTRAT::G;
         }
         return strat;  
     }
     
-    bool isSearchStrategyLGM(SEARCH_STRATEGY strat) {
-        return ((strat == GM)||(strat == LM)||(strat == L)||(strat == G)); 
+    bool isSearchStrategyLGM(SSTRAT strat) {
+        return (
+                  (strat == SSTRAT::GM) ||
+                  (strat == SSTRAT::LM) ||
+                  (strat == SSTRAT::L ) ||
+                  (strat == SSTRAT::G)
+             );
     }
 
-    bool isSearchStrategyLG(SEARCH_STRATEGY strat) {
-        return ((strat == G)||(strat == L)); 
+    bool isSearchStrategyLG(SSTRAT strat) {
+        return ((strat == SSTRAT::G)||(strat == SSTRAT::L));
     }
 
-    bool isMetaSearchStrategy(SEARCH_STRATEGY strat) {
-        return ((strat == GM)||(strat == LM)); 
+    bool isMetaSearchStrategy(SSTRAT strat) {
+        return ((strat == SSTRAT::GM)||(strat == SSTRAT::LM));
     }
 
-    bool isSearchStrategyR(SEARCH_STRATEGY strat) {
-        return (strat == R); 
+    bool isSearchStrategyR(SSTRAT strat) {
+        return (strat == SSTRAT::R);
     }
     
-    bool  isP4pAlgLocalOrGlobal(SEARCH_STRATEGY strat, bool searchLocalOrGlobal) {
+    bool  isP4pAlgLocalOrGlobal(SSTRAT strat, bool searchLocalOrGlobal) {
         int  searchStrategyIntAbs=abs(static_cast<int>(strat));
         return searchLocalOrGlobal&&(
-                searchStrategyIntAbs>=static_cast<int>(nloptwr::L) 
+                searchStrategyIntAbs>=static_cast<int>(SSTRAT::L)
                 || 
-                searchStrategyIntAbs<=static_cast<int>(nloptwr::G)
+                searchStrategyIntAbs<=static_cast<int>(SSTRAT::G)
                 );
     }
 
-    string getStrategyAsString(SEARCH_STRATEGY strat) {
+    string getStrategyAsString(SSTRAT strat) {
         string rc=" ";
-        if (strat==R) { rc="R"; } else 
-        if (strat==G) { rc="G"; } else 
-        if (strat==L) { rc="L"; } else 
-        if (strat==N) { rc="N"; } else 
-        if (strat==LM) { rc="LM"; } else 
-        if (strat==GM) { rc="GM"; } else 
+        if (strat == SSTRAT::R) { rc="R"; } else
+        if (strat == SSTRAT::G) { rc="G"; } else
+        if (strat == SSTRAT::L) { rc="L"; } else
+        if (strat == SSTRAT::N) { rc="N"; } else
+        if (strat == SSTRAT::LM) { rc="LM"; } else
+        if (strat == SSTRAT::GM) { rc="GM"; } else
         rc="?"; 
             
         return rc;
     }
 
+    SSTRAT getStrategyFromString(const std::string& src, SSTRAT sstratDefault) {
+        SSTRAT result=sstratDefault;
+        if ((1<=src.size()) && (src.size()<=2)) {
+            string srcU(src);
+            if (src.size()>=1) srcU[0]= toupper(srcU[0]);
+            if (src.size()>=2) srcU[1]= toupper(srcU[1]);
+
+            if (srcU=="R") { result= SSTRAT::R; } else
+            if (srcU=="G") { result= SSTRAT::G; } else
+            if (srcU=="L") { result= SSTRAT::L; } else
+            if (srcU=="N") { result= SSTRAT::N; } else
+            if (srcU=="LM") { result= SSTRAT::LM; } else
+            if (srcU=="GM") { result= SSTRAT::GM; }; 
+        }
+        return result;
+    }
 
     NLOptWrAlgorithm::NLOptWrAlgorithm(
     nlopt::algorithm a,
     const std::string& n,
-    SEARCH_STRATEGY rgl,
+    SSTRAT rgl,
     bool hasGrad,
     bool neC,
     bool nSubopt,
@@ -91,7 +112,7 @@ namespace nloptwr {
         
     }
     
-    NLOptWrAlgorithm::NLOptWrAlgorithm() { }
+  // NLOptWrAlgorithm::NLOptWrAlgorithm() { }
     
     NLOptWrAlgorithm::NLOptWrAlgorithm(const NLOptWrAlgorithm& src) 
     :
@@ -116,7 +137,7 @@ namespace nloptwr {
     
     const std::string& NLOptWrAlgorithm::getName() const {  return name; }
     
-    SEARCH_STRATEGY NLOptWrAlgorithm::getSearchStrategy() const {  return pRGL; }
+    SSTRAT NLOptWrAlgorithm::getSearchStrategy() const {  return pRGL; }
     
     bool NLOptWrAlgorithm::getUseGradient() const { return hasGradient; }
     

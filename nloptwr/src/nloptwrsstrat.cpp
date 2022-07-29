@@ -11,13 +11,13 @@ using namespace std;
 namespace nloptwr
 {
 
-NLOptWrSStrat::NLOptWrSStrat ( SEARCH_STRATEGY searchStrat, bool useGrad, bool useAugLagBeforeMlsl )
+NLOptWrSStrat::NLOptWrSStrat ( SSTRAT searchStrat, bool useGrad, bool useAugLagBeforeMlsl )
   :
   searchStrategy ( searchStrat ),
   useGradient ( useGrad ),
   useAugLagBeforeMLSL ( useAugLagBeforeMlsl )
 {
-  if ( R == searchStrat )
+  if (SSTRAT::R == searchStrat )
     {
       useGradient=false;
     }
@@ -34,12 +34,12 @@ NLOptWrSStrat::NLOptWrSStrat ( const NLOptWrSStrat& src )
 // virtual
 NLOptWrSStrat::~NLOptWrSStrat() { }
 
-SEARCH_STRATEGY NLOptWrSStrat::getSearchStrategy() const
+SSTRAT NLOptWrSStrat::getSearchStrategy() const
 {
   return searchStrategy;
 }
 
-void NLOptWrSStrat::setSearchStrategy ( SEARCH_STRATEGY val )
+void NLOptWrSStrat::setSearchStrategy ( SSTRAT val )
 {
   searchStrategy=val;
 }

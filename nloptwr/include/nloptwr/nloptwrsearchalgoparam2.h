@@ -28,7 +28,7 @@ public:
      * @param useGrad use gradient flag
      * @param useAugLagBeforeMlsl use Augmented Lagrangian befoe MLSL flag
      */
-    NLOptWrSearchAlgoParam2 ( SEARCH_STRATEGY searchStrat, bool hasConstr, bool useGrad=true, bool useAugLagBeforeMlsl=true );
+    NLOptWrSearchAlgoParam2 (SSTRAT searchStrat, bool hasConstr, bool useGrad=true, bool useAugLagBeforeMlsl=true );
 
     /**
      * copy constructor
@@ -44,7 +44,7 @@ public:
     NLOptWrSearchAlgoParam2 ( const NLOptWrSearchAlgoParam2& src );
 
     /// default constructor
-    NLOptWrSearchAlgoParam2();
+    NLOptWrSearchAlgoParam2() = delete;
 
     /// destructor
     virtual ~NLOptWrSearchAlgoParam2();

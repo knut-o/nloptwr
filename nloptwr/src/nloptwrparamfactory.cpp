@@ -33,7 +33,7 @@ namespace nloptwr {
     // ==================================================================================================
 
     
-    vector<NLOptWrAlgorithm> NLOptWrParamFactory::getAlgorithm(SEARCH_STRATEGY searchStrategy, bool hasConstraints, bool useGradient, bool useAugLagBeforeMlsl, std::size_t xDim) const {
+    vector<NLOptWrAlgorithm> NLOptWrParamFactory::getAlgorithm(SSTRAT searchStrategy, bool hasConstraints, bool useGradient, bool useAugLagBeforeMlsl, std::size_t xDim) const {
         NLOptWrSearchAlgoParam3  p4pAlg3(searchStrategy, hasConstraints, useGradient, useAugLagBeforeMlsl, xDim);
         return getAlgorithm(p4pAlg3);
      }
@@ -44,9 +44,15 @@ namespace nloptwr {
        return getAlgorithm(p4pAlg3); 
    }
     
-    vector<NLOptWrAlgorithm> NLOptWrParamFactory::getAlgorithm(const NLOptWrSearchAlgoParam3& p4pAlg) const {
+    vector<NLOptWrAlgorithm> NLOptWrParamFactory::getAlgorithm(const NLOptWrSearchAlgoParam3& p4pAlg0) const {
         // if (d) cout << "DEBUG: NlOptParamFactory::getAlgorithm[-1]: " << p4pAlg.toString() << endl;
 
+        NLOptWrSearchAlgoParam3 p4pAlg(p4pAlg0);
+                // local optimizations without constraints do not need meta algoritms at all
+        if (p4pAlg0.getSearchStrategy()==SSTRAT::LM && !p4pAlg0.getHasContraints()) {
+            p4pAlg = NLOptWrSearchAlgoParam3(SSTRAT::L, p4pAlg0.getHasContraints(), p4pAlg0.getUseGradient(), p4pAlg0.getUseAugLagBeforeMLSL(), p4pAlg0.getDim());
+        }
+        
         bool foundAlgorithm=false;
         bool useAugLagBeforeMLSL=p4pAlg.getUseAugLagBeforeMLSL();
         std::size_t xDim=p4pAlg.getDim();
@@ -54,12 +60,15 @@ namespace nloptwr {
         vector<NLOptWrAlgorithm> result;
         if (result.capacity()<2) result.reserve(2);
     
-        SEARCH_STRATEGY searchStrategy=p4pAlg.getSearchStrategy();
+        SSTRAT searchStrategy=p4pAlg.getSearchStrategy();
         bool hasConstraints=p4pAlg.getHasContraints();
         
         string forbiddenAlgorith;
-        SEARCH_STRATEGY mainStrategy=searchStrategy;
+        SSTRAT mainStrategy=searchStrategy;
         
+        NLOptWrSearchAlgoParam p4pAlg1(p4pAlg); 
+
+        SSTRAT mainStrategy2(searchStrategy);
         int searchStrategyInt = static_cast<int>(searchStrategy);
         
         // exit in case of error
@@ -69,12 +78,9 @@ namespace nloptwr {
             exit(1);
         }
 
-        SEARCH_STRATEGY mainStrategy2(searchStrategy);
-        NLOptWrSearchAlgoParam p4pAlg1(p4pAlg); 
-        
         if (d && !foundAlgorithm) {
-            cout << "DEBUG: NlOptParamFactory::getAlgorithm[00]: " << p4pAlg.toString() << ", searchStrategy=" << searchStrategy << ",  mainStrategy2=" << mainStrategy2 << endl;
-            cout << "DEBUG: NlOptParamFactory::getAlgorithm[00]: " << p4pAlg1.toString() << ", searchStrategy=" << searchStrategy << ",  mainStrategy2=" << mainStrategy2 << endl;
+           cout << "DEBUG: NlOptParamFactory::getAlgorithm[00]: " << p4pAlg.toString() << ", searchStrategy=" << static_cast<int>(searchStrategy) << ",  mainStrategy2=" << static_cast<int>(mainStrategy2) << endl;
+           cout << "DEBUG: NlOptParamFactory::getAlgorithm[01]: " << p4pAlg1.toString() << ", searchStrategy=" << static_cast<int>(searchStrategy) << ",  mainStrategy2=" << static_cast<int>(mainStrategy2) << endl;
         }
         
         if (!foundAlgorithm) foundAlgorithm= findSearchAlgorithmR(p4pAlg, xDim, result);
@@ -82,38 +88,36 @@ namespace nloptwr {
         
         
         if (!foundAlgorithm && isSearchStrategyLG(mainStrategy)) {
-            if (d>4) cout << "DEBUG: NlOptParamFactory::getAlgorithm[LG]: " << p4pAlg.toString() << ", searchStrategy=" << searchStrategy << ",  mainStrategy2=" << mainStrategy2 << endl;
+            if (d>4) cout << "DEBUG: NlOptParamFactory::getAlgorithm[LG]: " << p4pAlg.toString() << ", searchStrategy=" << static_cast<int>(searchStrategy) << ",  mainStrategy2=" << static_cast<int>(mainStrategy2) << endl;
+            // NOTE: case of no constraints: add Prameter: hasConstraints
             foundAlgorithm= findSearchAlgorithmLG(p4pAlg, xDim, hasConstraints, result); // TODO: case of no constraints: add Prameter: hasConstraints
             if (!foundAlgorithm) {
                 mainStrategy2=getMetaSearchStrategy(mainStrategy);
                 p4pAlg1.setSearchStrategy(mainStrategy2); 
-                if (d>4) cout << "DEBUG: NlOptParamFactory::getAlgorithm[M0]: " << p4pAlg.toString() << ", searchStrategy=" << searchStrategy << ",  mainStrategy2=" << mainStrategy2 << endl;
+                if (d>4) cout << "DEBUG: NlOptParamFactory::getAlgorithm[M0]: " << p4pAlg.toString() << ", searchStrategy=" << static_cast<int>(searchStrategy) << ",  mainStrategy2=" << static_cast<int>(mainStrategy2) << endl;
             }
         }
         
         if (!foundAlgorithm && isMetaSearchStrategy(mainStrategy2)) {
             if (!foundAlgorithm && !hasConstraints && !useAugLagBeforeMLSL) {
-                if (d>4) cout << "DEBUG: NlOptParamFactory::getAlgorithm[M0]: " << p4pAlg.toString() << ", searchStrategy=" << searchStrategy << ",  mainStrategy2=" << mainStrategy2 << endl;
-                // TODO:  case of no constraints: add Prameter: hasConstraints to the subalgoritm!!!
+                if (d>4) cout << "DEBUG: NlOptParamFactory::getAlgorithm[M0]: " << p4pAlg.toString() << ", searchStrategy=" << static_cast<int>(searchStrategy) << ",  mainStrategy2=" << static_cast<int>(mainStrategy2) << endl;
                 foundAlgorithm= findSearchAlgorithmMlsl(p4pAlg1, xDim, hasConstraints, result);
             }
             
             if (!foundAlgorithm && hasConstraints) {
-                if (d>4) cout << "DEBUG: NlOptParamFactory::getAlgorithm[MA]: " << p4pAlg.toString() << ", searchStrategy=" << searchStrategy << ",  mainStrategy2=" << mainStrategy2 << endl;
-                // TODO:  case of no constraints: add Prameter: hasConstraints to the subalgoritm!!!
+                if (d>4) cout << "DEBUG: NlOptParamFactory::getAlgorithm[MA]: " << p4pAlg.toString() << ", searchStrategy=" << static_cast<int>(searchStrategy) << ",  mainStrategy2=" << static_cast<int>(mainStrategy2) << endl;
                 foundAlgorithm= findSearchAlgorithmAugLag(p4pAlg1, xDim, result);
             }
             
             if (!foundAlgorithm) {
-                if (d>4) cout << "DEBUG: NlOptParamFactory::getAlgorithm[M2]: " << p4pAlg.toString() << ", searchStrategy=" << searchStrategy << ",  mainStrategy2=" << mainStrategy2 << endl;
-                // TODO:  case of no constraints: add Prameter: hasConstraints to the subalgoritm!!!
+                if (d>4) cout << "DEBUG: NlOptParamFactory::getAlgorithm[M2]: " << p4pAlg.toString() << ", searchStrategy=" << static_cast<int>(searchStrategy) << ",  mainStrategy2=" << static_cast<int>(mainStrategy2) << endl;
                 foundAlgorithm= findSearchAlgorithmMlsl(p4pAlg1, xDim, hasConstraints, result);
             }
         }
 
         // TODO: Fallback: Stochasctic search al last!!!
             if (!foundAlgorithm) {
-                NLOptWrSearchAlgoParam2 p4pAlgR(R, false, false);
+                NLOptWrSearchAlgoParam2 p4pAlgR(SSTRAT::R, false, false);
                 if (d>4) cout << "DEBUG: NlOptParamFactory::getAlgorithm[RX]: " << p4pAlgR.toString() << "// Fallback to R" << endl;
                 foundAlgorithm= findSearchAlgorithmAugLag(p4pAlgR, xDim, result);
             }        
@@ -192,7 +196,7 @@ namespace nloptwr {
         res.clear();
         if (res.capacity()<2) res.reserve(2);
         
-        SEARCH_STRATEGY searcStrategyMain = p4pAlg1.getSearchStrategy();
+        SSTRAT searcStrategyMain = p4pAlg1.getSearchStrategy();
         
         if ((!isSearchStrategyR(searcStrategyMain))) return rc;
         
@@ -220,7 +224,7 @@ namespace nloptwr {
         res.clear();
         if (res.capacity()<2) res.reserve(2);
         
-        SEARCH_STRATEGY searcStrategyMain = p4pAlg1.getSearchStrategy();
+        SSTRAT searcStrategyMain = p4pAlg1.getSearchStrategy();
         
         if (!isSearchStrategyLGM(searcStrategyMain)) return rc;
         
@@ -259,7 +263,7 @@ namespace nloptwr {
         res.clear();
         if (res.capacity()<2) res.reserve(2);
         
-        SEARCH_STRATEGY searcStrategyMain = p4pAlg1.getSearchStrategy();
+        SSTRAT searcStrategyMain = p4pAlg1.getSearchStrategy();
         
         if (d>6) cout << "DEBUG: NlOptParamFactory::findSearchAlgorithmAugLag [A]: p4pAlg1: " << p4pAlg1.toString() << endl;
 
@@ -316,7 +320,7 @@ namespace nloptwr {
         res.clear();
         if (res.capacity()<2) res.reserve(2);
         
-        SEARCH_STRATEGY searcStrategyMain = p4pAlg1.getSearchStrategy();
+        SSTRAT searcStrategyMain = p4pAlg1.getSearchStrategy();
         
         if ((!isSearchStrategyLGM(searcStrategyMain))) return rc;
         
@@ -413,7 +417,7 @@ namespace nloptwr {
         vector<NLOptWrAlgorithm> results;
         if (results.capacity() <= availableAlgs.size()) results.reserve( availableAlgs.size()+1 );
         
-        SEARCH_STRATEGY p4SearchStrategy=p4pAlg.getSearchStrategy();
+        SSTRAT p4SearchStrategy=p4pAlg.getSearchStrategy();
         bool p4UseGradient=p4pAlg.getUseGradient();
         bool p4HasConstraints=p4pAlg.getHasContraints();
         // bool p4SubOpt=isMetaSearchStrategy(p4SearchStrategy);
@@ -440,7 +444,7 @@ namespace nloptwr {
                 bool algAlgAugLag=alg.isAugLag();
                 bool algHasConstraints=alg.canHandleNonEqualConstraints();
                 bool isRealAugLag=(alg.getAlgorithmEnum()==nlopt::AUGLAG);
-                SEARCH_STRATEGY algSearchStrategy=alg.getSearchStrategy();
+                SSTRAT algSearchStrategy=alg.getSearchStrategy();
                 bool algSubOptFlag=alg.getNeedsSubopt();
                 
                 if (
@@ -470,7 +474,7 @@ namespace nloptwr {
                 
                 bool algMLSL=alg.isMLSL();
                 bool isRealMLSL=((alg.getAlgorithmEnum()==nlopt::G_MLSL)||(alg.getAlgorithmEnum()==nlopt::G_MLSL_LDS));
-                SEARCH_STRATEGY algSearchStrategy=alg.getSearchStrategy();
+                SSTRAT algSearchStrategy=alg.getSearchStrategy();
                 bool algSubOptFlag=alg.getNeedsSubopt();
                 
                 if (
@@ -496,7 +500,7 @@ namespace nloptwr {
             // 2nd: search first match
             for (size_t i=0; i<availableAlgs.size(); i++) {
                 const NLOptWrAlgorithm& alg = availableAlgs.at(i);
-                SEARCH_STRATEGY algSearchStrategy=alg.getSearchStrategy();
+                SSTRAT algSearchStrategy=alg.getSearchStrategy();
                 // bool algSubOpt=isMetaSearchStrategy(algSearchStrategy);
                 bool algSubOptFlag=alg.getNeedsSubopt();
                 
@@ -558,81 +562,83 @@ namespace nloptwr {
     const std::vector<class NLOptWrAlgorithm> NLOptWrParamFactory::nlOptAlgorithms {
         
       // enum(agorithm)                name(agorithm)                STRAT  GRAD   NEC    nSUB  Min Max
-	{ nlopt::LN_AUGLAG_EQ,             "LN_AUGLAG_EQ",                   N, false, true , true ,  1,  0 }, 
-	{ nlopt::LD_AUGLAG_EQ,             "LD_AUGLAG_EQ",                   N, true , true , true ,  1,  0 }, 
-	{ nlopt::AUGLAG_EQ,                "AUGLAG_EQ",                      N, true , true , true ,  1,  0 }, 
+	{ nlopt::LN_AUGLAG_EQ,             "LN_AUGLAG_EQ",  SSTRAT::N, false, true , true ,  1,  0 },
+	{ nlopt::LD_AUGLAG_EQ,             "LD_AUGLAG_EQ",  SSTRAT::N, true , true , true ,  1,  0 },
+	{ nlopt::AUGLAG_EQ,                "AUGLAG_EQ",     SSTRAT::N, true , true , true ,  1,  0 },
             
     // ----------------------------------------------------------------------------------------------------------
     
-	{ nlopt::LD_AUGLAG,                "LD_AUGLAG",                     LM, true , true , true ,  1,  0 }, 
-	{ nlopt::LN_AUGLAG,                "LN_AUGLAG",                     LM, false, true , true ,  1,  0 }, 
-	{ nlopt::AUGLAG,                   "AUGLAG",                        GM, true , true , true ,  1,  0 }, 
+	{ nlopt::LD_AUGLAG,                "LD_AUGLAG",    SSTRAT::LM, true , true , true ,  1,  0 },
+	{ nlopt::LN_AUGLAG,                "LN_AUGLAG",    SSTRAT::LM, false, true , true ,  1,  0 },
+	{ nlopt::AUGLAG,                   "AUGLAG",       SSTRAT::GM, true , true , true ,  1,  0 },
         
     // ----------------------------------------------------------------------------------------------------------
     
-	{ nlopt::GD_MLSL,                  "GD_MLSL",                       GM, true , false, true ,  1,  0 }, 
-	{ nlopt::GN_MLSL,                  "GN_MLSL",                       GM, false, false, true ,  1,  0 }, 
-	{ nlopt::GD_MLSL_LDS,              "GD_MLSL_LDS",                   GM, true , false, true ,  1,  0 }, 
-	{ nlopt::GN_MLSL_LDS,              "GN_MLSL_LDS",                   GM, false, false, true ,  1,  0 },
-	{ nlopt::G_MLSL,                   "G_MLSL",                        GM, true,  false, true ,  1,  0 }, 
-	{ nlopt::G_MLSL_LDS,               "G_MLSL_LDS",                    GM, true,  false, true ,  1,  0 }, 
+	{ nlopt::GD_MLSL,                  "GD_MLSL",      SSTRAT::GM, true , false, true ,  1,  0 },
+	{ nlopt::GN_MLSL,                  "GN_MLSL",      SSTRAT::GM, false, false, true ,  1,  0 },
+	{ nlopt::GD_MLSL_LDS,              "GD_MLSL_LDS",  SSTRAT::GM, true , false, true ,  1,  0 },
+	{ nlopt::GN_MLSL_LDS,              "GN_MLSL_LDS",  SSTRAT::GM, false, false, true ,  1,  0 },
+	{ nlopt::G_MLSL,                   "G_MLSL",       SSTRAT::GM, true,  false, true ,  1,  0 },
+	{ nlopt::G_MLSL_LDS,               "G_MLSL_LDS",   SSTRAT::GM, true,  false, true ,  1,  0 },
 
     // ----------------------------------------------------------------------------------------------------------
     
-	{ nlopt::LD_LBFGS,                 "LD_LBFGS",                       L, true , false, false,  1,  0 }, 
-	{ nlopt::LD_LBFGS_NOCEDAL,         "LD_LBFGS_NOCEDAL",               L, true , false, false,  1,  0 }, 
-	{ nlopt::LD_TNEWTON,               "LD_TNEWTON",                     L, true , false, false,  1,  0 }, 
-	{ nlopt::LD_TNEWTON_PRECOND,       "LD_TNEWTON_PRECOND",             L, true , false, false,  1,  0 }, 
-	{ nlopt::LD_TNEWTON_PRECOND_RESTART,"LD_TNEWTON_PRECOND_RESTART",    L, true , false, false,  1,  0 }, 
-	{ nlopt::LD_TNEWTON_RESTART,       "LD_TNEWTON_RESTART",             L, true , false, false,  1,  0 }, 
-	{ nlopt::LD_VAR1,                  "LD_VAR1",                        L, true , false, false,  1,  0 }, 
-	{ nlopt::LD_VAR2,                  "LD_VAR2",                        L, true , false, false,  1,  0 }, 
+	{ nlopt::LD_LBFGS,                 "LD_LBFGS",      SSTRAT::L, true , false, false,  1,  0 },
+	{ nlopt::LD_LBFGS_NOCEDAL,       "LD_LBFGS_NOCEDAL",SSTRAT::L, true , false, false,  1,  0 },
+	{ nlopt::LD_TNEWTON,               "LD_TNEWTON",    SSTRAT::L, true , false, false,  1,  0 },
+	{ nlopt::LD_TNEWTON_PRECOND,   "LD_TNEWTON_PRECOND",SSTRAT::L, true , false, false,  1,  0 },
+	{ nlopt::LD_TNEWTON_PRECOND_RESTART,"LD_TNEWTON_PRECOND_RESTART",
+                                                        SSTRAT::L, true , false, false,  1,  0 },
+	{ nlopt::LD_TNEWTON_RESTART,  "LD_TNEWTON_RESTART", SSTRAT::L, true , false, false,  1,  0 },
+	{ nlopt::LD_VAR1,                  "LD_VAR1",       SSTRAT::L, true , false, false,  1,  0 },
+	{ nlopt::LD_VAR2,                  "LD_VAR2",       SSTRAT::L, true , false, false,  1,  0 },
     
     // ----------------------------------------------------------------------------------------------------------
     
-	{ nlopt::LD_MMA,                   "LD_MMA",                         L, true , true , false,  1,  0 }, 
-    { nlopt::LD_CCSAQ,                 "LD_CCSAQ",                       L, true , true , false,  1,  0 }, 
-	{ nlopt::LD_SLSQP,                 "LD_SLSQP",                       L, true , true , false,  1,900 }, 
+	{ nlopt::LD_MMA,                   "LD_MMA",        SSTRAT::L, true , true , false,  1,  0 },
+    { nlopt::LD_CCSAQ,                 "LD_CCSAQ",      SSTRAT::L, true , true , false,  1,  0 },
+	{ nlopt::LD_SLSQP,                 "LD_SLSQP",      SSTRAT::L, true , true , false,  1,900 },
     
     // ----------------------------------------------------------------------------------------------------------
     
-	{ nlopt::LN_COBYLA,                "LN_COBYLA",                      L, false, true , false,  1,  0 },
+	{ nlopt::LN_COBYLA,                "LN_COBYLA",     SSTRAT::L, false, true , false,  1,  0 },
 
     // ----------------------------------------------------------------------------------------------------------
     
-	{ nlopt::LN_SBPLX,                 "LN_SBPLX",                       L, false, false, false,  1, 15 }, 
-	{ nlopt::LN_BOBYQA,                "LN_BOBYQA",                      L, false, false, false,  1, 12 }, 
-	{ nlopt::LN_NELDERMEAD,            "LN_NELDERMEAD",                  L, false, false, false,  1, 12 }, 
-	{ nlopt::LN_NEWUOA,                "LN_NEWUOA",                      L, false, false, false,  1, 12 }, 
-	{ nlopt::LN_NEWUOA_BOUND,          "LN_NEWUOA_BOUND",                L, false, false, false,  1, 12 }, 
-	{ nlopt::LN_PRAXIS,                "LN_PRAXIS",                      L, false, false, false,  1, 12 },
+	{ nlopt::LN_SBPLX,                 "LN_SBPLX",      SSTRAT::L, false, false, false,  1, 15 },
+	{ nlopt::LN_BOBYQA,                "LN_BOBYQA",     SSTRAT::L, false, false, false,  1, 12 },
+	{ nlopt::LN_NELDERMEAD,            "LN_NELDERMEAD", SSTRAT::L, false, false, false,  1, 12 },
+	{ nlopt::LN_NEWUOA,                "LN_NEWUOA",     SSTRAT::L, false, false, false,  1, 12 },
+	{ nlopt::LN_NEWUOA_BOUND,        "LN_NEWUOA_BOUND", SSTRAT::L, false, false, false,  1, 12 },
+	{ nlopt::LN_PRAXIS,                "LN_PRAXIS",     SSTRAT::L, false, false, false,  1, 12 },
         
     // ----------------------------------------------------------------------------------------------------------
     
-	{ nlopt::GN_DIRECT,                "GN_DIRECT",                      G, false, false, false,  1,  0 }, 
-	{ nlopt::GN_DIRECT_L,              "GN_DIRECT_L",                    G, false, false, false,  1,  0 }, 
-	{ nlopt::GN_DIRECT_L_NOSCAL,       "GN_DIRECT_L_NOSCAL",             G, false, false, false,  1,  0 }, 
-	{ nlopt::GN_DIRECT_L_RAND,         "GN_DIRECT_L_RAND",               G, false, false, false,  1,  0 }, 
-	{ nlopt::GN_DIRECT_L_RAND_NOSCAL,  "GN_DIRECT_L_RAND_NOSCAL",        G, false, false, false,  1,  0 }, 
-	{ nlopt::GN_DIRECT_NOSCAL,         "GN_DIRECT_NOSCAL",               G, false, false, false,  1,  0 }, 
-	{ nlopt::GN_ORIG_DIRECT,           "GN_ORIG_DIRECT",                 G, false, false, false,  1,  0 }, 
-	{ nlopt::GN_ORIG_DIRECT_L,         "GN_ORIG_DIRECT_L",               G, false, false, false,  1,  0 }, 
-	{ nlopt::GN_AGS,                   "GN_AGS",                         G, false, false, false,  1,  5 },     
+	{ nlopt::GN_DIRECT,                "GN_DIRECT",     SSTRAT::G, false, false, false,  1,  0 },
+	{ nlopt::GN_DIRECT_L,              "GN_DIRECT_L",   SSTRAT::G, false, false, false,  1,  0 },
+	{ nlopt::GN_DIRECT_L_NOSCAL, "GN_DIRECT_L_NOSCAL",  SSTRAT::G, false, false, false,  1,  0 },
+	{ nlopt::GN_DIRECT_L_RAND,     "GN_DIRECT_L_RAND",  SSTRAT::G, false, false, false,  1,  0 },
+	{ nlopt::GN_DIRECT_L_RAND_NOSCAL,"GN_DIRECT_L_RAND_NOSCAL", 
+                                                        SSTRAT::G, false, false, false,  1,  0 },
+	{ nlopt::GN_DIRECT_NOSCAL,     "GN_DIRECT_NOSCAL",  SSTRAT::G, false, false, false,  1,  0 },
+	{ nlopt::GN_ORIG_DIRECT,        "GN_ORIG_DIRECT",   SSTRAT::G, false, false, false,  1,  0 },
+	{ nlopt::GN_ORIG_DIRECT_L,      "GN_ORIG_DIRECT_L", SSTRAT::G, false, false, false,  1,  0 },
+	{ nlopt::GN_AGS,                   "GN_AGS",        SSTRAT::G, false, false, false,  1,  5 },
     
 
     // ----------------------------------------------------------------------------------------------------------
     
-	{ nlopt::GD_STOGO,                 "GD_STOGO",                       G, true , false, false,  1, 20 }, 
-	{ nlopt::GD_STOGO_RAND,            "GD_STOGO_RAND",                  G, true , false, false,  1, 20 }, 
+	{ nlopt::GD_STOGO,                 "GD_STOGO",      SSTRAT::G, true , false, false,  1, 20 },
+	{ nlopt::GD_STOGO_RAND,            "GD_STOGO_RAND", SSTRAT::G, true , false, false,  1, 20 },
     
     // ----------------------------------------------------------------------------------------------------------
     
-	{ nlopt::GN_CRS2_LM,               "GN_CRS2_LM",                     R, false, false, false,  1,  0 }, 
-	{ nlopt::GN_ESCH,                  "GN_ESCH",                        R, false, false, false,  1,  0 }, 
+	{ nlopt::GN_CRS2_LM,               "GN_CRS2_LM",    SSTRAT::R, false, false, false,  1,  0 },
+	{ nlopt::GN_ESCH,                  "GN_ESCH",       SSTRAT::R, false, false, false,  1,  0 },
     
     // ----------------------------------------------------------------------------------------------------------
     
-	{ nlopt::GN_ISRES,                 "GN_ISRES",                       R, false, true , false,  1,  0 }, 
+	{ nlopt::GN_ISRES,                 "GN_ISRES",      SSTRAT::R, false, true , false,  1,  0 },
     
     // ----------------------------------------------------------------------------------------------------------
     

@@ -27,6 +27,13 @@ namespace nloptwr
 struct FArg {
 public:
     /// function value
+    /// constructor
+    FArg();
+
+    ///  destructor
+    ~FArg();
+
+    /// function value
     double f;
     
     /// function arguments
@@ -77,6 +84,11 @@ public:
      */
     std::vector<NLOptWrAlgorithm> getSelectedAlgorithms ( const NLOptWrSStrat& nloptWrSStrat ) const;
 
+    /**
+    * set search minimum
+    * @param sMin flag (true means minimum, false mean maximum)
+    */
+    void setSearchMin(bool sMin = true);
 
     /** optimization call
      * @param fOpt return value of function object
@@ -85,11 +97,21 @@ public:
      * @param maxEval set max evaluations (default: 1000000)
      */
     nlopt::result optimize (
-        double &fOpt,
         const NLOptWrSStrat& nloptWrSStrat,
         int maxTime=3600,
         int maxEval=1000000
     );
+
+    /**
+    * get optimized value
+    */    
+    double getLastOptimumValue() const;
+
+    /**
+    * get search flag
+    * @return search flag: true means minimum, false mean maximum
+    */
+    bool getSearchMin() const;
 
     /** get result vector
      * @return vector of arguments
@@ -155,6 +177,17 @@ public:
 
     // ------------------------------------------------------------------------------------------------
 
+
+    /**
+    * get population size (for stochastic algorithms)
+    */
+    unsigned int getPopulation() const;
+
+    /**
+    * set population size (for stochastic algorithms)
+    */
+    void setPopulation(unsigned int val=0);
+
     /**
      * set vector storage for some vector based methods (i.e. LBFGS)
      * @param val number data sets 
@@ -169,43 +202,6 @@ public:
     
 
     // ------------------------------------------------------------------------------------------------
-    
-    /**
-    * get activation of new derivation method
-    * @return true if new derivation method (regression) is used
-    */    
-    bool getNewDerivMethod() const ;
-
-    /**
-    * activate new derivation method
-    * @param val true means the new derivation method (regression) is used
-    */    
-    void setNewDerivMethod(bool val=true);
-
-    /**
-    * get dimension of regression (2=linear terms; 3=quadratic terms)
-    * @return dimension of regression (of new method)
-    */
-    std::size_t getDerivRegrDim() const;
-
-    /**
-    * set dimension of regression (2=linear terms; 3=quadratic terms)
-    * @param d dimension of regression (of new method)
-    */
-    void setDerivRegrDim(std::size_t d=3);
-
-    /**
-     * get number of steps for regression (the number of data points=2*(number of steps)+)
-     * @return val number of steps
-     */
-    std::size_t getDerivRegrNoSteps() const ;
-
-    /**
-     * number of steps for regression (the number of data points=2*(number of steps)+)
-     * @param val number of steps
-     */
-    void setDerivRegrNoSteps(std::size_t val);
-
     // ------------------------------------------------------------------------------------------------
     
     /**
@@ -286,7 +282,7 @@ public:
      * set tolerance
      * @param val value (default: 1e-9)
      */
-    void setXTolAbs ( double val=1.0E-6);
+    void setXTolAbs ( double val=1.0E-7);
 
     /**
      * set tolerance
@@ -340,10 +336,10 @@ private:
     std::vector<std::shared_ptr<oif::OptFknBase> >  optFknBases;
 
     /// number of dimensions (x)
-    unsigned int nDim;
+    long int nDim;
 
     /// number of constraints
-    unsigned int mDim;
+    long int mDim;
 
     /// pointer to the optimization object
     std::shared_ptr<nlopt::opt> opt;
@@ -412,7 +408,7 @@ private:
     std::vector<double> xTolAbs;
 
     /// the minimum objective value, upon return
-    double minf;
+    double fOpt;
 
 // =======================================
 
@@ -486,52 +482,8 @@ private:
         double *cGrad
     );
 
-// =======================================
-
-    /**
-    * internal used method to initialize lregxVec and lregxVecC
-    */
-    void initLxReg();
-    
 
 protected:
-
-    /**
-     * Almost all function calulations are done.
-     * The result of the calulation
-     * is stored in members like
-     * fArgs, fArgs1, fArgs2, and cGrad
-     *
-     * @param n number of optimization parameters
-     * @param x1 optimization parameters
-     * @param useGrad gradient flag
-     */
-    virtual void calcFktnConstrAndDeriv ( unsigned n, const double *x1, bool useGrad );
-    
-    /**
-     * Almost all function calulations are done (old method).
-     * The result of the calulation
-     * is stored in members like
-     * fArgs, fArgs1, fArgs2, and cGrad
-     *
-     * @param n number of optimization parameters
-     * @param x1 optimization parameters
-     * @param useGrad gradient flag
-     */
-    void calcFktnConstrAndDerivOld ( unsigned n, const double *x1, bool useGrad );
-    
-    /**
-     * Almost all function calulations are done (new method).
-     * The result of the calulation
-     * is stored in members like
-     * fArgs, fArgs1, fArgs2, and cGrad
-     *
-     * @param n number of optimization parameters
-     * @param x1 optimization parameters
-     * @param useGrad gradient flag
-     */
-    void calcFktnConstrAndDerivNew ( unsigned n, const double *x1, bool useGrad );
-    
 
     /**
      * factory class to select algorithms
@@ -553,16 +505,6 @@ protected:
      */
     std::size_t derivRegrDim;
     
-    /**
-     * number of steps for regression
-     */
-    std::size_t derivRegrNoSteps;
-
-    /// used for making better derivations of function
-    std::vector< std::shared_ptr<utilx::LRegX> > lregxVec;
-    
-    /// used for making better derivations of constraints
-    std::vector< std::vector< std::shared_ptr<utilx::LRegX> > > lregxVecC;
     
 private:
     
@@ -570,7 +512,13 @@ private:
      * time of previous optimization
      */
     double optTime;
-     
+
+    /// search minimum flag
+    bool searchMin;
+
+    /// population size (for stochastic algorithms)
+    unsigned int population;
+
 };
 
 }

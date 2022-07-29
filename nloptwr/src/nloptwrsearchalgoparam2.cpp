@@ -12,16 +12,12 @@ using namespace std;
 namespace nloptwr
 {
 
-NLOptWrSearchAlgoParam2::NLOptWrSearchAlgoParam2 ( SEARCH_STRATEGY searchStrat, bool hasConstr, bool useGrad, bool useAugLagBeforeMlsl )
+NLOptWrSearchAlgoParam2::NLOptWrSearchAlgoParam2 ( SSTRAT searchStrat, bool hasConstr, bool useGrad, bool useAugLagBeforeMlsl )
   :
   NLOptWrSearchAlgoParam ( searchStrat, hasConstr, useGrad ),
   useAugLagBeforeMLSL ( useAugLagBeforeMlsl )
 {
  // cout << "DEBUG: NLOptWrSearchAlgoParam2::NLOptWrSearchAlgoParam2(searchStrat=" << searchStrat << ", hasConstr=" << hasConstr << ", useGrad=" << useGrad << ", useAugLagBeforeMlsl=" << useAugLagBeforeMlsl << ") : toString()=" << toString() << endl;
-}
-
-NLOptWrSearchAlgoParam2::NLOptWrSearchAlgoParam2() { 
-  // cout << "DEBUG: NLOptWrSearchAlgoParam2::NLOptWrSearchAlgoParam2() : toString()=" << toString() << endl;
 }
 
 NLOptWrSearchAlgoParam2::NLOptWrSearchAlgoParam2 ( const NLOptWrSearchAlgoParam& src, bool useAugLagBeforeMlsl )
