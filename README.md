@@ -186,7 +186,7 @@ Contributors and contact info:
 
 ## License
 
-This project is licensed under the [GNU AFFERO GENERAL PUBLIC LICENSE, Version 3](https://www.gnu.org/licenses/agpl-3.0.txtl) from 19 November 2007 - see the License.txt file for details
+This project is licensed under the [GNU AFFERO GENERAL PUBLIC LICENSE, Version 3](https://www.gnu.org/licenses/agpl-3.0.txtl) from 19 November 2007 - see the [LICENSE](https://github.com/knut-o/nloptwr/blob/main/LICENSE) file for details.
 
                        
 ## Acknowledgments
