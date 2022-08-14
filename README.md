@@ -104,7 +104,7 @@ libc6, libgcc-s1, libgomp1, libnlopt-cxx0, libstdc++6
 
 Other OS can try to build it from source.
 
-The directory "misc" contains some files (FindNLOPT.cmake, FindNLOPTCXX.cmake  FindNLOPTWR.cmake, FindOpenMP.cmake).
+The directory "cmake" contains some files (FindNLOPT.cmake, FindNLOPTCXX.cmake  FindNLOPTWR.cmake, FindOpenMP.cmake).
 
 ### Installing
 
