@@ -6,7 +6,7 @@ on:
       - created
       - edited
   push:
-    branches: [ "main", "devel" ]
+    branches: [ "main", "dev" ]
   pull_request:
     branches: [ "main" ]
 
