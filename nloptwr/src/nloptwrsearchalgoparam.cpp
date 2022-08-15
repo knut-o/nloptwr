@@ -113,4 +113,3 @@ std::string NLOptWrSearchAlgoParam::toStringShort() const
 
 
 }
-

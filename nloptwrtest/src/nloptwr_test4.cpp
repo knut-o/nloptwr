@@ -12,7 +12,7 @@
 using namespace std;
 
 namespace opttest {
-    
+
 int opttest4()
 {
     int rc=0;
@@ -32,13 +32,13 @@ int opttest4()
     bool useAugLagBeforeMlsl=true;
 
     // a target function
-    Griewank oGriewank( dim ); 
+    Griewank oGriewank( dim );
     oGriewank.initialize ( -15.0, 15.0, 14.3 );
 
     // get reference of the target function
     oif::OptFknBase&  oTarget = oGriewank;
 
-    // get initial x 
+    // get initial x
     vector<double> x ( oTarget.getXInitial() );
 
     // create the NLOptWrapper object
@@ -46,19 +46,19 @@ int opttest4()
 
     // parallel evaluations need less time
     if (useGrad) maxTimeSec /= static_cast<int>(optWr.getNThreads());
-    
+
     // you can make proposals for the algorithms
     optWr.setPreferedAlgorithm( nlopt::LD_CCSAQ, 0, 700);
     optWr.setPreferedAlgorithm( nlopt::GD_STOGO_RAND, 0, 50);
 
-    // Improvement of solution: 
+    // Improvement of solution:
     cout << "Start of optimization..." << endl;
-        
+
     // select strategy: "L", "LM", "GM", "G" an "R"
     nloptwr::NLOptWrSStrat sStrategy( nloptwr::SSTRAT::GM, useGrad, useAugLagBeforeMlsl );
 
-    nlopt::result opt_stat = nlopt::result::FAILURE; 
-    
+    nlopt::result opt_stat = nlopt::result::FAILURE;
+
     try {
         // start opptimization
         opt_stat = optWr.optimize(sStrategy, maxTimeSec, maxEvals);
@@ -77,7 +77,7 @@ int opttest4()
 
     // display the results
     rc = opttest::display(optWr, sStrategy, opt_stat, minf);
-    
+
     // test
     bool isOk = opttest::fvcompare(minf, 0.0, optWr.getX(), 0.0);
     if (!isOk) {
@@ -97,5 +97,3 @@ int main()
 
   return rc;
 }
-
-

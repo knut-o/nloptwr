@@ -91,4 +91,3 @@ std::string NLOptWrSearchAlgoParam2::toString() const
 
 
 }
-

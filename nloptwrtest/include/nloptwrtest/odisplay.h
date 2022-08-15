@@ -43,7 +43,7 @@ int displaySearchAlgorithms(const nloptwr::NLOptWrapper& optWr, const nloptwr::N
      * @param minf optimized value
      */
 int displayResult(const nloptwr::NLOptWrapper& optWr, nlopt::result opt_stat, double minf);
-    
+
 }
 
 #endif // O_DISPLAY_H

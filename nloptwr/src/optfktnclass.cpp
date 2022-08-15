@@ -12,24 +12,24 @@ using namespace std;
 
 namespace oif {
 
-    OptFknClass::OptFknClass() 
-    : 
+    OptFknClass::OptFknClass()
+    :
     oif::OptFknBase()
     {
         // init(1, 0, -1000.0, 1000.0, 0.1);
     }
-    
+
     void OptFknClass::init(size_t dim, size_t nrOfNeConstraints, double lb, double ub, double xInit) {
         nDim=dim;
         mDim=nrOfNeConstraints;
         lB=shared_ptr< vector<double> >(new vector<double>(dim, lb));
-        uB=shared_ptr< vector<double> >(new vector<double>(dim, ub)); 
+        uB=shared_ptr< vector<double> >(new vector<double>(dim, ub));
         xInitial=shared_ptr< vector<double> >(new vector<double>(dim, xInit));
-        // 
+        //
         if (c.size()!=mDim) c.resize(mDim);
     }
-    
-// virtual 
+
+// virtual
 bool OptFknClass::validate() const {
     bool rc=true; // (lB->size()==nDim)&&(uB->size()==nDim);
 
@@ -38,7 +38,7 @@ bool OptFknClass::validate() const {
          cerr << "ERROR: (n=" << setw(4) << n << ") != (nDim="<< nDim << ") " << endl;
          rc=false;
     }
-    
+
     double lVal=0.0; // lower bound
     double xVal=0.0; // initial value
     double uVal=0.0; // upper bound
@@ -49,7 +49,7 @@ bool OptFknClass::validate() const {
         if (rc) {
             rc= ((lVal < xVal) && (xVal < uVal));
             if (!rc) {
-                cout << "#### rc=" << rc << ", index i=" << setw(4) << i << ": false = ((lVal="<< lVal << ") <= (xVal=" << xVal << ") <=  (uVal=" << uVal << "))" << endl; 
+                cout << "#### rc=" << rc << ", index i=" << setw(4) << i << ": false = ((lVal="<< lVal << ") <= (xVal=" << xVal << ") <=  (uVal=" << uVal << "))" << endl;
                 cerr.flush();
             }
         }
@@ -58,65 +58,64 @@ bool OptFknClass::validate() const {
     return rc;
 }
 
-// virtual 
+// virtual
 OptFknClass::~OptFknClass() {}
-    
+
     void OptFknClass::setXInit(std::size_t idx, double val) {
         ( *xInitial ) [idx]=val;
     }
-    
+
     /**
      * set a lower bound at idx
      */
     void OptFknClass::setLb(std::size_t idx, double val) {
         ( *lB ) [idx]=val;
     }
-    
+
     /**
      * set a upper bound at idx
      */
     void OptFknClass::setUb(std::size_t idx, double val) {
-        ( *uB ) [idx]=val;     
+        ( *uB ) [idx]=val;
     }
-    
 
 
-    // virtual 
+
+    // virtual
     size_t OptFknClass::getSizeOfX() const {
         return nDim;
     }
-    
-    // virtual 
+
+    // virtual
     size_t OptFknClass::getSizeOfNeConstraints() const {
         return mDim;
     }
-    
-    // virtual 
+
+    // virtual
     vector<double> OptFknClass::getUpperBounds() const {
         return *uB;
     }
 
-    // virtual 
+    // virtual
     std::vector<double> OptFknClass::getLowerBounds() const {
         return *lB;
     }
 
-    // virtual 
+    // virtual
     std::vector<double> OptFknClass::getXInitial() const {
         return *xInitial;
     }
 
-    
+
     // ===========================================================
-    
-    // virtual 
+
+    // virtual
     double OptFknClass::optF ( const std::vector<double>& x ) {
         return  optFktn ( x, c );
     }
 
-    // virtual 
+    // virtual
     void OptFknClass::optC ( const std::vector<double>& x, std::vector<double>& c ) {
         if (!c.empty()) optFktn ( x, c );
     }
 }
-

@@ -22,13 +22,13 @@ namespace opttest
     ss << "{";
     for (size_t i=0; i<a.size(); i++) {
         ss << ((i>0)? ", " : " ");
-        ss << "nlopt::" << a.at(i).getName(); 
+        ss << "nlopt::" << a.at(i).getName();
     }
     ss << " }";
 
   return ss.str();
 }
-    
+
     /**
      * This function print the list of funtion enums as text
      */
@@ -38,13 +38,13 @@ namespace opttest
     ss << "{";
     for (size_t i=0; i<a.size(); i++) {
         ss << ((i>0)? ", " : " ");
-        ss << a.at(i).getAlgorithmEnum(); 
+        ss << a.at(i).getAlgorithmEnum();
     }
     ss << " }";
 
   return ss.str();
 }
-    
+
     /**
      * This function print the list of funtion positions as text
      */
@@ -54,14 +54,14 @@ namespace opttest
     ss << "{";
     for (size_t i=0; i<a.size(); i++) {
         ss << ((i>0)? ", " : " ");
-        ss << a.at(i); 
+        ss << a.at(i);
     }
     ss << " }";
 
   return ss.str();
 }
-        
-    
+
+
     /**
      * Vector comparision
      */
@@ -70,41 +70,41 @@ namespace opttest
      if (rc) {
       for (size_t i=0; rc && i<a.size(); i++) {
           if (rc) {
-           rc=(a.at(i)==b.at(i));   
+           rc=(a.at(i)==b.at(i));
           }
       }
      }
       return rc;
     }
-    
-    
+
+
     /**
      * Vector comparision
      */
- bool isEqual(const vector<nlopt::algorithm>& a, const vector<nloptwr::NLOptWrAlgorithm>& b) { 
+ bool isEqual(const vector<nlopt::algorithm>& a, const vector<nloptwr::NLOptWrAlgorithm>& b) {
      bool rc=true;
-     
+
      vector<nlopt::algorithm> b2;
      if (b2.capacity()<b.size()) b2.reserve(b.size());
      for (size_t i=0; rc && i<b.size(); i++) {
          b2.push_back(b.at(i).getAlgorithmEnum());
      }
-     
+
      isEqual(a, b2);
-     
+
      return rc;
     }
-    
+
     // =============================================================================
     // =============================================================================
 
     /**
-     * This fucntion generates a list of algoritms 
+     * This fucntion generates a list of algoritms
      * dependent of the search strategi and dimension
      * a source code text (to stdout)
-     * @param nlOptParamFactory parameter parameter factory 
+     * @param nlOptParamFactory parameter parameter factory
      * @param xDim number of free parameters
-     * 
+     *
      */
   int selAlgTestGenerate(const nloptwr::NLOptWrParamFactory& nlOptParamFactory, vector<size_t>& xDimVec) {
     int rc=0;
@@ -129,8 +129,8 @@ namespace opttest
     cout << endl;
 
 
- cout << "std::vector<std::tuple<nloptwr::NLOptWrSearchAlgoParam3, vector<nlopt::algorithm> > > test0" << endl 
- << " { " 
+ cout << "std::vector<std::tuple<nloptwr::NLOptWrSearchAlgoParam3, vector<nlopt::algorithm> > > test0" << endl
+ << " { "
  << endl
  << "// { nloptwr::P4PrefAlgorithm3( SerchStrat, Constr,  Grad, uALag, dim  )  = { Algoritm, ... } },"
  << endl;
@@ -155,12 +155,12 @@ for (size_t k=0; k<xDimVec.size(); k++) {
             {
                 nloptwr::NLOptWrSearchAlgoParam3 searchAlgoParam3(searchStrat, hasConstr, useGrad, uAugl, dim );
                 vector<nloptwr::NLOptWrAlgorithm> selectedAlgs = nlOptParamFactory.getAlgorithm (searchAlgoParam3);
-                
-                cout 
-                << " { " 
-                << "  " << searchAlgoParam3.toString2() << ", " << pAlgo2(selectedAlgs) 
+
+                cout
+                << " { "
+                << "  " << searchAlgoParam3.toString2() << ", " << pAlgo2(selectedAlgs)
                 << " },"
-                << endl; 
+                << endl;
             }
         }
        }
@@ -175,41 +175,41 @@ for (size_t k=0; k<xDimVec.size(); k++) {
 
     /**
      * comparision for regression test
-     * @param nlOptParamFactory parameter factory 
+     * @param nlOptParamFactory parameter factory
      * @param test0 solution to be compared
-     * @return result: 0 is OK, otherwise is failed 
+     * @return result: 0 is OK, otherwise is failed
      */
     int selAlgTestCmp(const nloptwr::NLOptWrParamFactory& nlOptParamFactory, const std::vector<std::tuple<nloptwr::NLOptWrSearchAlgoParam3, vector<nlopt::algorithm> > >& test0) {
     int rc=0;
-    
+
     bool rcTmp=true;
     for (size_t i=0; i<test0.size(); i++) {
         const std::tuple<nloptwr::NLOptWrSearchAlgoParam3, vector<nlopt::algorithm> >& ttuple = test0.at(i);
         const nloptwr::NLOptWrSearchAlgoParam3& searchAlgoParam3 = get<0>(ttuple);
         const vector<nlopt::algorithm>& eResult = get<1>(ttuple);
-        
-        
+
+
          vector<nloptwr::NLOptWrAlgorithm> tResult = nlOptParamFactory.getAlgorithm ( searchAlgoParam3 );
-         
+
          rcTmp= isEqual(eResult, tResult);
-         
+
          if (!rcTmp) {
            ++rc;
            cerr << "nlOptParamFactory.getAlgorithm(" << searchAlgoParam3.toString() << "), " << pAlgo(tResult) << " != " <<  pAlgo(eResult) << endl;
          }
     }
-    
+
       return rc;
     }
-    
+
     // =============================================================================
-    
+
     int selAlgTestCompare() {
         int rc = 0;
         nloptwr::NLOptWrParamFactory nlOptParamFactory;
-     
+
 std::vector<std::tuple<nloptwr::NLOptWrSearchAlgoParam3, vector<nlopt::algorithm> > > test0
- { 
+ {
 // { nloptwr::P4PrefAlgorithm3( SerchStrat, Constr,  Grad, uALag, dim  )  = { Algoritm, ... } },
  {   nloptwr::NLOptWrSearchAlgoParam3( nloptwr::SSTRAT::GM, false, false, false,   15 ) , { nlopt::GN_MLSL, nlopt::LN_COBYLA } },
  {   nloptwr::NLOptWrSearchAlgoParam3( nloptwr::SSTRAT::GM, false, true , false,   15 ) , { nlopt::GD_MLSL, nlopt::LD_LBFGS } },
@@ -320,7 +320,7 @@ std::vector<std::tuple<nloptwr::NLOptWrSearchAlgoParam3, vector<nlopt::algorithm
  {   nloptwr::NLOptWrSearchAlgoParam3( nloptwr::SSTRAT::R , false, false, true ,  200 ) , { nlopt::GN_CRS2_LM } },
  {   nloptwr::NLOptWrSearchAlgoParam3( nloptwr::SSTRAT::R , true , false, true ,  200 ) , { nlopt::GN_ISRES } },
 
- };       
+ };
         rc = selAlgTestCmp(nlOptParamFactory, test0);
         return rc;
     }
@@ -337,29 +337,29 @@ int main(int argc, const char *argv[]) {
 
     // dimension
     vector<size_t> xDim;
-    
+
     // parameter factory
     nloptwr::NLOptWrParamFactory nlOptParamFactory;
-    
+
     // flag for prefered algorithms
     bool usePreferedAlgoritms=false;
 
     // flag for output generation
     bool generateOutPut=false;
-    
+
     for (int i=0; i<argc; i++) {
         if (0==i) prog=argv[i];
-        if (i>0) { 
+        if (i>0) {
             string sizeStr=argv[i];
             stringstream is(sizeStr);
             size_t xd=0;
             is >> xd;
             if (xDim.size()>=xDim.capacity()) xDim.reserve(2*(xDim.size()+1));
             xDim.push_back(xd);
-            
+
             if (!generateOutPut) generateOutPut=true;
         }
-    } 
+    }
 
     if (usePreferedAlgoritms) {
         nlOptParamFactory.setPreferedAlgorithm ( nlopt::GD_STOGO,1, 15);
@@ -370,19 +370,19 @@ int main(int argc, const char *argv[]) {
         nlOptParamFactory.setPreferedAlgorithm ( nlopt::LD_MMA,   0, 500 );
         nlOptParamFactory.setPreferedAlgorithm ( nlopt::LN_NELDERMEAD, 0,  12 );
     }
-    
+
     cout << "Parameter generateOutPut=" << ((generateOutPut)? "true" : "false") << endl;
     if (generateOutPut) {
         // generate output
-        rc=opttest::selAlgTestGenerate(nlOptParamFactory, xDim);   
-    } else { 
+        rc=opttest::selAlgTestGenerate(nlOptParamFactory, xDim);
+    } else {
         // regression test
         rc=opttest::selAlgTestCompare();
-        
+
         cout << "The test was " << ((rc==0)? "" : "not") << "successfull. " << endl;
     }
 
-    cout << endl << "rc=" << rc << endl << endl;     
- 
+    cout << endl << "rc=" << rc << endl << endl;
+
  return rc;
 }

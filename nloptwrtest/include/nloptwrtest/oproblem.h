@@ -15,7 +15,7 @@ namespace opttest
 
 /**
  * @class OProblem
- * A simple optimization task 
+ * A simple optimization task
  * (implementation of test function)
  */
 class OProblem : public oif::OptFknClass

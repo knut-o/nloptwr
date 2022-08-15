@@ -102,18 +102,18 @@ public:
      * @return instance of derived object
      */
     virtual OptFknBase* clone() const = 0;
-    
+
     /**
      * validation means range checks
      * For all indices i is:
-     * lB[i] <= xInitial[i] <= uB[i]  
-     * 
+     * lB[i] <= xInitial[i] <= uB[i]
+     *
      * @return true if is everything OK.
      */
     virtual bool validate() const = 0;
-    
+
 private:
-    
+
     /// instance of optimization function object
     optFunction myOptFunction;
 };
@@ -123,4 +123,3 @@ private:
 }
 
 #endif // OPT_FKTN_BASE_H
-

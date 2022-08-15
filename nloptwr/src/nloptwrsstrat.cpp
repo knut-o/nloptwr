@@ -71,4 +71,3 @@ std::string NLOptWrSStrat::toString() const
 
 
 }
-

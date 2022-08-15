@@ -16,7 +16,7 @@ namespace opttest {
 
 /**
  * PDemo01
- * A simple optimization task 
+ * A simple optimization task
  * (implementation of test function)
  */
 class PDemo01 : public oif::OptFknClass
@@ -45,20 +45,20 @@ public:
     double optFktn ( const std::vector<double>& x, std::vector<double>& c ) {
         double sum=0.0;
         double tmp=0.0;
-        
+
         // calculation of function value
         for (size_t i=0; i<getSizeOfX(); i++) {
             tmp=x[i]-(0.5+static_cast<double>(i));
             sum += tmp*tmp;
-            
+
         }
- 
+
         // calculation of constraints
         size_t ine=getSizeOfNeConstraints();
         for (size_t i=0; i< ine; i++) {
-          c[i]=0.0;   
+          c[i]=0.0;
         }
-        
+
         return sum;
     }
 
@@ -78,8 +78,8 @@ public:
 /**
  * test the optimization
  * @param useGrad true means explicit calculation of gradients
- * @return success 
- */    
+ * @return success
+ */
 //int opttest1(bool useGrad)
 int opttest1(bool useGrad, nloptwr::SSTRAT sStrat=nloptwr::SSTRAT::L, int maxTimeSec=400)
 {
@@ -93,8 +93,8 @@ int opttest1(bool useGrad, nloptwr::SSTRAT sStrat=nloptwr::SSTRAT::L, int maxTim
     int maxEvals=1000000000;
 
     // Instantiate the optimization task
-    opttest::PDemo01 pDemo01; 
-    
+    opttest::PDemo01 pDemo01;
+
     // create the search strategy object
     nloptwr::NLOptWrSStrat sStrategy( sStrat, useGrad);
 
@@ -103,10 +103,10 @@ int opttest1(bool useGrad, nloptwr::SSTRAT sStrat=nloptwr::SSTRAT::L, int maxTim
 
     // parallel evaluations need less time
     if (useGrad) maxTimeSec /= static_cast<int>(optWr.getNThreads());
-    
+
     // start opptimization
-    nlopt::result opt_stat = nlopt::result::FAILURE; 
-    
+    nlopt::result opt_stat = nlopt::result::FAILURE;
+
     try {
         opt_stat = optWr.optimize(sStrategy, maxTimeSec, maxEvals);
     } catch (runtime_error eRt) {
@@ -115,7 +115,7 @@ int opttest1(bool useGrad, nloptwr::SSTRAT sStrat=nloptwr::SSTRAT::L, int maxTim
         cerr << "ERROR: exception : " << e.what() << endl; cerr.flush();
         throw exception(e);
     }
-    
+
     // get the optimized value
     double minf = optWr.getLastOptimumValue();
 
@@ -131,7 +131,7 @@ int opttest1(bool useGrad, nloptwr::SSTRAT sStrat=nloptwr::SSTRAT::L, int maxTim
     }
     cout << "opt_stat = " << opt_stat << " : "  << optWr.getStringOfResult ( opt_stat ) << endl;
     cout << "minF     = " << minf  << endl;
-    cout << "rc        = " << rc << endl; 
+    cout << "rc        = " << rc << endl;
 
     // print the selected algorithms
     std::vector<nloptwr::NLOptWrAlgorithm> algs = optWr.getSelectedAlgorithms ( sStrat );
@@ -140,7 +140,7 @@ int opttest1(bool useGrad, nloptwr::SSTRAT sStrat=nloptwr::SSTRAT::L, int maxTim
         if ( i>0 ) cout << ", ";
         cout << algs.at ( i ).getName();
     }
-    cout << " } " << endl; 
+    cout << " } " << endl;
 
     cout << "optTime   = " << fixed << setw(6) << optWr.getOptTime();
     cout << endl << endl;
@@ -154,8 +154,8 @@ int opttest1(bool useGrad, nloptwr::SSTRAT sStrat=nloptwr::SSTRAT::L, int maxTim
         cerr << "The optimization has failed!" << endl;
         cerr.flush();
     }
-    
-    
+
+
     return rc;
 
 }; // main
@@ -171,9 +171,9 @@ int main(int argc, char *argv[])
     int maxTimeSec = 300;
     nloptwr::SSTRAT sStrat=nloptwr::SSTRAT::L;
     bool useGrad=true;
-    
+
     if (argc<=2) {
-        cout 
+        cout
         << endl
         << "cout usage:" << endl
         << " " << argv[0] << " [useGrad] [sStrat] [maxTimeSec] " << endl
@@ -182,7 +182,7 @@ int main(int argc, char *argv[])
         << " # maxTimeSec: max. time [s] (default=" << maxTimeSec << ") " << endl
         << endl;
     }
-  
+
     for (int i = 1; i < argc; ++i) {
         if (i == 1) useGrad=(string(argv[i])=="1");
         if (i == 2) sStrat = nloptwr::getStrategyFromString(argv[i], nloptwr::SSTRAT::L);
@@ -196,4 +196,3 @@ int main(int argc, char *argv[])
 return rc;
 
 }
-

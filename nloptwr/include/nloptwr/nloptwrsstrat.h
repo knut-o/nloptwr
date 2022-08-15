@@ -44,7 +44,7 @@ public:
 
     /**
      * get use gradient flag
-     * @return true if use gradient, otherwise false 
+     * @return true if use gradient, otherwise false
      */
     bool getUseGradient() const;
 
@@ -88,5 +88,3 @@ protected:
 }
 
 #endif // NLOPTWR_SSTRAT_H
-
-

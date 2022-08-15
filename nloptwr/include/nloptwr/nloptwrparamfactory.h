@@ -60,8 +60,8 @@ public:
      * @param xDim dimension of parameter x
      */
     std::vector<NLOptWrAlgorithm> getAlgorithm ( const NLOptWrSearchAlgoParam2& p4pAlg, std::size_t xDim ) const;
-    
-    
+
+
     // ------------------------------------------------------------------------------------------------
 
     /**
@@ -123,7 +123,7 @@ public:
      * @param xDim dimension of parameter x
      * @param ignoreConstraints ignore constraints flag
      * @param searchLocalOrGlobal search local or global flag
-     * @param isNotMLSL is not MLSL flag 
+     * @param isNotMLSL is not MLSL flag
      * @return availabe algorithms
      */
     std::vector<NLOptWrAlgorithm> getAvailableAlgorithms ( const NLOptWrSearchAlgoParam& p4pAlg, std::size_t xDim, bool ignoreConstraints=false, bool searchLocalOrGlobal=false, bool isNotMLSL=false ) const;
@@ -199,7 +199,7 @@ protected:
      * find default search Algorithm
      * @param p4pAlg search criterium
      * @param xDim dimension of search vector x
-     * @param ignoreConstraints ignore constraints flag 
+     * @param ignoreConstraints ignore constraints flag
      * @param searchLocalOrGlobal  search global or local flag
      * @param isNotMLSL is not MLSL flag
      * @param res result vector

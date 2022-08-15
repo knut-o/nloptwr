@@ -79,4 +79,3 @@ protected:
 }
 
 #endif // P4PREF_ALGORITHM_H
-

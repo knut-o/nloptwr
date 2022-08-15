@@ -17,4 +17,3 @@
 #include "optfktnclass.h"
 
 #endif // NLOPTWR_A_H
-

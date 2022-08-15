@@ -21,15 +21,15 @@ using namespace std;
 namespace opttest
 {
     // static
-    const double Rastrigin::Pi2 = 
-#ifdef _MSC_VER 
+    const double Rastrigin::Pi2 =
+#ifdef _MSC_VER
         2.0*3.14159265358979323846;
 #else
         2.0*M_PI;
-#endif // _MSC_VER 
+#endif // _MSC_VER
 
 
-        
+
 
     Rastrigin::Rastrigin ( int dim )
   :
@@ -72,4 +72,3 @@ double Rastrigin::optFktn ( const std::vector<double>& x, std::vector<double>& c
 
 
 } // namespace opttest
-

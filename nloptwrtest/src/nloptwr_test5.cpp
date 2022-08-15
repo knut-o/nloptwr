@@ -31,7 +31,7 @@ int opttest5(int dim, int maxTimeSec, nloptwr::SSTRAT sstrat)
 
     // use gradient flag
     bool useGrad=true;
-    
+
     // flag
     bool useAugLagBeforeMlsl=true;
 
@@ -39,13 +39,13 @@ int opttest5(int dim, int maxTimeSec, nloptwr::SSTRAT sstrat)
     nloptwr::NLOptWrSStrat sStrategy( sstrat, useGrad, useAugLagBeforeMlsl );
 
     // target function
-    Rastrigin oRastrigin( dim ); 
+    Rastrigin oRastrigin( dim );
     oRastrigin.initialize ( -5.05, 5.05, 5.0 );
 
     // get reference of problem
     oif::OptFknBase&  oTarget = oRastrigin;
 
-    // get initial x 
+    // get initial x
     vector<double> x ( oTarget.getXInitial() );
 
     // create th NLOptWrapper object
@@ -53,7 +53,7 @@ int opttest5(int dim, int maxTimeSec, nloptwr::SSTRAT sstrat)
 
     // parallel evaluations need less time
     if (sStrategy.getUseGradient() && useGrad) maxTimeSec /= static_cast<int>(optWr.getNThreads());
-    
+
     // you can make proposals
     // optWr.setPreferedAlgorithm( nlopt::LD_LBFGS );
     optWr.setPreferedAlgorithm( nlopt::GD_STOGO_RAND, 1, 90);
@@ -65,8 +65,8 @@ int opttest5(int dim, int maxTimeSec, nloptwr::SSTRAT sstrat)
     optWr.calculateInitialStep(1.3);
 
     // start opptimization
-    nlopt::result opt_stat = nlopt::result::FAILURE; 
-    
+    nlopt::result opt_stat = nlopt::result::FAILURE;
+
     try {
         opt_stat = optWr.optimize(sStrategy, maxTimeSec, maxEvals);
     } catch (runtime_error eRt) {
@@ -75,7 +75,7 @@ int opttest5(int dim, int maxTimeSec, nloptwr::SSTRAT sstrat)
         cerr << "ERROR: exception : " << e.what() << endl; cerr.flush();
         throw exception(e);
     }
-    
+
 
     // get the optimized value
     double minf = optWr.getLastOptimumValue();
@@ -84,7 +84,7 @@ int opttest5(int dim, int maxTimeSec, nloptwr::SSTRAT sstrat)
 
     // display the results
     rc = opttest::display(optWr, sStrategy, opt_stat, minf);
-    
+
     // compare the result
     bool isOk=opttest::vcompare(optWr.getX(), 0.0);
     if (!isOk) {
@@ -106,9 +106,9 @@ int main(int argc, char *argv[])
     int dim = 4;
     int maxTimeSec = 300;
     nloptwr::SSTRAT sstrat=nloptwr::SSTRAT::G;
-    
+
     if (argc<=2) {
-        cout 
+        cout
         << endl
         << "cout usage:" << endl
         << " " << argv[0] << " [dim] [maxTimeSec] [G|GM|R] " << endl
@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
         << " # G=Global, GM=Global Meta; R=Random (default='" << getStrategyAsString(sstrat) << "')" << endl
         << endl;
     }
-  
+
     for (int i = 1; i < argc; ++i) {
         if (i == 1) dim=atoi(argv[i]);
         if (i == 2) maxTimeSec = atoi(argv[i]);
@@ -130,9 +130,3 @@ int main(int argc, char *argv[])
 
 return rc;
 }
-
-
-
-
-
-

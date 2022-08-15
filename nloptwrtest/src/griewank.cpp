@@ -56,14 +56,12 @@ double Griewank::optFktn ( const std::vector<double>& x, std::vector<double>& c 
         sum = sum + xi*xi/4000.;
         prod = prod * cos(xi/sqrt(1.0+i));
     }
-        
+
     y = sum - prod + 1.;
-    
+
     // cout << "## y=" << y << endl;
 
     return y;
 }
 
 } // namespace opttest
-
-

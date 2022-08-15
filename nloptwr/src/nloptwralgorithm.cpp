@@ -1,5 +1,5 @@
 
-#include "nloptwr/nloptwralgorithm.h"   
+#include "nloptwr/nloptwralgorithm.h"
 #include "nlopt.hpp"
 
 #include <string>
@@ -11,24 +11,24 @@
 using namespace std;
 
 namespace nloptwr {
-    
+
     SSTRAT getMetaSearchStrategy(SSTRAT strat) {
         if (static_cast<int>(strat) > 0) {
             if (strat == SSTRAT::R) strat= SSTRAT::N;
             if (strat == SSTRAT::L) strat= SSTRAT::LM;
             if (strat == SSTRAT::G) strat= SSTRAT::GM;
         }
-        return strat;  
+        return strat;
     }
-    
+
     SSTRAT getNonMetaSearchStrategy(SSTRAT strat) {
         if (static_cast<int>(strat) < 0) {
             if (strat == SSTRAT::LM) strat= SSTRAT::L;
             if (strat == SSTRAT::GM) strat= SSTRAT::G;
         }
-        return strat;  
+        return strat;
     }
-    
+
     bool isSearchStrategyLGM(SSTRAT strat) {
         return (
                   (strat == SSTRAT::GM) ||
@@ -49,12 +49,12 @@ namespace nloptwr {
     bool isSearchStrategyR(SSTRAT strat) {
         return (strat == SSTRAT::R);
     }
-    
+
     bool  isP4pAlgLocalOrGlobal(SSTRAT strat, bool searchLocalOrGlobal) {
         int  searchStrategyIntAbs=abs(static_cast<int>(strat));
         return searchLocalOrGlobal&&(
                 searchStrategyIntAbs>=static_cast<int>(SSTRAT::L)
-                || 
+                ||
                 searchStrategyIntAbs<=static_cast<int>(SSTRAT::G)
                 );
     }
@@ -67,8 +67,8 @@ namespace nloptwr {
         if (strat == SSTRAT::N) { rc="N"; } else
         if (strat == SSTRAT::LM) { rc="LM"; } else
         if (strat == SSTRAT::GM) { rc="GM"; } else
-        rc="?"; 
-            
+        rc="?";
+
         return rc;
     }
 
@@ -84,7 +84,7 @@ namespace nloptwr {
             if (srcU=="L") { result= SSTRAT::L; } else
             if (srcU=="N") { result= SSTRAT::N; } else
             if (srcU=="LM") { result= SSTRAT::LM; } else
-            if (srcU=="GM") { result= SSTRAT::GM; }; 
+            if (srcU=="GM") { result= SSTRAT::GM; };
         }
         return result;
     }
@@ -98,7 +98,7 @@ namespace nloptwr {
     bool nSubopt,
     unsigned int minP,
     unsigned int maxP
-    ) 
+    )
     :
     alg(a),
     name(n),
@@ -108,13 +108,13 @@ namespace nloptwr {
     needsSubOpt(nSubopt),
     minParam(minP),
     maxParam(maxP)
-    { 
-        
+    {
+
     }
-    
+
   // NLOptWrAlgorithm::NLOptWrAlgorithm() { }
-    
-    NLOptWrAlgorithm::NLOptWrAlgorithm(const NLOptWrAlgorithm& src) 
+
+    NLOptWrAlgorithm::NLOptWrAlgorithm(const NLOptWrAlgorithm& src)
     :
    alg(src.alg),
    name(src.name),
@@ -123,40 +123,40 @@ namespace nloptwr {
    neConstraints(src.neConstraints),
    needsSubOpt(src.needsSubOpt),
    minParam(src.minParam),
-   maxParam(src.maxParam)    
+   maxParam(src.maxParam)
    {
-        
+
     }
 
-    
-    NLOptWrAlgorithm::~NLOptWrAlgorithm() { 
-        
-    } 
-    
+
+    NLOptWrAlgorithm::~NLOptWrAlgorithm() {
+
+    }
+
     nlopt::algorithm NLOptWrAlgorithm::getAlgorithmEnum() const {  return alg; }
-    
+
     const std::string& NLOptWrAlgorithm::getName() const {  return name; }
-    
+
     SSTRAT NLOptWrAlgorithm::getSearchStrategy() const {  return pRGL; }
-    
+
     bool NLOptWrAlgorithm::getUseGradient() const { return hasGradient; }
-    
+
     bool NLOptWrAlgorithm::canHandleNonEqualConstraints() const {  return neConstraints; }
-    
+
     bool NLOptWrAlgorithm::getNeedsSubopt() const {  return needsSubOpt; }
-    
+
     unsigned int NLOptWrAlgorithm::getMinParameters() const {  return minParam; }
-    
+
     void NLOptWrAlgorithm::setMinParameters(unsigned int var) { minParam=var; }
 
-    
+
     unsigned int NLOptWrAlgorithm::getMaxParameters() const {  return maxParam; }
-    
+
     void NLOptWrAlgorithm::setMaxParameters(unsigned int var) { maxParam=var; }
 
-    
+
     void NLOptWrAlgorithm::setHasGradient(bool val) { hasGradient=val; }
-    
+
     void NLOptWrAlgorithm::setNeConstraints(bool val) { neConstraints=val; }
 
     bool NLOptWrAlgorithm::isAugLag() const {
@@ -170,17 +170,17 @@ namespace nloptwr {
 
     // ==================================================================================================
     // ==================================================================================================
-    
+
     bool NLOptWrAlgorithm::isSetPopulation() const {
         return
-                (name.find("CRS2" ) != string::npos) || 
-                (name.find("MSL"  ) != string::npos) ||  
+                (name.find("CRS2" ) != string::npos) ||
+                (name.find("MSL"  ) != string::npos) ||
                 (name.find("ISRES") != string::npos);
     }
-  
+
   bool NLOptWrAlgorithm::isHasInnerMaxeval() const {
         return
-                (name.find("MMA" )  != string::npos) || 
+                (name.find("MMA" )  != string::npos) ||
                 (name.find("CCSAQ") != string::npos);
   }
 
@@ -203,25 +203,25 @@ namespace nloptwr {
     bool NLOptWrAlgorithm::operator == (const NLOptWrAlgorithm& rhs) const {
         return (alg == rhs.alg);
     }
-       
+
     std::string NLOptWrAlgorithm::toString() const {
         stringstream ss;
-        ss 
+        ss
         << "NlOptAlgorithm("
         // << "  algorithm=" << setw(3) << static_cast<int>(alg) << ", "
         // << "/* , name= */
         << "nlopt::"<< setw(12) << left << name << ", "
-        // << "/* , SEARCH_STRATEGY= */" 
+        // << "/* , SEARCH_STRATEGY= */"
         << setw(2) << getStrategyAsString(pRGL) << ", "
-        // << "/* hasGradient= */" 
+        // << "/* hasGradient= */"
         << setw(5) << (hasGradient? "true" : "false") << ", "
-        // << "/* , neConstraints= */" 
+        // << "/* , neConstraints= */"
         << setw(5) << (neConstraints? "true" : "false") << ", "
-        // << "/* , needsSubOpt= */" 
+        // << "/* , needsSubOpt= */"
         << setw(5) << (needsSubOpt? "true" : "false") << ", "
-        // << "/* , minParam= */" 
+        // << "/* , minParam= */"
         << setw(3) << minParam << ", "
-        // << "/* , maxParam= */" 
+        // << "/* , maxParam= */"
         << setw(5) << maxParam
         << " ) ";
 

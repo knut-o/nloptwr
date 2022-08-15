@@ -35,10 +35,10 @@ public:
 
     /// function value
     double f;
-    
+
     /// function arguments
     std::vector<double> x;
-    
+
     /// constraints
     std::vector<double> c;
 };
@@ -57,7 +57,7 @@ class NLOptWrapper
 public:
 
     /** constructor
-     * @param oFktn reference to function evaluation object 
+     * @param oFktn reference to function evaluation object
      * @param nThr number of threads (0=default)
      */
     NLOptWrapper (
@@ -104,7 +104,7 @@ public:
 
     /**
     * get optimized value
-    */    
+    */
     double getLastOptimumValue() const;
 
     /**
@@ -190,26 +190,26 @@ public:
 
     /**
      * set vector storage for some vector based methods (i.e. LBFGS)
-     * @param val number data sets 
+     * @param val number data sets
      */
     void setVectorStorage ( unsigned int val=10 );
 
     /**
      * get vector storage for some vector based methods (i.e. LBFGS)
-     * @return number data sets 
+     * @return number data sets
      */
     unsigned int getVectorStorage() const;
-    
+
 
     // ------------------------------------------------------------------------------------------------
     // ------------------------------------------------------------------------------------------------
-    
+
     /**
      * get time of previous optimization
      * @return time of optimization in seconds
      */
     double getOptTime() const;
-    
+
 // ------------------------------------------------------------------------------------------------
 
     /**
@@ -240,10 +240,10 @@ public:
     /// get the reduction factor of absolute fucntion tolerance of subopt
     double getSubFTolAbsFactor() const;
 
-    /// set the reduction factor of relative function tolerance of subopt 
+    /// set the reduction factor of relative function tolerance of subopt
     void setSubFTolRelFactor(double val=0.1);
 
-    /// get the reduction factor of relative function tolerance of subopt 
+    /// get the reduction factor of relative function tolerance of subopt
     double getSubFTolRelFactor() const;
 
     /// set the eduction factor of relative arguments tolerance of subopt
@@ -278,7 +278,7 @@ public:
     /// set absolute tolerance of function value
     double getFTolRelSubOpt () const;
 
-    /** 
+    /**
      * set tolerance
      * @param val value (default: 1e-9)
      */
@@ -296,37 +296,37 @@ public:
      */
     const std::vector<double>& getXTolAbs() const;
 
-    
+
     /**
      * get absolute tolerance of sub optimization
      * @return vals vector of tolerances
      */
     std::vector<double> getXTolAbsSubOpt() const;
-    
-    /** 
+
+    /**
      * set relative tolerance
      * @param val tolerance (for all elements)
      */
     void setXTolRel ( double val=1E-10);
 
-    /** 
+    /**
      * get relative tolerance
      * @return val tolerance (for all elements)
      */
     double getXTolRel () const;
-    
-    /** 
+
+    /**
      * get relative tolerance
      * @return val tolerance (for all elements) of subalgorithm
      */
     double getXTolRelSubOpt () const;
-   
-   
+
+
     /**
      * get number of threads
      */
-    size_t getNThreads() const; 
-    
+    size_t getNThreads() const;
+
 private:
 
     /** target functions
@@ -367,7 +367,7 @@ private:
     std::vector<double> tolMConstraints;
 
   // ========================================
-    
+
     /// initial step
     std::vector<double> initial_step;
 
@@ -403,7 +403,7 @@ private:
 
     /// rel. tolerance
     // double xTolRelSubOpt;
-    
+
     /// tolerance
     std::vector<double> xTolAbs;
 
@@ -494,20 +494,20 @@ protected:
      * vector storage for some vector based methods (i.e. LBFGS)
      */
     unsigned int vectorStorage;
-    
+
     /**
      * method of derivations
      */
     bool useNewDerivMethod;
-    
+
     /**
      * dimension of linear regression
      */
     std::size_t derivRegrDim;
-    
-    
+
+
 private:
-    
+
     /**
      * time of previous optimization
      */
@@ -524,4 +524,3 @@ private:
 }
 
 #endif // NLOPT_WR_H
-

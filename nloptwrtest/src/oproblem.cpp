@@ -67,11 +67,11 @@ double OProblem::optFktn ( const std::vector<double>& x, std::vector<double>& c 
   double tmp2=0.0;
   double tmpX1=1.0;
   double tmpX2=1.0;
-  
+
   if (getSizeOfX()==3) {
         tmp2 = ( 1.0 - x[2] );
         val += 100.0* ( tmp2*tmp2 );
-      
+
   } else {
     tmpX1=x[2];
     for ( size_t i=3; i<getSizeOfX(); i++ )
@@ -88,5 +88,3 @@ double OProblem::optFktn ( const std::vector<double>& x, std::vector<double>& c 
 }
 
 } // namespace opttest
-
-

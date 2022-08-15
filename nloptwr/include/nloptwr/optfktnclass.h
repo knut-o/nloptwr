@@ -98,12 +98,12 @@ public:
     /**
      * validation means range checks
      * For all indices i is:
-     * lB[i] <= xInitial[i] <= uB[i]  
-     * 
+     * lB[i] <= xInitial[i] <= uB[i]
+     *
      * @return true if is everything OK.
      */
     virtual bool validate() const;
-    
+
 // protected:
 
     /**
@@ -123,21 +123,21 @@ public:
      * @param val value
      */
     void setXInit(std::size_t idx, double val);
-    
+
     /**
      * set a lower bound at idx
      * @param idx index
      * @param val value
      */
     void setLb(std::size_t idx, double val);
-    
+
     /**
      * set a upper bound at idx
      * @param idx index
      * @param val value
      */
     void setUb(std::size_t idx, double val);
-    
+
 private:
     /// number of parameters
     size_t nDim;
@@ -163,4 +163,3 @@ protected:
 }
 
 #endif // OPT_FKTN_CLASS_H
-

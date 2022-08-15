@@ -16,7 +16,7 @@ namespace opttest
 
 /**
  * @class Griewank
- * A simple optimization task 
+ * A simple optimization task
  * (implementation of Griewank test function)
  */
 class Griewank : public oif::OptFknClass

@@ -9,7 +9,7 @@ namespace opttest
 // int oproblemtest ( bool log=false, int dim=4 );
 
 int selAlgTest();
-     
+
 
 }
 

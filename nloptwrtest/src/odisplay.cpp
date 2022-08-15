@@ -21,7 +21,7 @@ namespace opttest {
 
 
 int displaySearchAlgorithms(const nloptwr::NLOptWrapper& optWr, const nloptwr::NLOptWrSStrat& sStrat ) {
-  
+
     // print selected algorithms
     std::vector<nloptwr::NLOptWrAlgorithm> algs = optWr.getSelectedAlgorithms ( sStrat );
 
@@ -32,9 +32,9 @@ int displaySearchAlgorithms(const nloptwr::NLOptWrapper& optWr, const nloptwr::N
         if ( i>0 ) cout << ", ";
         cout << algs.at ( i ).getName();
     }
-    cout << " } " << endl; 
+    cout << " } " << endl;
 
-    return rc;  
+    return rc;
 }
 
 int displayResult(const nloptwr::NLOptWrapper& optWr, nlopt::result opt_stat, double minf) {
@@ -42,7 +42,7 @@ int displayResult(const nloptwr::NLOptWrapper& optWr, nlopt::result opt_stat, do
 
     // get result
     vector<double> x = optWr.getX();
-    
+
     cout << "Solution: " << endl;
     cout << "minF     = " << minf  << endl;
     for ( unsigned int i=0; i< x.size(); i++ ) {
@@ -51,7 +51,7 @@ int displayResult(const nloptwr::NLOptWrapper& optWr, nlopt::result opt_stat, do
     cout << "opt_stat = " << opt_stat << " : "  << optWr.getStringOfResult ( opt_stat ) << endl;
     cout << "minF     = " << minf  << endl;
     cout << " " << endl;
-    cout << "rc        = " << rc << endl; 
+    cout << "rc        = " << rc << endl;
     cout << "optTime   = " << fixed << setw(6) << optWr.getOptTime();
 
   return rc;
@@ -60,13 +60,12 @@ int displayResult(const nloptwr::NLOptWrapper& optWr, nlopt::result opt_stat, do
 int display(const nloptwr::NLOptWrapper& optWr, const nloptwr::NLOptWrSStrat& sStrat, nlopt::result opt_stat, double minf) {
     int rc1=displaySearchAlgorithms(optWr, sStrat);
     int rc2=displayResult(optWr, opt_stat, minf);
-    
+
     int rc=(rc2!=0)? rc2 : rc1;
-    
+
     return rc;
 }
 
 
 
-} // namespace opttest 
-
+} // namespace opttest

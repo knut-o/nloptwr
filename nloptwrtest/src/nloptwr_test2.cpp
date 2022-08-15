@@ -33,11 +33,11 @@ int opttest2(int dim, bool useGrad, nloptwr::SSTRAT sStrat=nloptwr::SSTRAT::L, i
 
     // create the search strategy object
     nloptwr::NLOptWrSStrat sStrategy( sStrat, useGrad);
-    
+
     cout << "sStrategy.getUseGradient(): " << sStrategy.getUseGradient() << endl;
 
     // utl::OmpHelper ompHelper;
-    OProblem oProblem ( dim ); 
+    OProblem oProblem ( dim );
 
     oif::OptFknBase&  oTarget = oProblem;
 
@@ -45,21 +45,21 @@ int opttest2(int dim, bool useGrad, nloptwr::SSTRAT sStrat=nloptwr::SSTRAT::L, i
 
     // parallel evaluations need less time
     if (useGrad) maxTimeSec /= static_cast<int>(optWr.getNThreads());
-    
+
     optWr.calculateInitialStep(1.3);
 
     // set population for stochastic optimization
     optWr.setPopulation(1000);
-    
+
     optWr.setPreferedAlgorithm( nlopt::LD_MMA );
     optWr.setPreferedAlgorithm( nlopt::LD_CCSAQ );
-    
+
     optWr.setDx(1e-10);
     optWr.setXTolAbs(1e-6);
 
     // start opptimization
-    nlopt::result opt_stat = nlopt::result::FAILURE; 
-    
+    nlopt::result opt_stat = nlopt::result::FAILURE;
+
     try {
         opt_stat = optWr.optimize(sStrategy, maxTimeSec, maxEvals);
     } catch (runtime_error eRt) {
@@ -68,12 +68,12 @@ int opttest2(int dim, bool useGrad, nloptwr::SSTRAT sStrat=nloptwr::SSTRAT::L, i
         cerr << "ERROR: exception : " << e.what() << endl; cerr.flush();
         throw exception(e);
     }
-    
+
     // get the optimized value
     double minf = optWr.getLastOptimumValue();
 
     // ========================================================================
-    
+
     // Display the solution:
     rc = opttest::display(optWr, sStrategy, opt_stat, minf);
 
@@ -106,9 +106,9 @@ int main(int argc, char *argv[])
     int maxTimeSec = 300;
     nloptwr::SSTRAT sStrat=nloptwr::SSTRAT::LM;
     bool useGrad=true;
-    
+
     if (argc<=2) {
-        cout 
+        cout
         << endl
         << "cout usage:" << endl
         << " " << argv[0] << " [dim] [useGrad] [sStrat] [maxTimeSec] " << endl
@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
         << " # maxTimeSec: max. time [s] (default=" << maxTimeSec << ") " << endl
         << endl;
     }
-  
+
     for (int i = 1; i < argc; ++i) {
         if (i == 1) dim=atoi(argv[i]);
         if (i == 2) useGrad=(string(argv[i])=="1");
@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
     }
 
     if (dim<2) { dim=2; }
-    
+
     cout <<  "### dim: " << dim << " " << endl;
     cout <<  "### useGrad: '" << useGrad << "' " << endl;
     cout <<  "### sStrat: '" << getStrategyAsString(sStrat) << "' " << endl;
@@ -140,6 +140,3 @@ int main(int argc, char *argv[])
   return rc;
 
 }
-
-
-

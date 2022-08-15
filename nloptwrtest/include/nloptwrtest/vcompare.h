@@ -39,7 +39,7 @@ namespace opttest
 
     /**
     * compare two vectors value by value with tolerance eps
-    * @param src1 vector 
+    * @param src1 vector
     * @param src2 value
     * @param eps
     * @return true if all elements of src1 are equal src2 (with tolerance)
@@ -49,4 +49,3 @@ namespace opttest
 } // namespace opttest
 
 #endif // V_COMPARE_H
-

@@ -64,7 +64,7 @@ NLOptWrapper::NLOptWrapper (
   if (static_cast<long int>(fArgs.c.size()) !=mDim ) fArgs.c.resize ( mDim );  // vector of single constraints (mDim)
   if (static_cast<long int>(lb.size()) !=nDim ) lb.resize ( nDim );
   if (static_cast<long int>(ub.size()) !=nDim ) ub.resize ( nDim );
-    
+
   // ========================================
 
   tolMConstraints.resize ( mDim );
@@ -78,13 +78,13 @@ NLOptWrapper::NLOptWrapper (
     if (static_cast<long int>(xTolAbs.size()) != nDim ) xTolAbs.resize ( nDim );
 
     setSubFactors(0.1);
-  
+
     setFTolAbs();
     setFTolRel();
 
     setXTolAbs();
     setXTolRel();
-  
+
   // ========================================
 
   calculateInitialStep();
@@ -96,9 +96,9 @@ NLOptWrapper::NLOptWrapper (
   vectorStorage=10;
   useNewDerivMethod=false;
   derivRegrDim=3;
-  
+
   optTime=0.0;
-  
+
   searchMin = true;
   population = 0;
 };
@@ -117,7 +117,7 @@ void NLOptWrapper::setFTolAbs ( double val )
 }
 
     double NLOptWrapper::getFTolAbs () const {
-     return fTolAbs;   
+     return fTolAbs;
     }
 
 double NLOptWrapper::getFTolAbsSubOpt () const {
@@ -141,7 +141,7 @@ void NLOptWrapper::setXTolAbs ( double val )
 {
   for ( long int i=0; i<nDim; i++ ) {
     xTolAbs[i] = val;
-  }      
+  }
 }
 
 
@@ -154,13 +154,13 @@ void NLOptWrapper::setXTolAbs ( const std::vector<double>& vals )
 }
 
 const std::vector<double>& NLOptWrapper::getXTolAbs() const {
-    return  xTolAbs; 
-} 
+    return  xTolAbs;
+}
 
 
 std::vector<double> NLOptWrapper::getXTolAbsSubOpt() const {
     vector<double> xTolAbsSubOpt(nDim);
-    for (long int i=0; i<nDim; i++) { xTolAbsSubOpt[i]=xTolAbs[i]*subXTolAbsFactor; } 
+    for (long int i=0; i<nDim; i++) { xTolAbsSubOpt[i]=xTolAbs[i]*subXTolAbsFactor; }
     return xTolAbsSubOpt;
 }
 
@@ -212,45 +212,45 @@ void NLOptWrapper::setTolMConstraints ( const std::vector<double>& vals )
 }
 
     // ------------------------------------------------------------------------------------------------
-    
+
 
     void NLOptWrapper::setSubFactors() {
-        setSubFTolAbsFactor();  
+        setSubFTolAbsFactor();
         setSubFTolRelFactor();
         setSubXtolRelFactor();
         setSubXTolAbsFactor();
     }
-    
+
     void NLOptWrapper::setSubFactors(double val) {
-        setSubFTolAbsFactor(val);  
+        setSubFTolAbsFactor(val);
         setSubFTolRelFactor(val);
         setSubXtolRelFactor(val);
         setSubXTolAbsFactor(val);
     }
-    
+
     void NLOptWrapper::setSubFTolAbsFactor(double val) {
-     subFTolAbsFactor=(val<0.5)? val : 0.5;   
+     subFTolAbsFactor=(val<0.5)? val : 0.5;
     }
-    
+
     double NLOptWrapper::getSubFTolAbsFactor() const {
         return subFTolAbsFactor;
     }
 
 /// reduction factor of relative fuction tolerance of subopt (lower than 1)
     void NLOptWrapper::setSubFTolRelFactor(double val)  {
-     subFTolRelFactor=(val<0.5)? val : 0.5;   
+     subFTolRelFactor=(val<0.5)? val : 0.5;
     }
-    
+
 
 double NLOptWrapper::getSubFTolRelFactor() const {
- return subFTolRelFactor;   
+ return subFTolRelFactor;
 }
 
 /// eduction factor of relative arguments tolerance of subopt (lower than 1)
 void NLOptWrapper::setSubXtolRelFactor(double val)  {
-     subXtolRelFactor=(val<0.5)? val : 0.5;   
+     subXtolRelFactor=(val<0.5)? val : 0.5;
     }
-    
+
 
 double NLOptWrapper::getSubXtolRelFactor() const {
     return subXtolRelFactor;
@@ -258,16 +258,16 @@ double NLOptWrapper::getSubXtolRelFactor() const {
 
 /// eduction factor of absolute arguments tolerance of subopt (lower than 1)
 void NLOptWrapper::setSubXTolAbsFactor(double val)  {
-     subXTolAbsFactor=(val<0.5)? val : 0.5;   
+     subXTolAbsFactor=(val<0.5)? val : 0.5;
     }
-    
+
 
 double NLOptWrapper::getSubXTolAbsFactor() const {
     return subXTolAbsFactor;
 }
 
 // ------------------------------------------------------------------------------------------------
-    
+
 void NLOptWrapper::calculateInitialStep ( double numberOfSteps )
 {
   for (long int i=0; i<nDim; i++ )
@@ -299,7 +299,7 @@ std::vector<NLOptWrAlgorithm> NLOptWrapper::getSelectedAlgorithms ( const NLOptW
   bool hasConstraints= ( mDim>0 );
   bool useAugLagBeforeMlsl=nloptWrSStrat.getUseAugLagBeforeMLSL();
   bool useGrad=nloptWrSStrat.getUseGradient();
-  
+
   return ( *nlOptParamFactory ).getAlgorithm ( searchStrategy, hasConstraints, useGrad, useAugLagBeforeMlsl, nDim );
 }
 
@@ -348,7 +348,7 @@ nlopt::result NLOptWrapper::optimize (
 
   utl::OmpHelper ompH;
   ompH.setStart();
-  
+
   if ( static_cast<long int>(x.size()) !=nDim )
     {
       const string errMsg2 ( "NLOptWrapper::optimize : ERROR: x.size() !=nDim " );
@@ -441,7 +441,7 @@ nlopt::result NLOptWrapper::optimize (
   opt = shared_ptr<nlopt::opt>(new nlopt::opt ( alg1.getAlgorithmEnum(), nDim ) ); // algorithm and dimensionality
 
   if ( maxTimeSec>0 ) opt->set_maxtime ( maxTimeSec );
-  
+
   if ( maxEvals>0 ) opt->set_maxeval ( maxEvals );
 
   // set bounds
@@ -546,7 +546,7 @@ nlopt::result NLOptWrapper::optimize (
 
     sub_opt.set_xtol_abs(getXTolAbsSubOpt());
     sub_opt.set_xtol_rel(getXTolRelSubOpt());
-    
+
     sub_opt.set_ftol_rel(getFTolRelSubOpt());
     sub_opt.set_ftol_abs(getFTolAbsSubOpt());
 
@@ -599,12 +599,12 @@ nlopt::result NLOptWrapper::optimize (
   nlopt::result opt_stat = opt->optimize ( x, fOpt );
 
   double fOptTmp=optFknBases[0]->optFktn(x, fArgs2[0].c);
-  
+
   if (fabs(fOpt-fOptTmp)>0.001) {
     cout << "Warning: fOpt=" << fOpt << " <==> fOptTmp=" << fOptTmp << endl;
     fOpt=fOptTmp;
   }
-  
+
   ompH.setEnd();
   optTime=ompH.getDuration();
 
@@ -741,7 +741,7 @@ bool NLOptWrapper::setXVec ( unsigned int n, const double* x1 )
 // ===================================================================
 
 double NLOptWrapper::getOptTime() const {
- return optTime;   
+ return optTime;
 }
 
 // ===================================================================
@@ -752,7 +752,7 @@ double NLOptWrapper::f ( unsigned n, const double *x1, double *fGradVal )
   if ( fArgs.x.size() !=n ) fArgs.x.resize ( n );
   for ( size_t i=0; i<n; ++i) fArgs.x[i] = x1[i];
 
-    
+
     // function call
     // calcFktnConstrAndDeriv ( n, x1, useGradient );
 
@@ -864,7 +864,7 @@ void NLOptWrapper::multi_constraint (
                 for ( unsigned int i=0; i<n; i++ )
                     cGradc[k*n+i] = cGrad[k][i];
 
-            
+
         } // useGradient
 
     }
@@ -876,4 +876,3 @@ void NLOptWrapper::multi_constraint (
 }
 
 #pragma warning( pop )
-

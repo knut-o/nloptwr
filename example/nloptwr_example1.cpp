@@ -14,7 +14,7 @@ namespace opttest {
 
 /**
  * Demo01
- * A simple optimization task 
+ * A simple optimization task
  * (implementation of test function)
  */
 class Demo01 : public oif::OptFknClass
@@ -43,20 +43,20 @@ public:
     double optFktn ( const std::vector<double>& x, std::vector<double>& c ) {
         double sum=0.0;
         double tmp=0.0;
-        
+
         // calculation of function value
         for (size_t i=0; i<getSizeOfX(); i++) {
             tmp=x[i]-(0.5+static_cast<double>(i));
             sum += tmp*tmp;
-            
+
         }
- 
+
         // calculation of constraints
         size_t ine=getSizeOfNeConstraints();
         for (size_t i=0; i< ine; i++) {
-          c[i]=0.0;   
+          c[i]=0.0;
         }
-        
+
         return sum;
     }
 
@@ -76,8 +76,8 @@ public:
 /**
  * test the optimization
  * @param useGrad true means explicit calculation of gradients
- * @return success 
- */    
+ * @return success
+ */
 int opttest1(bool useGrad)
 {
     // retun code
@@ -88,7 +88,7 @@ int opttest1(bool useGrad)
 
     // define time limit
     int maxTimeSec=120;
-    
+
     // define limit of calculations
     int maxEvals=1000000000;
 
@@ -99,17 +99,17 @@ int opttest1(bool useGrad)
     nloptwr::NLOptWrSStrat sStrat( nloptwr::L, useGrad );
 
     // Instantiate the optimization task
-    opttest::Demo01 pDemo01; 
-    
+    opttest::Demo01 pDemo01;
+
     // instantiate the NLOptWrapper
     nloptwr::NLOptWrapper optWr ( pDemo01, nThr);
 
     // parallel evaluations need less time
     if (useGrad) maxTimeSec /= static_cast<int>(optWr.getNThreads());
-    
+
     // start optimization
     nlopt::result opt_stat = optWr.optimize(minf, sStrat, maxTimeSec, maxEvals);
-    
+
     // get the solution
     vector<double> x = optWr.getX();
 
@@ -120,7 +120,7 @@ int opttest1(bool useGrad)
     }
     cout << "opt_stat = " << opt_stat << " : "  << optWr.getStringOfResult ( opt_stat ) << endl;
     cout << "minF     = " << minf  << endl;
-    cout << "rc        = " << rc << endl; 
+    cout << "rc        = " << rc << endl;
 
     // print the selected algorithms
     std::vector<nloptwr::NLOptWrAlgorithm> algs = optWr.getSelectedAlgorithms ( sStrat );
@@ -129,7 +129,7 @@ int opttest1(bool useGrad)
         if ( i>0 ) cout << ", ";
         cout << algs.at ( i ).getName();
     }
-    cout << " } " << endl; 
+    cout << " } " << endl;
 
     cout << "optTime   = " << fixed << setw(6) << optWr.getOptTime();
     cout << endl << endl;
@@ -145,17 +145,16 @@ int main()
 {
     int rc1=0;
     int rc2=0;
-    
+
     cout << "Test: " << endl << endl;
-    
+
     cout << "1.) Optimization with gradients: " << endl;
     rc1=opttest::opttest1(true);
-    
+
     cout << endl << "===========================================================" << endl;
-    
+
     cout << "2.) Optimization without gradients:" << endl;
     rc2=opttest::opttest1(false);
-    
+
     return (rc1+rc2);
 }
-

@@ -107,9 +107,3 @@ int OmpHelper::getThreadNum()
 
 
 } // namespace utl
-
-
-
-
-
-

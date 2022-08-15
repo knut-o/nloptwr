@@ -85,7 +85,7 @@ bool  isP4pAlgLocalOrGlobal (SSTRAT strat, bool searchLocalOrGlobal );
 std::string getStrategyAsString (SSTRAT strat );
 
 /**
- * 
+ *
  */
 SSTRAT getStrategyFromString(const std::string& src, SSTRAT sstratDefault=SSTRAT::G);
 
@@ -229,13 +229,13 @@ public:
      * @return true if population is set, otherwise false
      */
     bool isSetPopulation() const;
-    
+
     /**
      * test if has inner max evaluations
      * @return true if it is set, otherwise false
      */
     bool isHasInnerMaxeval() const;
-    
+
     /**
      * test vector storage call
      * @return true if vector storage call is already invoked

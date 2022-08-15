@@ -10,7 +10,7 @@
 using namespace std;
 
 namespace opttest {
-    
+
 int opttest3()
 {
     int rc=0;
@@ -28,15 +28,15 @@ int opttest3()
 
     // use gradient
     bool useGrad=true;
-    
+
     // other parameter
     bool useAugLagBeforeMlsl=true;
 
     // =====================================================
 
     // a target function
-    Griewank oGriewank( dim ); 
-    
+    Griewank oGriewank( dim );
+
     // initial point is near the optimum
     oGriewank.initialize ( -15.0, 15.0, 2.0 );
 
@@ -53,9 +53,9 @@ int opttest3()
 
     // parallel evaluations need less time
     if (useGrad) maxTimeSec /= static_cast<int>(optWr.getNThreads());
-    
-    nlopt::result opt_stat = nlopt::result::FAILURE; 
-    
+
+    nlopt::result opt_stat = nlopt::result::FAILURE;
+
     try {
         // start opptimization
         opt_stat = optWr.optimize(sStrategy, maxTimeSec, maxEvals);
@@ -70,10 +70,10 @@ int opttest3()
     double minf = optWr.getLastOptimumValue();
 
     // =====================================================
-    
+
     // display the result
     rc = opttest::display(optWr, sStrategy, opt_stat, minf);
-    
+
     // check the results
     bool isOk = opttest::fvcompare(minf, 0.0, optWr.getX(), 0.0);
     if (!isOk) {
@@ -95,5 +95,3 @@ int main()
 
   return rc;
 }
-
-

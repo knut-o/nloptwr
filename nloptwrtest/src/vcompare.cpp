@@ -39,7 +39,7 @@ namespace opttest {
         }
         return result;
     }
-    
+
     bool vcompare(const vector<double>& src1, double src2, double eps) {
         vector<double> v2(src1.size(), src2);
 
@@ -48,4 +48,3 @@ namespace opttest {
 
 
 } // namespace opttest
-

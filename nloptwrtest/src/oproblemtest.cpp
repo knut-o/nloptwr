@@ -41,7 +41,7 @@ int oproblemtest ( bool log, int dim )
   // OProblem oProblem ( dim ); oProblem.initialize ( 0.15, 5.0, 0.2 );
   Griewank oProblem( dim ); oProblem.initialize ( -15.0, 15.0, 14.3 );
 
-  
+
   cout << "TEST" << endl;
 
   unsigned long ulSize = static_cast<unsigned long>(oProblem.getUpperBounds().size());
@@ -58,17 +58,17 @@ int oproblemtest ( bool log, int dim )
   // vector<double> tol(dim, 1.0e-8);
 
   nloptwr::NLOptWrapper optWr ( oProblem, nThr );
-  
+
   optWr.setXTolRel(0.00000003);
   optWr.setXTolAbs(0.000001);
   // optWr.setXTolRel(0.003);
   // optWr.setTolerance(0.001);
-  
+
 
   // NOTE: Non-Gradient methods do not need a numerical derivation!!!!!!
   bool useGrad=true;
   bool useAugLagBeforeMlsl=true;
-  
+
   nloptwr::NLOptWrSStrat sStratL ( nloptwr::SSTRAT::L,  useGrad, useAugLagBeforeMlsl );
   nloptwr::NLOptWrSStrat sStratLM( nloptwr::SSTRAT::LM, useGrad, useAugLagBeforeMlsl );
   nloptwr::NLOptWrSStrat sStratR ( nloptwr::SSTRAT::R,  useGrad, useAugLagBeforeMlsl );
@@ -76,10 +76,10 @@ int oproblemtest ( bool log, int dim )
   nloptwr::NLOptWrSStrat sStratG ( nloptwr::SSTRAT::G,  useGrad, useAugLagBeforeMlsl );
 
   nloptwr::NLOptWrSStrat& sStrat = sStratL;
-  
-  
+
+
   std::vector<nloptwr::NLOptWrAlgorithm> algs0 = optWr.getSelectedAlgorithms ( sStrat );
-  
+
 
   cout << endl << "optWr.getSelectedAlgorithms( " << sStrat.toString() << ") = { ";
   for ( size_t i=0; i<algs0.size(); i++ )
@@ -89,8 +89,8 @@ int oproblemtest ( bool log, int dim )
     }
   cout << " } " << endl;
 
-if (true) {  
-  // if (sStrat.getSearchStrategy()==nloptwr::R) 
+if (true) {
+  // if (sStrat.getSearchStrategy()==nloptwr::R)
   optWr.calculateInitialStep(1.3);
 
   nlopt::result opt_stat = optWr.optimize (
@@ -123,11 +123,11 @@ if (true) {
       cout << "opt_stat = " << opt_stat << " : "  << optWr.getStringOfResult ( opt_stat ) << endl;
       cout << "minf     = " << minf  << endl;
       cout << " " << endl;
-      cout << "rc        = " << rc << endl; 
+      cout << "rc        = " << rc << endl;
       cout << "optTime   = " << fixed << setw(6) << optWr.getOptTime()
       << endl;
     }
-    
+
 }
 
   return rc;
@@ -135,4 +135,3 @@ if (true) {
 };
 
 } // namespace opttest
-

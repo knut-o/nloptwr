@@ -57,7 +57,7 @@ public:
 
     /**
      * copmparision operator
-     * @param rhs object 
+     * @param rhs object
      */
     bool operator < ( const NLOptWrSearchAlgoParam2& rhs ) const;
 
@@ -74,4 +74,3 @@ private:
 }
 
 #endif // P4PREF_ALGORITHM2_H
-

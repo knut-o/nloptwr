@@ -17,14 +17,14 @@ namespace nloptwr
             :
         NLOptWrSearchAlgoParam2(strat, constr, grad, uaugl), dim(d)
         { }
-        
+
         NLOptWrSearchAlgoParam3::NLOptWrSearchAlgoParam3(const NLOptWrSearchAlgoParam2& alg, size_t d )
         :
         NLOptWrSearchAlgoParam2(alg),  dim(d)
         { }
-        
+
         NLOptWrSearchAlgoParam3::~NLOptWrSearchAlgoParam3() { }
-        
+
         /// det dimension
         size_t NLOptWrSearchAlgoParam3::getDim() const {
             return dim;
@@ -46,7 +46,7 @@ std::string NLOptWrSearchAlgoParam3::toString() const
 
   return ss.str();
 }
-   
+
    // nloptwr::NLOptWrSearchAlgoParam3(nloptwr::G , false, false, true ,  3), { nlopt::GN_DIRECT } },
 std::string NLOptWrSearchAlgoParam3::toString2() const
 {
@@ -63,5 +63,5 @@ std::string NLOptWrSearchAlgoParam3::toString2() const
 
   return ss.str();
 }
-   
+
 }

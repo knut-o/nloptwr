@@ -13,9 +13,9 @@
 
 namespace opttest
 {
-    
+
 /*
- * 
+ *
  *     h ^                            + hn=hc[nDim+1]
  *       |                           /|
  *       |                          / |
@@ -38,18 +38,18 @@ namespace opttest
  *       +-----+-------+-----+--------+
  *      x0    xc[1]   xc[2] xc[3] ... xn
  *     =xc[0]                         =xc[nDim+1]
- * 
+ *
  *  w1, w2, ... = additional weights
  *  h = height
  *  hc[i] = height at position
  *  xc[i] = coordinate x at position
- * 
- *  
+ *
+ *
  */
 
 /**
  * @class ChainWithWeights
- * A simple optimization task 
+ * A simple optimization task
  * (implementation of test function)
  */
 class ChainWithWeights : public oif::OptFknClass
@@ -95,7 +95,7 @@ public:
     virtual oif::OptFknBase* clone() const override;
 
     /**
-     * print result 
+     * print result
      * @param x arguments
      * @param os output stream
      */
@@ -108,37 +108,37 @@ private:
 
     /// number of nonequal constraints
     const static int mDim=4;
-    
+
     /// left corner
     double x0;
-    
+
     /// left corner
     double h0;
-    
+
     /// right corner
     double xn;
 
     /// right corner
     double hn;
-    
+
     /// mass per length
     double lm;
 
     /// length of a chain link
     double li;
 
-    // weights 
+    // weights
     std::vector<double> weights;
-    
+
     // coordinates x
     std::vector<double> xc;
-    
+
     // coordinate h
     std::vector<double> hc;
-    
+
     // epsilon
     static const double epsilon;
-    
+
     // PI
     static const double PI;
 };

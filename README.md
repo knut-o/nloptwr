@@ -9,8 +9,8 @@ Initially it was started a an experiment to use the Program **NLOPT** more easyl
 
 The program has the folowing functionalities:
 
-1. ***C++ API***  
-2. ***rule based selection of algoritms***  
+1. ***C++ API***
+2. ***rule based selection of algoritms***
 3. ***numerical calculation of gradients*** in parallel with **OpenMP** if needed</li>
 
 
@@ -29,22 +29,22 @@ The remaining following functions have to be implementd:
 
 <ol start="1">
   <li>virtual <b>double optFktn ( const std::vector<double>& x, std::vector<double>& c )</b>
-     override; 
+     override;
     // target function
 </li>
-  <li>virtual <b>void initialize ( double lb, double ub, double xInit )</b>; 
+  <li>virtual <b>void initialize ( double lb, double ub, double xInit )</b>;
     // initialize function
 </li>
-<li>virtual <b>oif::OptFknBase* clone() const</b> 
-    override; 
+<li>virtual <b>oif::OptFknBase* clone() const</b>
+    override;
     // clone method
 </li>
 </ol>
 
-The function return the function value. 
+The function return the function value.
 
-* "x" contains the function arguments. 
-* "c" are the constraints (c[i] <= 0). 
+* "x" contains the function arguments.
+* "c" are the constraints (c[i] <= 0).
 * "lb" is the lower bound
 * "ub" is the upper bound
 * "xInit" is the initial value
@@ -56,13 +56,13 @@ The class ***PDemo01*** in the file "nloptwr_test1.cpp" in a example.
 An instance of parameter class ***nloptwr::NLOptWrSStrat*** can be used to select the search methods.
 The constructor of this class has three arguments:
 
-1. ***nloptwr::SSTRAT***  
+1. ***nloptwr::SSTRAT***
         // enum of search strategies
-2. ***useGrad***  
+2. ***useGrad***
         // usage of gradient methods (default=true)
-3. ***useAugLagBeforeMlsl***   
+3. ***useAugLagBeforeMlsl***
         // prefer Augmented Lagrangian before MLSL (default=true)
- 
+
 The emun class <b>nloptwr::SSTRAT</b> can have following valid values:
 
  * ***L*** = Local search strategy is prefered
@@ -71,7 +71,7 @@ The emun class <b>nloptwr::SSTRAT</b> can have following valid values:
  * ***GM*** = Global meta search strategy is choosen
  * ***LM*** = Local meta search strategy is choosen (sometimes a global search strategy is selected)
 
-The selected methods also depends on the number of parameters (see ***nloptwr::NLOptWrSearchAlgoParam3*** and ***nloptwr::NLOptWrParamFactory***). 
+The selected methods also depends on the number of parameters (see ***nloptwr::NLOptWrSearchAlgoParam3*** and ***nloptwr::NLOptWrParamFactory***).
 
 ### Calculation of gradients
 
@@ -81,8 +81,8 @@ Necessary is a correct working clone method.
 
 The default method of numerical derivation is the 2-point formula.
 
-An experimental feature is an polynom regression. 
-This feature can be activated with 
+An experimental feature is an polynom regression.
+This feature can be activated with
 the call ***NLOptWrapper::setNewDerivMethod(true)*** method.
 The following parameters can changed:
 
@@ -109,7 +109,7 @@ The directory "cmake" contains some files (FindNLOPT.cmake, FindNLOPTCXX.cmake  
 ### Installing
 
 You can get this program from git repository.
-Under LINUX (Debian or RPM based systems, X86, 64-bit) 
+Under LINUX (Debian or RPM based systems, X86, 64-bit)
 you can install the library and the demo-programs from package.
 
 Other system can install the package from source.
@@ -158,8 +158,8 @@ Any advise for common problems or issues.
 
 ## Authors
 
-Contributors and contact info: 
-[Knut Opherden](knut.opherden@hotmail.com) 
+Contributors and contact info:
+[Knut Opherden](knut.opherden@hotmail.com)
 [knut.opherden@hotmail.com](knut.opherden@hotmail.com)
 
 ## Links
@@ -188,6 +188,5 @@ Contributors and contact info:
 
 This project is licensed under the [GNU AFFERO GENERAL PUBLIC LICENSE, Version 3](https://www.gnu.org/licenses/agpl-3.0.txtl) from 19 November 2007 - see the [LICENSE](https://github.com/knut-o/nloptwr/blob/main/LICENSE) file for details.
 
-                       
-## Acknowledgments
 
+## Acknowledgments

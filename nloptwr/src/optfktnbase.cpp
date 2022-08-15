@@ -32,5 +32,3 @@ std::vector<double> OptFknBase::getZeroNeConstraintVec()
 
 
 }
-
-

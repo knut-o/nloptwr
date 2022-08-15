@@ -1,5 +1,4 @@
 
 OUTPUT_DIRECTORY       = @CMAKE_CURRENT_BINARY_DIR@/doc/
-INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/nloptwr @CMAKE_CURRENT_SOURCE_DIR@/nloptwrtest 
+INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/nloptwr @CMAKE_CURRENT_SOURCE_DIR@/nloptwrtest
 # INPUT                  = @CMAKE_CURRENT_SOURCE_DIR@/../src/ @CMAKE_CURRENT_SOURCE_DIR@/../docs
-

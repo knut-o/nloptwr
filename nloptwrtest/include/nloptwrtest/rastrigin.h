@@ -16,7 +16,7 @@ namespace opttest
 
 /**
  * @class Rastrigin
- * A simple optimization task 
+ * A simple optimization task
  * (implementation of Rastrigin test function)
  */
 class Rastrigin : public oif::OptFknClass
@@ -68,4 +68,3 @@ private:
 } // namespace opttest
 
 #endif // RASTRIGIN_H
-
