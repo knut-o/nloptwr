@@ -6,69 +6,64 @@
 #include "nloptwr/optfktnbase.h"
 #include "nloptwr/optfktnclass.h"
 
-#include <vector>
 #include <functional>
 #include <memory>
+#include <vector>
 
-namespace opttest
-{
+namespace opttest {
 
 /**
  * @class OProblem
  * A simple optimization task
  * (implementation of test function)
  */
-class OProblem : public oif::OptFknClass
-{
+class OProblem : public oif::OptFknClass {
 
 public:
+  /**
+   * constructor
+   * @param dim dimension
+   */
+  OProblem(int dim);
 
+  /// destructor
+  virtual ~OProblem();
 
-/**
- * constructor
- * @param dim dimension
- */
-    OProblem ( int dim );
+  /**
+   * implementation of function definition
+   * @param x (vector of) function arguments
+   * @param c vector of nonequal constraints (c_i <= 0.0)
+   * @return value of target function
+   */
+  virtual double optFktn(const std::vector<double> &x,
+                         std::vector<double> &c) override;
 
-    /// destructor
-    virtual ~OProblem();
+  /**
+   * initialize method
+   * @param lb lower bounds
+   * @param ub upper bounds
+   * @param xInit initial value for all arguments
+   */
+  virtual void initialize(); //  double lb, double ub, double xInit );
 
-    /**
-     * implementation of function definition
-     * @param x (vector of) function arguments
-     * @param c vector of nonequal constraints (c_i <= 0.0)
-     * @return value of target function
-     */
-    virtual double optFktn ( const std::vector<double>& x, std::vector<double>& c ) override;
-
-    /**
-     * initialize method
-     * @param lb lower bounds
-     * @param ub upper bounds
-     * @param xInit initial value for all arguments
-     */
-    virtual void initialize (); //  double lb, double ub, double xInit );
-
-    /**
-     * clone method
-     * @return refernce of clone (of this object)
-     */
-    virtual oif::OptFknBase* clone() const override;
+  /**
+   * clone method
+   * @return refernce of clone (of this object)
+   */
+  virtual oif::OptFknBase *clone() const override;
 
 private:
+  /// dimension of x-vector
+  int nDim;
 
-    /// dimension of x-vector
-    int nDim;
+  /// number of nonequal constraints
+  const static int mDim = 2;
 
-    /// number of nonequal constraints
-    const static int mDim=2;
-
-    /// internally used constants
-    const double constraint_data[mDim][2] = {
-        {  2.0, 0.0 },
-        { -1.0, 1.0 },
-    };
-
+  /// internally used constants
+  const double constraint_data[mDim][2] = {
+      {2.0, 0.0},
+      {-1.0, 1.0},
+  };
 };
 
 } // namespace opttest
