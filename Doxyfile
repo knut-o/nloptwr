@@ -59,8 +59,8 @@ EXTRACT_STATIC         = YES
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces.
 
-INPUT                  = ./readme.md ./nloptwr ./nloptwrtest 
-USE_MDFILE_AS_MAINPAGE = readme.md
+INPUT                  = ./README.md ./nloptwr ./nloptwrtest 
+USE_MDFILE_AS_MAINPAGE = README.md
 
 
 # If the value of the INPUT tag contains directories, you can use the 
