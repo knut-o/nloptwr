@@ -88,7 +88,7 @@ target_compile_features(${NLOPTWR_BIN_a1} PRIVATE cxx_std_${CMAKE_CXX_STANDARD} 
 
 # =========================================================================
 
-TARGET_LINK_LIBRARIES( 
+TARGET_LINK_LIBRARIES(
         ${NLOPTWR_BIN_01}
         PRIVATE
         nloptwrtest
@@ -97,7 +97,7 @@ TARGET_LINK_LIBRARIES(
         ${NLOPTCXX_LIBS}
 )
 
-TARGET_LINK_LIBRARIES( 
+TARGET_LINK_LIBRARIES(
         ${NLOPTWR_BIN_02}
         PRIVATE
         nloptwrtest
@@ -106,7 +106,7 @@ TARGET_LINK_LIBRARIES(
         ${NLOPTCXX_LIBS}
 )
 
-TARGET_LINK_LIBRARIES( 
+TARGET_LINK_LIBRARIES(
         ${NLOPTWR_BIN_03}
         PRIVATE
         nloptwrtest
@@ -115,7 +115,7 @@ TARGET_LINK_LIBRARIES(
         ${NLOPTCXX_LIBS}
 )
 
-TARGET_LINK_LIBRARIES( 
+TARGET_LINK_LIBRARIES(
         ${NLOPTWR_BIN_04}
         PRIVATE
         nloptwrtest
@@ -124,7 +124,7 @@ TARGET_LINK_LIBRARIES(
         ${NLOPTCXX_LIBS}
 )
 
-TARGET_LINK_LIBRARIES( 
+TARGET_LINK_LIBRARIES(
         ${NLOPTWR_BIN_05}
         # PRIVATE
         nloptwrtest
@@ -134,7 +134,7 @@ TARGET_LINK_LIBRARIES(
 )
 
 
-TARGET_LINK_LIBRARIES( 
+TARGET_LINK_LIBRARIES(
         ${NLOPTWR_BIN_06}
         # PRIVATE
         nloptwrtest
@@ -143,7 +143,7 @@ TARGET_LINK_LIBRARIES(
         ${NLOPTCXX_LIBS}
 )
 
-TARGET_LINK_LIBRARIES( 
+TARGET_LINK_LIBRARIES(
         ${NLOPTWR_BIN_a1}
         PRIVATE
         nloptwrtest
@@ -155,15 +155,15 @@ TARGET_LINK_LIBRARIES(
 # =========================================================================
 
 install(
-  TARGETS   
-        ${NLOPTWR_BIN_01} 
-        ${NLOPTWR_BIN_02} 
-        ${NLOPTWR_BIN_03} 
-        ${NLOPTWR_BIN_04} 
-        ${NLOPTWR_BIN_05} 
-        ${NLOPTWR_BIN_06} 
-        ${NLOPTWR_BIN_a1} 
-        nloptwr 
+  TARGETS
+        ${NLOPTWR_BIN_01}
+        ${NLOPTWR_BIN_02}
+        ${NLOPTWR_BIN_03}
+        ${NLOPTWR_BIN_04}
+        ${NLOPTWR_BIN_05}
+        ${NLOPTWR_BIN_06}
+        ${NLOPTWR_BIN_a1}
+        nloptwr
         # nloptwrtest
   RUNTIME   DESTINATION ${CMAKE_INSTALL_BINDIR}
   ARCHIVE   DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -194,4 +194,3 @@ ADD_TEST(NAME ${NLOPTWR_DESC_06}_LM-N   WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/
 ADD_TEST(NAME ${NLOPTWR_DESC_a1}     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/nloptwrtest COMMAND ${NLOPTWR_BIN_a1}  )
 
 # =========================================================================
-

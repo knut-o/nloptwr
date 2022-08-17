@@ -75,12 +75,12 @@ function(_OPENMP_FLAG_CANDIDATES LANG)
 endfunction(_OPENMP_FLAG_CANDIDATES)
 
 # sample openmp source code to test
-set(OpenMP_C_TEST_SOURCE 
+set(OpenMP_C_TEST_SOURCE
 "
 #include <omp.h>
-int main() { 
+int main() {
 #ifdef _OPENMP
-  return 0; 
+  return 0;
 #else
   breaks_on_purpose
 #endif
@@ -165,5 +165,3 @@ if(_OPENMP_REQUIRED_VARS)
 else()
   message(SEND_ERROR "FindOpenMP requires C or CXX language to be enabled")
 endif()
-
-
