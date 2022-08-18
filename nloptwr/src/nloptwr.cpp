@@ -210,7 +210,7 @@ void NLOptWrapper::setSubFTolAbsFactor(double val) {
 
 double NLOptWrapper::getSubFTolAbsFactor() const { return subFTolAbsFactor; }
 
-/// reduction factor of relative fuction tolerance of subopt (lower than 1)
+/// reduction factor of relative function tolerance of subopt (lower than 1)
 void NLOptWrapper::setSubFTolRelFactor(double val) {
   subFTolRelFactor = (val < 0.5) ? val : 0.5;
 }
@@ -257,7 +257,7 @@ bool NLOptWrapper::checkVectors() const {
   return result;
 }
 
-// get selecte algorithms of a given search getSearchStrategy
+// get selected algorithms of a given search getSearchStrategy
 std::vector<NLOptWrAlgorithm>
 NLOptWrapper::getSelectedAlgorithms(const NLOptWrSStrat &nloptWrSStrat) const {
   SSTRAT searchStrategy(nloptWrSStrat.getSearchStrategy());
@@ -335,7 +335,7 @@ nlopt::result NLOptWrapper::optimize(const NLOptWrSStrat &nloptWrSStrat,
   if (static_cast<long int>(dX.size()) != nDim) {
     dX.resize(nDim);
     for (long int i = 0; i < nDim; i++) {
-      // TODO: Initalization in constructor
+      // TODO: Initialization in constructor
       dX[i] = 0.00001;
     }
   }
@@ -381,8 +381,8 @@ nlopt::result NLOptWrapper::optimize(const NLOptWrSStrat &nloptWrSStrat,
 
   std::vector<NLOptWrAlgorithm> algs = getSelectedAlgorithms(nloptWrSStrat);
   if (algs.empty()) {
-    cerr << "ERROR: There are no proper algoritms found." << endl;
-    throw runtime_error("There are no proper algoritms found.");
+    cerr << "ERROR: There are no proper algorithms found." << endl;
+    throw runtime_error("There are no proper algorithms found.");
   }
 
   // for ( size_t j=0; j<algs.size(); j++ ) cout << "NLOptWrapper::optimize :
@@ -438,14 +438,14 @@ nlopt::result NLOptWrapper::optimize(const NLOptWrSStrat &nloptWrSStrat,
   if (!alg1.isMLSL()) {
     // add an inequality m(ulti-)constraint
     opt->add_inequality_mconstraint(
-        [](unsigned int m,  // number of constraints
-           double *result,  // vector of single contraint function result values
-           unsigned int n,  // number of optimization parameters
+        [](unsigned int m, // number of constraints
+           double *result, // vector of single constraint function result values
+           unsigned int n, // number of optimization parameters
            const double *x, // optimization parameters
            double *grad, void *f_data) {
           reinterpret_cast<NLOptWrapper *>(f_data)->multi_constraint(
               m,      // number of constraints
-              result, // vector of single contraint function result values
+              result, // vector of single constraint function result values
               n,      // number of optimization parameters
               x,      // optimization parameters
               grad    // gradient of constraints
@@ -455,7 +455,7 @@ nlopt::result NLOptWrapper::optimize(const NLOptWrSStrat &nloptWrSStrat,
         tolMConstraints);
   }
 
-  // set tolerances of 1st algoritm
+  // set tolerances of 1st algorithm
   opt->set_xtol_abs(getXTolAbs());
   opt->set_xtol_rel(getXTolRel());
 
@@ -503,7 +503,7 @@ nlopt::result NLOptWrapper::optimize(const NLOptWrSStrat &nloptWrSStrat,
 
     sub_opt.set_default_initial_step(initial_step);
 
-    // TODO: set tolerances of 2nd algoritm
+    // TODO: set tolerances of 2nd algorithm
 
     sub_opt.set_xtol_abs(getXTolAbsSubOpt());
     sub_opt.set_xtol_rel(getXTolRelSubOpt());
@@ -529,13 +529,13 @@ nlopt::result NLOptWrapper::optimize(const NLOptWrSStrat &nloptWrSStrat,
       sub_opt.add_inequality_mconstraint(
           [](unsigned int m, // number of constraints
              double
-                 *result, // vector of single contraint function result values
+                 *result, // vector of single constraint function result values
              unsigned int n,  // number of optimization parameters
              const double *x, // optimization parameters
              double *grad, void *f_data) {
             reinterpret_cast<NLOptWrapper *>(f_data)->multi_constraint(
                 m,      // number of constraints
-                result, // vector of single contraint function result values
+                result, // vector of single constraint function result values
                 n,      // number of optimization parameters
                 x,      // optimization parameters
                 grad    // gradient of constraints
@@ -731,7 +731,7 @@ double NLOptWrapper::f(unsigned n, const double *x1, double *fGradVal) {
 
 void NLOptWrapper::multi_constraint(
     unsigned int m,  // number of constraints
-    double *c,       // vector of single contraint function result values
+    double *c,       // vector of single constraint function result values
     unsigned int n,  // number of optimization parameters
     const double *x, // optimization parameters
     double *cGradc   // gradient of constraints

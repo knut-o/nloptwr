@@ -20,7 +20,7 @@
 namespace opttest {
 
 /**
- * diplays the search algoritm and the result of the optimization
+ * displays the search algorithm and the result of the optimization
  * @param optWr opt wrapper object
  * @param sStrat search strategy
  * @param opt_stat status of result of optimization
@@ -31,7 +31,7 @@ int display(const nloptwr::NLOptWrapper &optWr,
             double minf);
 
 /**
- * diplays the search algoritm of the optimization
+ * displays the search algorithm of the optimization
  * @param optWr opt wrapper object
  * @param sStrat search strategy
  */
@@ -39,7 +39,7 @@ int displaySearchAlgorithms(const nloptwr::NLOptWrapper &optWr,
                             const nloptwr::NLOptWrSStrat &sStrat);
 
 /**
- * diplays the result of the optimization
+ * displays the result of the optimization
  * @param optWr opt wrapper object
  * @param opt_stat status of result of optimization
  * @param minf optimized value

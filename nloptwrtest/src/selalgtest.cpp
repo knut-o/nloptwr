@@ -12,7 +12,7 @@ using namespace std;
 
 namespace opttest {
 /**
- * This function print the list of funtion names as text
+ * This function print the list of function names as text
  */
 std::string pAlgo2(const vector<nloptwr::NLOptWrAlgorithm> &a) {
   stringstream ss;
@@ -28,7 +28,7 @@ std::string pAlgo2(const vector<nloptwr::NLOptWrAlgorithm> &a) {
 }
 
 /**
- * This function print the list of funtion enums as text
+ * This function print the list of function enums as text
  */
 std::string pAlgo(const vector<nloptwr::NLOptWrAlgorithm> &a) {
   stringstream ss;
@@ -44,7 +44,7 @@ std::string pAlgo(const vector<nloptwr::NLOptWrAlgorithm> &a) {
 }
 
 /**
- * This function print the list of funtion positions as text
+ * This function print the list of function positions as text
  */
 std::string pAlgo(const vector<nlopt::algorithm> &a) {
   stringstream ss;
@@ -60,7 +60,7 @@ std::string pAlgo(const vector<nlopt::algorithm> &a) {
 }
 
 /**
- * Vector comparision
+ * Vector comparison
  */
 bool isEqual(const vector<nlopt::algorithm> &a,
              const vector<nlopt::algorithm> &b) {
@@ -76,7 +76,7 @@ bool isEqual(const vector<nlopt::algorithm> &a,
 }
 
 /**
- * Vector comparision
+ * Vector comparison
  */
 bool isEqual(const vector<nlopt::algorithm> &a,
              const vector<nloptwr::NLOptWrAlgorithm> &b) {
@@ -98,7 +98,7 @@ bool isEqual(const vector<nlopt::algorithm> &a,
 // =============================================================================
 
 /**
- * This fucntion generates a list of algoritms
+ * This function generates a list of algorithms
  * dependent of the search strategi and dimension
  * a source code text (to stdout)
  * @param nlOptParamFactory parameter parameter factory
@@ -124,7 +124,7 @@ int selAlgTestGenerate(const nloptwr::NLOptWrParamFactory &nlOptParamFactory,
   bool needsSubopt = false;
   bool uAugl = true;
 
-  // prefered algortitms provide different results:
+  // preferred algortitms provide different results:
   std::vector<nloptwr::NLOptWrAlgorithm> prefAlgs = f.getPreferedAlgorithms();
   for (size_t i = 0; i < prefAlgs.size(); i++)
     cout << "  prefAlgs[i=" << i << "] : " << prefAlgs.at(i).toString() << endl;
@@ -135,7 +135,7 @@ int selAlgTestGenerate(const nloptwr::NLOptWrParamFactory &nlOptParamFactory,
        << endl
        << " { " << endl
        << "// { nloptwr::P4PrefAlgorithm3( SerchStrat, Constr,  Grad, uALag, "
-          "dim  )  = { Algoritm, ... } },"
+          "dim  )  = { Algorithm, ... } },"
        << endl;
 
   for (size_t k = 0; k < xDimVec.size(); k++) {
@@ -176,7 +176,7 @@ int selAlgTestGenerate(const nloptwr::NLOptWrParamFactory &nlOptParamFactory,
 // =============================================================================
 
 /**
- * comparision for regression test
+ * comparison for regression test
  * @param nlOptParamFactory parameter factory
  * @param test0 solution to be compared
  * @return result: 0 is OK, otherwise is failed
@@ -219,7 +219,7 @@ int selAlgTestCompare() {
       std::tuple<nloptwr::NLOptWrSearchAlgoParam3, vector<nlopt::algorithm>>>
       test0{
           // { nloptwr::P4PrefAlgorithm3( SerchStrat, Constr,  Grad, uALag, dim
-          // )  = { Algoritm, ... } },
+          // )  = { Algorithm, ... } },
           {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::GM, false, false,
                                             false, 15),
            {nlopt::GN_MLSL, nlopt::LN_COBYLA}},
@@ -566,7 +566,7 @@ int main(int argc, const char *argv[]) {
   // parameter factory
   nloptwr::NLOptWrParamFactory nlOptParamFactory;
 
-  // flag for prefered algorithms
+  // flag for preferred algorithms
   bool usePreferedAlgoritms = false;
 
   // flag for output generation
@@ -609,7 +609,7 @@ int main(int argc, const char *argv[]) {
     // regression test
     rc = opttest::selAlgTestCompare();
 
-    cout << "The test was " << ((rc == 0) ? "" : "not") << "successfull. "
+    cout << "The test was " << ((rc == 0) ? "" : "not") << "successful. "
          << endl;
   }
 

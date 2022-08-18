@@ -64,15 +64,15 @@ public:
    */
   ~NLOptWrapper();
 
-  /** calculation of initial steps fom lower bounds, and upper bounds
+  /** calculation of initial steps from lower bounds, and upper bounds
    * @param numberOfSteps (default: 15)
    */
   void calculateInitialStep(double numberOfSteps = 15);
 
   /**
-   * get selected algoritms
+   * get selected algorithms
    * @param nloptWrSStrat selection criteria
-   * @return selected algoithm objects
+   * @return selected algorithm objects
    */
   std::vector<NLOptWrAlgorithm>
   getSelectedAlgorithms(const NLOptWrSStrat &nloptWrSStrat) const;
@@ -113,13 +113,13 @@ public:
    */
   static const char *getStringOfResult(nlopt::result r);
 
-  /** set difference of differntial quotient
+  /** set difference of differential quotient
    * @param val value (default: 1e-7)
    */
   void setDx(double val = 1.0E-7);
 
   /**
-   * set differece of differntial quotient
+   * set difference of differential quotient
    * @param vals difference for differential quotients
    */
   void setDx(const std::vector<double> &vals);
@@ -131,37 +131,37 @@ public:
   // ------------------------------------------------------------------------------------------------
 
   /**
-   * ask for prefered algorithm
+   * ask for preferred algorithm
    * @param p4pAlg search parameter
-   * @return flag (true if a prefered algorithm exists)
+   * @return flag (true if a preferred algorithm exists)
    */
   bool hasPreferedAlgorithms() const;
 
   /**
-   * delete all prefered algorithms
+   * delete all preferred algorithms
    */
   void deletePreferedAlgorithms();
 
   /**
-   * set a prefered algorithm
+   * set a preferred algorithm
    * @param algx enum of algorithm
    * @param xDimMin minimal size of arguments (<=0 means unchanged)
    * @param xDimMax maximal number of arguments (0 means unlimited)
-   * @return flag (true if a prefered algorithm is deleted)
+   * @return flag (true if a preferred algorithm is deleted)
    */
   void setPreferedAlgorithm(nlopt::algorithm algx, int xDimMin = -1,
                             int xDimMax = 0);
 
   /**
-   * set a prefered algorithm
+   * set a preferred algorithm
    * @param algxs enums of algorithms
-   * @return flag (true if a prefered algorithm is deleted)
+   * @return flag (true if a preferred algorithm is deleted)
    */
   void setPreferedAlgorithms(const std::vector<nlopt::algorithm> &algxs);
 
   /**
-   * get prefered algorithms
-   * @return flag (true if a prefered algorithm is deleted)
+   * get preferred algorithms
+   * @return flag (true if a preferred algorithm is deleted)
    */
   const std::vector<NLOptWrAlgorithm> &getPreferedAlgorithms() const;
 
@@ -222,10 +222,10 @@ public:
 
   // ------------------------------------------------------------------------------------------------
 
-  /// set the reduction factor of absolute fucntion tolerance of subopt
+  /// set the reduction factor of absolute function tolerance of subopt
   void setSubFTolAbsFactor(double val = 0.1);
 
-  /// get the reduction factor of absolute fucntion tolerance of subopt
+  /// get the reduction factor of absolute function tolerance of subopt
   double getSubFTolAbsFactor() const;
 
   /// set the reduction factor of relative function tolerance of subopt
@@ -398,7 +398,7 @@ private:
   // =======================================
 
 protected:
-  /// chached function arguments, values, constraints
+  /// cached function arguments, values, constraints
   FArg fArgs;
 
   /// function arguments (Threads)
@@ -452,7 +452,7 @@ private:
   /**
    * internally used constraints function
    * @param m number of constraints
-   * @param c vector of single contraint function result values
+   * @param c vector of single constraint function result values
    * @param n number of optimization parameters
    * @param x optimization parameters
    * @param cGrad gradient of constraints (array of size m*n)
