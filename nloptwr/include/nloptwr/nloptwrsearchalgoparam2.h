@@ -13,7 +13,7 @@
 namespace nloptwr {
 
 /**
- * NLOptWrSearchAlgoParam2 (=parameter for prefered algorithm)
+ * NLOptWrSearchAlgoParam2 (=parameter for preferred algorithm)
  */
 class NLOptWrSearchAlgoParam2 : public NLOptWrSearchAlgoParam {
 
@@ -21,7 +21,7 @@ public:
   /**
    * nondefault constructor
    * @param searchStrat search strategy
-   * @param hasConstr has contraints flag
+   * @param hasConstr has constraints flag
    * @param useGrad use gradient flag
    * @param useAugLagBeforeMlsl use Augmented Lagrangian befoe MLSL flag
    */

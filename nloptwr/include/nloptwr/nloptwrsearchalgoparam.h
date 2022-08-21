@@ -11,7 +11,7 @@
 namespace nloptwr {
 
 /**
- * NLOptWrSearchAlgoParam (=parameter for prefered algorithm)
+ * NLOptWrSearchAlgoParam (=parameter for preferred algorithm)
  */
 class NLOptWrSearchAlgoParam {
 
@@ -19,7 +19,7 @@ public:
   /**
    * nondefault constructor
    * @param searchStrat search strategy
-   * @param hasConstr has contraints flag
+   * @param hasConstr has constraints flag
    * @param useGrad use gradient flag
    */
   NLOptWrSearchAlgoParam(SSTRAT searchStrat, bool hasConstr,
@@ -40,7 +40,7 @@ public:
   /// get search strategy
   SSTRAT getSearchStrategy() const;
 
-  /// get has contraints flag
+  /// get has constraints flag
   bool getHasContraints() const;
 
   /// get use gradient flag

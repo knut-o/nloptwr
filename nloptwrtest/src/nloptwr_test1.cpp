@@ -59,7 +59,7 @@ public:
   /**
    * clone method
    * is important for parallelization
-   * @return refernce of clone (of this object)
+   * @return reference of clone (of this object)
    */
   oif::OptFknBase *clone() const { return (new PDemo01(*this)); }
 };
@@ -74,7 +74,7 @@ public:
 // int opttest1(bool useGrad)
 int opttest1(bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
              int maxTimeSec = 400) {
-  // retun code
+  // return code
   int rc = 0;
 
   // number of threads ("0" means autodetect)

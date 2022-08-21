@@ -85,7 +85,7 @@ public:
   virtual std::vector<double> getXInitial() const = 0;
 
   /**
-   * get (empty) vector of contraints
+   * get (empty) vector of constraints
    */
   std::vector<double> getZeroNeConstraintVec();
 

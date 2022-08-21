@@ -12,8 +12,8 @@ namespace nloptwr {
  * category of search strategy
  * N = NONE: No supported search strategy
  * L = Local search strategy
- * G = Gloabal search strategy
- * R = Random serach strategy
+ * G = Global search strategy
+ * R = Random search strategy
  * GM = Global meta saerch strategy
  * LM = Local meta search strategy
  */
@@ -58,12 +58,12 @@ bool isMetaSearchStrategy(SSTRAT strat);
 /**
  * test if is a stochastic strategy of strategy
  * @param strat search strategy
- * @return result (true means stocastic search strategy)
+ * @return result (true means stochastic search strategy)
  */
 bool isSearchStrategyR(SSTRAT strat);
 
 /**
- * test if the algoritm is a local or global
+ * test if the algorithm is a local or global
  * @param strat search strategy
  * @param searchLocalOrGlobal flag (true if it is local or global search)
  * @return result (true means local or global search strategy)
@@ -84,7 +84,7 @@ SSTRAT getStrategyFromString(const std::string &src,
 
 /**
  * @class NLOptWrAlgorithm
- * optimiztion algoritm
+ * optimization algorithm
  * This class stores properties of the algorithm
  */
 class NLOptWrAlgorithm {
@@ -214,10 +214,10 @@ public:
    */
   bool isVectorStorage() const;
 
-  /// comparision operator
+  /// comparison operator
   bool operator<(const NLOptWrAlgorithm &rhs) const;
 
-  /// comparision operator
+  /// comparison operator
   bool operator==(const NLOptWrAlgorithm &rhs) const;
 
   /// to string

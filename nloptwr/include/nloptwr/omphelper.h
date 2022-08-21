@@ -5,7 +5,7 @@
 namespace utl {
 
 /**
- * This class is an OpenMP helper for convienence
+ * This class is an OpenMP helper for convenience
  */
 class OmpHelper {
 
@@ -26,7 +26,7 @@ public:
   void setStart();
 
   /**
-   * set end for mesurement of time
+   * set end for measurement of time
    */
   void setEnd();
 

@@ -53,7 +53,7 @@ vector<NLOptWrAlgorithm> NLOptWrParamFactory::getAlgorithm(
   // p4pAlg.toString() << endl;
 
   NLOptWrSearchAlgoParam3 p4pAlg(p4pAlg0);
-  // local optimizations without constraints do not need meta algoritms at all
+  // local optimizations without constraints do not need meta algorithms at all
   if (p4pAlg0.getSearchStrategy() == SSTRAT::LM &&
       !p4pAlg0.getHasContraints()) {
     p4pAlg = NLOptWrSearchAlgoParam3(
@@ -105,10 +105,10 @@ vector<NLOptWrAlgorithm> NLOptWrParamFactory::getAlgorithm(
            << p4pAlg.toString()
            << ", searchStrategy=" << static_cast<int>(searchStrategy)
            << ",  mainStrategy2=" << static_cast<int>(mainStrategy2) << endl;
-    // NOTE: case of no constraints: add Prameter: hasConstraints
+    // NOTE: case of no constraints: add Parameter: hasConstraints
     foundAlgorithm = findSearchAlgorithmLG(
         p4pAlg, xDim, hasConstraints,
-        result); // TODO: case of no constraints: add Prameter: hasConstraints
+        result); // TODO: case of no constraints: add Parameter: hasConstraints
     if (!foundAlgorithm) {
       mainStrategy2 = getMetaSearchStrategy(mainStrategy);
       p4pAlg1.setSearchStrategy(mainStrategy2);
@@ -384,7 +384,7 @@ bool NLOptWrParamFactory::findSearchAlgorithmAugLag(
 // ==================================================================================================
 // ==================================================================================================
 
-/// TODO: Don't ignore algoritms when no constraints exists!!!!
+/// TODO: Don't ignore algorithms when no constraints exists!!!!
 bool NLOptWrParamFactory::findSearchAlgorithmLG(
     const NLOptWrSearchAlgoParam &p4pAlg1, std::size_t xDim,
     bool hasConstraints, vector<NLOptWrAlgorithm> &res) const {
@@ -407,7 +407,7 @@ bool NLOptWrParamFactory::findSearchAlgorithmLG(
   bool searchLocalOrGlobal = false;
   bool isNotMLSL = true;
 
-  // TODO: Do not exclude constraint capable alogorithms!!!!
+  // TODO: Do not exclude constraint capable algorithms!!!!
   rc = findSearchAlgorithm(p4pAlg1Sub, xDim, ignoreConstraints,
                            searchLocalOrGlobal, isNotMLSL, res1);
 
@@ -656,7 +656,7 @@ bool NLOptWrParamFactory::isMLSL(std::size_t idx) const {
 // static
 const std::vector<class NLOptWrAlgorithm> NLOptWrParamFactory::nlOptAlgorithms{
 
-    // enum(agorithm)                name(agorithm)                STRAT  GRAD
+    // enum(algorithm)                name(algorithm)                STRAT  GRAD
     // NEC    nSUB  Min Max
     {nlopt::LN_AUGLAG_EQ, "LN_AUGLAG_EQ", SSTRAT::N, false, true, true, 1, 0},
     {nlopt::LD_AUGLAG_EQ, "LD_AUGLAG_EQ", SSTRAT::N, true, true, true, 1, 0},

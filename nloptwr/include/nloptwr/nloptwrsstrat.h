@@ -11,7 +11,7 @@
 namespace nloptwr {
 
 /**
- * NloptWrSStrat (=parameter for prefered algorithm)
+ * NloptWrSStrat (=parameter for preferred algorithm)
  */
 class NLOptWrSStrat {
 
@@ -20,7 +20,7 @@ public:
    * nondefault constructor
    * @param searchStrat search strategy
    * @param useGrad use gradient flag
-   * @param useAugLagBeforeMlsl use Augmented Lagrangian befor MLSL flag
+   * @param useAugLagBeforeMlsl use Augmented Lagrangian before MLSL flag
    */
   NLOptWrSStrat(SSTRAT searchStrat, bool useGrad = true,
                 bool useAugLagBeforeMlsl = true);

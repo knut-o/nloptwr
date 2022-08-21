@@ -89,7 +89,7 @@ public:
 
   /**
    * clone method
-   * @return refernce of clone (of this object)
+   * @return reference of clone (of this object)
    */
   virtual oif::OptFknBase *clone() const override;
 
