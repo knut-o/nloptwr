@@ -1,16 +1,16 @@
 # Project NLOptWR
 
-The name of program ***NLOptWR*** is an abreviation of an wrapper of ***NLOPT***.
+The name of program ***NLOptWR*** is an abbreviation of an wrapper of ***NLOPT***.
 
 ## Description
 
 The program ***NLOptWR*** is an extension to the Program **NLOPT**.
 Initially it was started a an experiment to use the Program **NLOPT** more easyly.
 
-The program has the folowing functionalities:
+The program has the following functionalities:
 
-1. ***C++ API***  
-2. ***rule based selection of algoritms***  
+1. ***C++ API***
+2. ***rule based selection of algorithms***
 3. ***numerical calculation of gradients*** in parallel with **OpenMP** if needed</li>
 
 
@@ -25,26 +25,26 @@ The class ***oif::OptFknBase*** is an interface class can be derived.
 
 For less implementation the derived class ***oif::OptFknClass*** can be derived.
 
-The remaining following functions have to be implementd:
+The remaining following functions have to be implemented:
 
 <ol start="1">
   <li>virtual <b>double optFktn ( const std::vector<double>& x, std::vector<double>& c )</b>
-     override; 
+     override;
     // target function
 </li>
-  <li>virtual <b>void initialize ( double lb, double ub, double xInit )</b>; 
+  <li>virtual <b>void initialize ( double lb, double ub, double xInit )</b>;
     // initialize function
 </li>
-<li>virtual <b>oif::OptFknBase* clone() const</b> 
-    override; 
+<li>virtual <b>oif::OptFknBase* clone() const</b>
+    override;
     // clone method
 </li>
 </ol>
 
-The function return the function value. 
+The function return the function value.
 
-* "x" contains the function arguments. 
-* "c" are the constraints (c[i] <= 0). 
+* "x" contains the function arguments.
+* "c" are the constraints (c[i] <= 0).
 * "lb" is the lower bound
 * "ub" is the upper bound
 * "xInit" is the initial value
@@ -56,33 +56,33 @@ The class ***PDemo01*** in the file "nloptwr_test1.cpp" in a example.
 An instance of parameter class ***nloptwr::NLOptWrSStrat*** can be used to select the search methods.
 The constructor of this class has three arguments:
 
-1. ***nloptwr::SSTRAT***  
+1. ***nloptwr::SSTRAT***
         // enum of search strategies
-2. ***useGrad***  
+2. ***useGrad***
         // usage of gradient methods (default=true)
-3. ***useAugLagBeforeMlsl***   
+3. ***useAugLagBeforeMlsl***
         // prefer Augmented Lagrangian before MLSL (default=true)
- 
+
 The emun class <b>nloptwr::SSTRAT</b> can have following valid values:
 
- * ***L*** = Local search strategy is prefered
- * ***G*** = Global search strategy is choosen
- * ***R*** = Random search strategy is choosen (NLOPT has no accelertion with gradient at all)
- * ***GM*** = Global meta search strategy is choosen
- * ***LM*** = Local meta search strategy is choosen (sometimes a global search strategy is selected)
+ * ***L*** = Local search strategy is preferred
+ * ***G*** = Global search strategy is chosen
+ * ***R*** = Random search strategy is chosen (NLOPT has no acceleration with gradient at all)
+ * ***GM*** = Global meta search strategy is chosen
+ * ***LM*** = Local meta search strategy is chosen (sometimes a global search strategy is selected)
 
-The selected methods also depends on the number of parameters (see ***nloptwr::NLOptWrSearchAlgoParam3*** and ***nloptwr::NLOptWrParamFactory***). 
+The selected methods also depends on the number of parameters (see ***nloptwr::NLOptWrSearchAlgoParam3*** and ***nloptwr::NLOptWrParamFactory***).
 
 ### Calculation of gradients
 
 The numerical calculation can be activated with the flag ***useGrad*** of ***nloptwr::NLOptWrSStrat***.
-The numerical calculation is done automatially in parallel with ***OpenMP***.
+The numerical calculation is done automatically in parallel with ***OpenMP***.
 Necessary is a correct working clone method.
 
 The default method of numerical derivation is the 2-point formula.
 
-An experimental feature is an polynom regression. 
-This feature can be activated with 
+An experimental feature is an polynom regression.
+This feature can be activated with
 the call ***NLOptWrapper::setNewDerivMethod(true)*** method.
 The following parameters can changed:
 
@@ -97,7 +97,7 @@ The package needs the following packages:
 
 * c-compiler (gcc and g++) und libc
 * OpenMP (libomp-dev, libgomp1)
-* NLOPT instllation with C++ extensions (libnlopt-dev,  libnlopt0)
+* NLOPT installation with C++ extensions (libnlopt-dev,  libnlopt0)
 
 The the Debian ".deb" 64-bit binary package (*Bullseye*) has the following dependencies:
 libc6, libgcc-s1, libgomp1, libnlopt-cxx0, libstdc++6
@@ -109,7 +109,7 @@ The directory "cmake" contains some files (FindNLOPT.cmake, FindNLOPTCXX.cmake  
 ### Installing
 
 You can get this program from git repository.
-Under LINUX (Debian or RPM based systems, X86, 64-bit) 
+Under LINUX (Debian or RPM based systems, X86, 64-bit)
 you can install the library and the demo-programs from package.
 
 Other system can install the package from source.
@@ -128,7 +128,7 @@ The precompiled demo programs can be launched manually:
 
 The test can be started with "ctest" after "cmake" and "build".
 
-#### Create your own optimiztion program with NLOptWR
+#### Create your own optimization program with NLOptWR
 
 ##### Create your own class with your tatget function
 
@@ -158,15 +158,15 @@ Any advise for common problems or issues.
 
 ## Authors
 
-Contributors and contact info: 
-[Knut Opherden](knut.opherden@hotmail.com) 
+Contributors and contact info:
+[Knut Opherden](knut.opherden@hotmail.com)
 [knut.opherden@hotmail.com](knut.opherden@hotmail.com)
 
 ## Links
 
 [NLOPT](https://nlopt.readthedocs.io/en/latest/#nlopt_1)
 
-[NLOPT Algoritms](https://nlopt.readthedocs.io/en/latest/NLopt_Algorithms/)
+[NLOPT Algorithms](https://nlopt.readthedocs.io/en/latest/NLopt_Algorithms/)
 
 [NLOPT C++ Reference](https://nlopt.readthedocs.io/en/latest/NLopt_C-plus-plus_Reference/)
 
@@ -188,6 +188,5 @@ Contributors and contact info:
 
 This project is licensed under the [GNU AFFERO GENERAL PUBLIC LICENSE, Version 3](https://www.gnu.org/licenses/agpl-3.0.txtl) from 19 November 2007 - see the [LICENSE](https://github.com/knut-o/nloptwr/blob/main/LICENSE) file for details.
 
-                       
-## Acknowledgments
 
+## Acknowledgments

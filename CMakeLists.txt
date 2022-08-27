@@ -73,17 +73,17 @@ if (VCPKG_FLAG)
 
     find_package(NLopt CONFIG REQUIRED)
 	message("NLOPT_LIBRARIES (vcpkg):      NLopt::nlopt ")
-    
+
     # target_link_libraries(main PRIVATE NLopt::nlopt)
     SET(NLOPTCXX_LIBS NLopt::nlopt )
-    
+
     # MESSAGE("VCPKG_INSTALLED_DIR:  ${VCPKG_INSTALLED_DIR}")
     set(VCPKG_INCL "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/include")
     MESSAGE("VCPKG_INSTALLED_DIR/VCPKG_TARGET_TRIPLET/include:  ${VCPKG_INCL}")
-    
-else() 
+
+else()
     # do not use vcpkg
-    
+
     find_package(NLOPT  REQUIRED)
     if (NLOPT_FOUND)
 	    message("NLOPT_LIBRARY (no vcpkg): ${NLOPT_LIBRARY} ")
@@ -97,7 +97,7 @@ else()
     else(NLOPTCXX_FOUND)
         message("NLOPTCXX not found. ")
     endif(NLOPTCXX_FOUND)
-    
+
     SET(NLOPTCXX_LIBS ${NLOPT_LIBRARY} ${NLOPTCXX_LIBRARY} )
 
 endif()
@@ -127,7 +127,7 @@ if (CMAKE_BUILD_TYPE MATCHES "^[Rr]elease")
         message("CMAKE_CURRENT_BINARY_DIR: ${CMAKE_CURRENT_BINARY_DIR}")
         message("DOXYGEN_EXECUTABLE:       ${DOXYGEN_EXECUTABLE}")
         message("CMAKE_CURRENT_LIST_DIR:   ${CMAKE_CURRENT_LIST_DIR}")
-        
+
         # SET(DOXYGEN_IN  ${CMAKE_CURRENT_LIST_DIR}/Doxyfile.in)
         SET(DOXYGEN_OUT ${CMAKE_CURRENT_LIST_DIR}/Doxyfile)
 
@@ -137,7 +137,7 @@ if (CMAKE_BUILD_TYPE MATCHES "^[Rr]elease")
 
         # note the option ALL which allows to build the docs together with the application
         add_custom_target( doc_doxygen ALL
-            COMMAND ${DOXYGEN_EXECUTABLE} 
+            COMMAND ${DOXYGEN_EXECUTABLE}
             WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
             COMMENT "Generating API documentation with Doxygen"
             VERBATIM )
@@ -154,9 +154,9 @@ SET (NLOPTWR_VERSION_MINOR "1")
 # ----------------------------
 
 SET (CPACK_SOURCE_IGNORE_FILES build/*,./.kdev4,.git/* )
-SET(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/readme.md")
+SET(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 
-# NEU 
+# NEU
 SET (CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 IF (UNIX)
@@ -189,4 +189,3 @@ include (CPack)
 ENABLE_TESTING()
 
 # =========================================================================
-

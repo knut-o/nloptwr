@@ -6,9 +6,9 @@ on:
       - created
       - edited
   push:
-    branches: [ "main", "devel" ]
+    branches: [ "main", "dev" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -41,7 +41,7 @@ jobs:
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: |
         echo "Configure CMake for nloptwr"
-        CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} 
+        CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
         echo "Configure CMake completed?"
     # ---------------------------------------------------------------
     - name: Build
@@ -62,21 +62,21 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y rpm graphviz doxygen
-        mkdir -p ${{github.workspace}}/build 
+        mkdir -p ${{github.workspace}}/build
     # ---------------------------------------------------------------
     - name: Create packages
-      run: |    
+      run: |
         cd  ${{github.workspace}}/build
         cpack
     # ---------------------------------------------------------------
     - name: List content of package
-      run: |    
+      run: |
         cd  ${{github.workspace}}/build
         ls -l *.deb
         dpkg -c ./*.deb
     # ---------------------------------------------------------------
     - name: Install package
-      run: |    
+      run: |
         cd  ${{github.workspace}}/build
         sudo dpkg -i ./*.deb
         echo "dpkg -i ./*.deb completed"
@@ -91,7 +91,7 @@ jobs:
 #        mkdir -p ${{github.workspace}}/example/build
 #        cd       ${{github.workspace}}/example
 #        echo "Configure CMake example: pwd=$(pwd)"
-#        CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -B ${{github.workspace}}/example/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} 
+#        CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -B ${{github.workspace}}/example/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 #        echo "Configure CMake completed?"
 #    # ---------------------------------------------------------------
 #    - name: Example build
@@ -125,7 +125,7 @@ jobs:
 #      run: |
 #        which vcpkg
 #        # ls -l /usr/local/share/vcpkg
-#        # find /usr -type f -iname vcpkg.cmake 
+#        # find /usr -type f -iname vcpkg.cmake
 #        ls -l                /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
 #        CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake vcpkg install nlopt
 #    # ---------------------------------------------------------------
@@ -135,7 +135,7 @@ jobs:
 #        mkdir -p ${{github.workspace}}/build
 #        ls -l /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
 #        # cd       ${{github.workspace}}/build
-#        CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -S . -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} 
+#        CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -S . -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 #        echo "Configure CMake completed?"
 ##
 ## =========================================
@@ -145,7 +145,7 @@ jobs:
 ##      run: |
 ##        brew update
 ##        # brew vcpkg
-##      
+##
 #    - name: Install NLOPT
 #      run: |
 #        echo "vcpkg install nlopt"
@@ -159,9 +159,9 @@ jobs:
 #    - name: Configure CMake for nloptwr
 #      run: |
 #        echo "Configure CMake"
-#        CMAKE_TOOLCHAIN_FILE=${{github.workspace}}/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} 
+#        CMAKE_TOOLCHAIN_FILE=${{github.workspace}}/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 #        echo "Configure CMake completed?"
-#        
+#
 #    # ---------------------------------------------------------------
 #    - name: Build
 #      run: |
@@ -175,7 +175,7 @@ jobs:
 #        mkdir -p ${{github.workspace}}/build
 #        cd       ${{github.workspace}}/build
 #        ctest -C ${{env.BUILD_TYPE}}
-#        
+#
 # ====================================================================
 #
 #  build:
@@ -187,12 +187,12 @@ jobs:
 #    steps:
 #    - name: checkout
 #      uses: actions/checkout@v3
-#      
+#
 #    - name: Install vcpkg
 #      run: |
 #        brew update
 #        # brew vcpkg
-#      
+#
 #    - name: Install NLOPT
 #      run: |
 #        echo "vcpkg install nlopt"
@@ -203,13 +203,13 @@ jobs:
 #        cd       ${{github.workspace}}/VcPkg/vcpkg
 #        ${{github.workspace}}/VcPkg/vcpkg/bootstrap-vcpkg.sh
 #        ${{github.workspace}}/VcPkg/vcpkg/vcpkg install nlopt
-#        
+#
 #    - name: Configure CMake
 #      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
 #      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
 #      run: |
 #        echo "Configure CMake"
-#        CMAKE_TOOLCHAIN_FILE=${{github.workspace}}/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} 
+#        CMAKE_TOOLCHAIN_FILE=${{github.workspace}}/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 #        echo "Configure CMake completed?"
 #
 #    - name: Build
@@ -255,8 +255,8 @@ jobs:
 ##    - name: Install nlopt
 ##      run: |
 ##        dir C:\vcpkg\scripts\buildsystems\vcpkg.cmake
-##        setx CMAKE_TOOLCHAIN_FILE C:\vcpkg\scripts\buildsystems\vcpkg.cmake 
-##        # set CMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake 
+##        setx CMAKE_TOOLCHAIN_FILE C:\vcpkg\scripts\buildsystems\vcpkg.cmake
+##        # set CMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake
 ##        # set CMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
 ##        vcpkg install nlopt
 #
@@ -265,15 +265,15 @@ jobs:
 ##    - name: Configure CMake
 ##      run: |
 ##        echo "Configure CMake"
-##        CMAKE_TOOLCHAIN_FILE=${{github.workspace}}/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} 
+##        CMAKE_TOOLCHAIN_FILE=${{github.workspace}}/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 ##        echo "Configure CMake completed?"
 ##    - name: Configure CMake
 ##      run: |
 ##        echo "Configure CMake"
 ##        mkdir -p ${{github.workspace}}/build
 ##        #
-##        cmake -S . -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} 
-##        # setx CMAKE_TOOLCHAIN_FILE C:\vcpkg\scripts\buildsystems\vcpkg.cmake 
-##        # set CMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake 
+##        cmake -S . -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+##        # setx CMAKE_TOOLCHAIN_FILE C:\vcpkg\scripts\buildsystems\vcpkg.cmake
+##        # set CMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake
 ##        # set CMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake
 ##        echo  "Configure CMake completed?"

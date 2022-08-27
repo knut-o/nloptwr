@@ -1,7 +1,7 @@
 
 # =========================================================================
 
-set(NLOPWR_INCLUDE_FILES 
+set(NLOPWR_INCLUDE_FILES
     include/nloptwr/omphelper.h
     include/nloptwr/nloptwralgorithm.h
     include/nloptwr/nloptwrsearchalgoparam.h
@@ -18,7 +18,7 @@ set(NLOPWR_INCLUDE_FILES
 # =========================================================================
 
 # compile all cpp files
-set( nloptwr_SRCS 
+set( nloptwr_SRCS
     src/omphelper.cpp
     src/nloptwralgorithm.cpp
     src/nloptwrsearchalgoparam.cpp
@@ -48,10 +48,10 @@ include_directories(
 # =========================================================================
 
 # Make sure the linker can find the Hello library once it is built.
-link_directories( 
-	${PROJECT_BINARY_DIR}/nloptwr 
+link_directories(
+	${PROJECT_BINARY_DIR}/nloptwr
 	${PROJECT_BINARY_DIR}/nloptwrtest
-	) 
+	)
 
 # =========================================================================
 
@@ -69,7 +69,7 @@ target_include_directories(nloptwr
         $<INSTALL_INTERFACE:include>
         )
 
-TARGET_LINK_LIBRARIES( 
+TARGET_LINK_LIBRARIES(
         nloptwr
         OpenMP::OpenMP_CXX
         # ${NLOPTCXX_LIBS}
@@ -83,7 +83,7 @@ target_compile_features(nloptwr PRIVATE cxx_std_${CMAKE_CXX_STANDARD} )
 set (CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 install(
-  TARGETS   nloptwr 
+  TARGETS   nloptwr
   RUNTIME   DESTINATION ${CMAKE_INSTALL_BINDIR}
   ARCHIVE   DESTINATION ${CMAKE_INSTALL_LIBDIR}
   LIBRARY   DESTINATION ${CMAKE_INSTALL_LIBDIR}

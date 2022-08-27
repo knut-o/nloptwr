@@ -10,25 +10,13 @@ using namespace std;
 
 #endif
 
+namespace utl {
 
-namespace utl
-{
+OmpHelper::OmpHelper() { setStart(); }
 
+OmpHelper::~OmpHelper() {}
 
-
-OmpHelper::OmpHelper()
-{
-  setStart();
-}
-
-
-OmpHelper::~OmpHelper()
-{
-
-}
-
-void OmpHelper::setStart()
-{
+void OmpHelper::setStart() {
 #ifdef _OPENMP
   tStart = omp_get_wtime();
 #else
@@ -36,8 +24,7 @@ void OmpHelper::setStart()
 #endif
 }
 
-void OmpHelper::setEnd()
-{
+void OmpHelper::setEnd() {
 #ifdef _OPENMP
   tEnd = omp_get_wtime();
 #else
@@ -45,10 +32,9 @@ void OmpHelper::setEnd()
 #endif
 }
 
-double OmpHelper::getDuration() const
-{
+double OmpHelper::getDuration() const {
 
-  double result = ( tEnd - tStart );
+  double result = (tEnd - tStart);
 
 #ifndef _OPENMP
   result /= CLOCKS_PER_SEC;
@@ -57,59 +43,43 @@ double OmpHelper::getDuration() const
   return result;
 }
 
-
-
 // static
 // inline
-int OmpHelper::getNumProcs()
-{
+int OmpHelper::getNumProcs() {
 
   return
 #ifdef _OPENMP
-    omp_get_num_procs()
+      omp_get_num_procs()
 #else
-    1
+      1
 #endif
-    ;
-
-}
-
-
-// static
-// inline
-int OmpHelper::getNumThreads()
-{
-
-  return
-#ifdef _OPENMP
-    omp_get_num_threads()
-#else
-    1
-#endif
-    ;
-
+          ;
 }
 
 // static
 // inline
-int OmpHelper::getThreadNum()
-{
+int OmpHelper::getNumThreads() {
 
   return
 #ifdef _OPENMP
-    omp_get_thread_num()
+      omp_get_num_threads()
 #else
-    0
+      1
 #endif
-    ;
-
+          ;
 }
 
+// static
+// inline
+int OmpHelper::getThreadNum() {
+
+  return
+#ifdef _OPENMP
+      omp_get_thread_num()
+#else
+      0
+#endif
+          ;
+}
 
 } // namespace utl
-
-
-
-
-
-

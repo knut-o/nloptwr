@@ -101,17 +101,17 @@ if (VCPKG_FLAG)
 
     find_package(NLopt CONFIG REQUIRED)
 	message("NLOPT_LIBRARIES (vcpkg):      NLopt::nlopt ")
-    
+
     # target_link_libraries(main PRIVATE NLopt::nlopt)
     SET(NLOPTCXX_LIBS NLopt::nlopt )
-    
+
     MESSAGE("VCPKG_INSTALLED_DIR:  ${VCPKG_INSTALLED_DIR}")
     set(VCPKG_INCL "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/include")
     MESSAGE("VCPKG_INSTALLED_DIR/VCPKG_TARGET_TRIPLET/include:  ${VCPKG_INCL}")
-    
-else() 
+
+else()
     # do not use vcpkg
-    
+
     find_package(NLOPT  REQUIRED)
     if (NLOPT_FOUND)
 	    message("NLOPT_LIBRARY (no vcpkg): ${NLOPT_LIBRARY} ")
@@ -125,7 +125,7 @@ else()
     else(NLOPTCXX_FOUND)
         message("NLOPTCXX not found. ")
     endif(NLOPTCXX_FOUND)
-    
+
     SET(NLOPTCXX_LIBS ${NLOPT_LIBRARY} ${NLOPTCXX_LIBRARY} )
 
 endif()
@@ -154,7 +154,7 @@ include_directories(
 add_executable(${NLOPTWR_EXPAMPLE1} ${nloptw_example_SRCS})
 
 
-TARGET_LINK_LIBRARIES( 
+TARGET_LINK_LIBRARIES(
         ${NLOPTWR_EXPAMPLE1}
 <<<<<<< HEAD
         ${NLOPTWR_LIBRARY}
@@ -174,4 +174,3 @@ ENABLE_TESTING()
 ADD_TEST(NAME ${NLOPTWR_EXPAMPLE1} COMMAND ${NLOPTWR_EXPAMPLE1}  )
 
 # =========================================================================
-

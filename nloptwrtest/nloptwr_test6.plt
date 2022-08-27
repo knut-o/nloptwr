@@ -25,9 +25,8 @@ set mxtics 5
 # set key left bottom
 set nokey     # no key
 
-set terminal pdf colour 
+set terminal pdf colour
 set output 'nloptwr_test6.pdf'
 # plot "nloptwr_test6.dat" using 2:3 with linespoints
-plot "nloptwr_test6.dat" using 2:3 with lines 
+plot "nloptwr_test6.dat" using 2:3 with lines
 # pause -1
-
