@@ -97,19 +97,22 @@ public:
    *  @param rgl ability of handlich stochstic problems
    *  @param hasGrad gradient flag
    *  @param neC ability to handle nonequal constraints
+   *  @param necO ability to handle only nonequal constraints
    *  @param nSubopt flag if a subopt is needed
    *  @param minP minimal number of parameters
    *  @param maxP maximal number of parameters
    */
   NLOptWrAlgorithm(nlopt::algorithm a, const std::string &n, SSTRAT rgl,
-                   bool hasGrad, bool neC, bool nSubopt, unsigned int minP,
+                   bool hasGrad, bool neC, 
+                   // bool necO, 
+                   bool nSubopt, unsigned int minP,
                    unsigned int maxP);
 
   /// default constructor
   NLOptWrAlgorithm() = delete;
 
   /// copy constructor
-  NLOptWrAlgorithm(const NLOptWrAlgorithm &src);
+  // NLOptWrAlgorithm(const NLOptWrAlgorithm &src);
 
   /// destructor
   ~NLOptWrAlgorithm();
@@ -238,7 +241,10 @@ private:
 
   /// ability to handle nonequal constraints
   bool neConstraints;
-
+  
+  /// only ne constraints
+  // bool neOnlyConstraints;
+  
   /// subopt required
   bool needsSubOpt;
 

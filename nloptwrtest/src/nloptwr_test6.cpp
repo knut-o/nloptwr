@@ -61,6 +61,8 @@ int opttest6(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
   oif::OptFknBase &oTarget = chainWithWeights;
 
   nloptwr::NLOptWrapper optWr(oTarget, nThr);
+  
+  optWr.setPreferedAlgorithm(nlopt::LD_SLSQP);
 
   // parallel evaluations need less time
   if (useGrad)
