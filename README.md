@@ -11,11 +11,11 @@ The program has the following functionalities:
 
 1. ***C++ API***
 2. ***rule based selection of algorithms***
-3. ***numerical calculation of gradients*** in parallel with **OpenMP** if needed</li>
+3. ***numerical calculation of gradients*** in parallel with **OpenMP** if needed
 
 
 Because of numerical calculation of gradients a lot of algorithms is available.
-In case of many parameters the calculation in parallel efficient.
+In case of many parameters the calculation can be done in parallel efficient.
 
 The program does not require a implementation of object serialization with ***boost***.
 
@@ -79,15 +79,8 @@ The numerical calculation can be activated with the flag ***useGrad*** of ***nlo
 The numerical calculation is done automatically in parallel with ***OpenMP***.
 Necessary is a correct working clone method.
 
-The default method of numerical derivation is the 2-point formula.
+The method of numerical derivation is the 2-point formula.
 
-An experimental feature is an polynom regression.
-This feature can be activated with
-the call ***NLOptWrapper::setNewDerivMethod(true)*** method.
-The following parameters can changed:
-
-* NLOptWrapper::setDerivRegrDim(size_t d) // "d" dimension of regression (default: 3)
-* NLOptWrapper::setDerivRegrNoSteps(std::size_t val) // Number of steps: val >= (2*d+1)
 
 ## Getting Started
 
@@ -95,7 +88,7 @@ The following parameters can changed:
 
 The package needs the following packages:
 
-* c-compiler (gcc and g++) und libc
+* C-compiler (gcc and g++) und libc
 * OpenMP (libomp-dev, libgomp1)
 * NLOPT installation with C++ extensions (libnlopt-dev,  libnlopt0)
 
@@ -124,6 +117,8 @@ The precompiled demo programs can be launched manually:
 * nloptwr_test02
 * nloptwr_test03
 * nloptwr_test04
+* nloptwr_test05
+* nloptwr_test06
 * selalg_test
 
 The test can be started with "ctest" after "cmake" and "build".
@@ -190,3 +185,4 @@ This project is licensed under the [GNU AFFERO GENERAL PUBLIC LICENSE, Version 3
 
 
 ## Acknowledgments
+
