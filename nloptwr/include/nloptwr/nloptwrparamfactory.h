@@ -5,8 +5,7 @@
 #include "nlopt.hpp"
 #include "nloptwralgorithm.h"
 #include "nloptwrsearchalgoparam.h"
-#include "nloptwrsearchalgoparam2.h"
-#include "nloptwrsearchalgoparam3.h"
+#include "nloptwrsearchalgoparamd.h"
 
 #include <map>
 #include <string>
@@ -37,7 +36,7 @@ public:
    * @return algorithms
    */
   std::vector<NLOptWrAlgorithm>
-  getAlgorithm(const NLOptWrSearchAlgoParam3 &p4pAlg) const;
+  getAlgorithm(const NLOptWrSearchAlgoParamD &p4pAlg) const;
 
   /**
    * get a set of agorithms
@@ -55,7 +54,7 @@ public:
    * @param xDim dimension of parameter x
    */
   std::vector<NLOptWrAlgorithm>
-  getAlgorithm(const NLOptWrSearchAlgoParam2 &p4pAlg, std::size_t xDim) const;
+  getAlgorithm(const NLOptWrSearchAlgoParam &p4pAlg, std::size_t xDim) const;
 
   // ------------------------------------------------------------------------------------------------
 

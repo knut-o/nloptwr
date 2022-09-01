@@ -8,31 +8,30 @@
 #include <string>
 
 #include "nloptwrsearchalgoparam.h"
-#include "nloptwrsearchalgoparam2.h"
 
 namespace nloptwr {
 
 /**
  * Container of search parameters and dimension
  */
-class NLOptWrSearchAlgoParam3 : public NLOptWrSearchAlgoParam2 {
+class NLOptWrSearchAlgoParamD : public NLOptWrSearchAlgoParam {
 
 public:
   /**
    * constructor
    */
-  NLOptWrSearchAlgoParam3(nloptwr::SSTRAT strat, bool constr, bool grad, size_t d);
+    NLOptWrSearchAlgoParamD(nloptwr::SSTRAT strat, bool constr, bool grad, size_t d);
 
   /**
    * constructor
    */
-  NLOptWrSearchAlgoParam3(const NLOptWrSearchAlgoParam2 &alg, size_t d);
+    NLOptWrSearchAlgoParamD(const NLOptWrSearchAlgoParam &alg, size_t d);
 
   /// default constructor
-  NLOptWrSearchAlgoParam3() = delete;
+    NLOptWrSearchAlgoParamD() = delete;
 
   /// destructor
-  virtual ~NLOptWrSearchAlgoParam3();
+  virtual ~NLOptWrSearchAlgoParamD();
 
   /// det dimension
   size_t getDim() const;

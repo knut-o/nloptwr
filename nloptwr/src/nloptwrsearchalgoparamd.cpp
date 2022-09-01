@@ -1,7 +1,6 @@
 
-#include "nloptwr/nloptwrsearchalgoparam3.h"
+#include "nloptwr/nloptwrsearchalgoparamd.h"
 #include "nloptwr/nloptwrsearchalgoparam.h"
-#include "nloptwr/nloptwrsearchalgoparam2.h"
 
 #include <iomanip>
 #include <iostream> // std::cout
@@ -12,21 +11,21 @@ using namespace std;
 
 namespace nloptwr {
 
-NLOptWrSearchAlgoParam3::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT strat,
+NLOptWrSearchAlgoParamD::NLOptWrSearchAlgoParamD(nloptwr::SSTRAT strat,
                                                  bool constr, bool grad,
                                                  size_t d)
-    : NLOptWrSearchAlgoParam2(strat, constr, grad), dim(d) {}
+    : NLOptWrSearchAlgoParam(strat, constr, grad), dim(d) {}
 
-NLOptWrSearchAlgoParam3::NLOptWrSearchAlgoParam3(
-    const NLOptWrSearchAlgoParam2 &alg, size_t d)
-    : NLOptWrSearchAlgoParam2(alg), dim(d) {}
+NLOptWrSearchAlgoParamD::NLOptWrSearchAlgoParamD(
+    const NLOptWrSearchAlgoParam &alg, size_t d)
+    : NLOptWrSearchAlgoParam(alg), dim(d) {}
 
-NLOptWrSearchAlgoParam3::~NLOptWrSearchAlgoParam3() {}
+NLOptWrSearchAlgoParamD::~NLOptWrSearchAlgoParamD() {}
 
 /// det dimension
-size_t NLOptWrSearchAlgoParam3::getDim() const { return dim; }
+size_t NLOptWrSearchAlgoParamD::getDim() const { return dim; }
 
-std::string NLOptWrSearchAlgoParam3::toString() const {
+std::string NLOptWrSearchAlgoParamD::toString() const {
   stringstream ss;
 
   ss << "NLOptWrSearchAlgoParam3( "
@@ -39,7 +38,7 @@ std::string NLOptWrSearchAlgoParam3::toString() const {
   return ss.str();
 }
 
-std::string NLOptWrSearchAlgoParam3::toString2() const {
+std::string NLOptWrSearchAlgoParamD::toString2() const {
   stringstream ss;
 
   ss << "nloptwr::NLOptWrSearchAlgoParam3( "

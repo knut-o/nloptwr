@@ -3,7 +3,6 @@
 #include "nloptwr/nloptwralgorithm.h"
 
 #include "nloptwr/nloptwrsearchalgoparam.h"
-#include "nloptwr/nloptwrsearchalgoparam2.h"
 #include "nloptwr/nloptwrsearchalgoparam3.h"
 
 #include <algorithm>
@@ -34,28 +33,29 @@ vector<NLOptWrAlgorithm>
 NLOptWrParamFactory::getAlgorithm(SSTRAT searchStrategy, bool hasConstraints,
                                   bool useGradient, 
                                   std::size_t xDim) const {
-  NLOptWrSearchAlgoParam3 p4pAlg3(searchStrategy, hasConstraints, useGradient, xDim);
+    NLOptWrSearchAlgoParamD p4pAlg3(searchStrategy, hasConstraints, useGradient, xDim);
   return getAlgorithm(p4pAlg3);
 }
 
 vector<NLOptWrAlgorithm>
-NLOptWrParamFactory::getAlgorithm(const NLOptWrSearchAlgoParam2 &p4pAlg,
+NLOptWrParamFactory::getAlgorithm(const NLOptWrSearchAlgoParam &p4pAlg,
                                   std::size_t xDim) const {
-  NLOptWrSearchAlgoParam3 p4pAlg3(p4pAlg, xDim);
+    NLOptWrSearchAlgoParamD p4pAlg3(p4pAlg, xDim);
 
   return getAlgorithm(p4pAlg3);
+                                      
 }
 
 vector<NLOptWrAlgorithm> NLOptWrParamFactory::getAlgorithm(
-    const NLOptWrSearchAlgoParam3 &p4pAlg0) const {
+    const NLOptWrSearchAlgoParamD &p4pAlg0) const {
   // if (d) cout << "DEBUG: NlOptParamFactory::getAlgorithm[-1]: " <<
   // p4pAlg.toString() << endl;
 
-  NLOptWrSearchAlgoParam3 p4pAlg(p4pAlg0);
+    NLOptWrSearchAlgoParamD p4pAlg(p4pAlg0);
   // local optimizations without constraints do not need meta algorithms at all
   if (p4pAlg0.getSearchStrategy() == SSTRAT::LM &&
       !p4pAlg0.getHasContraints()) {
-    p4pAlg = NLOptWrSearchAlgoParam3(
+    p4pAlg = NLOptWrSearchAlgoParamD(
         SSTRAT::L, p4pAlg0.getHasContraints(), 
         p4pAlg0.getUseGradient(),
         p4pAlg0.getDim());
@@ -155,7 +155,7 @@ vector<NLOptWrAlgorithm> NLOptWrParamFactory::getAlgorithm(
 
   // TODO: Fallback: Stochasctic search al last!!!
   if (!foundAlgorithm) {
-    NLOptWrSearchAlgoParam2 p4pAlgR(SSTRAT::R, false, false);
+    NLOptWrSearchAlgoParam p4pAlgR(SSTRAT::R, false, false);
     if (d > 4)
       cout << "DEBUG: NlOptParamFactory::getAlgorithm[RX]: "
            << p4pAlgR.toString() << "// Fallback to R" << endl;
