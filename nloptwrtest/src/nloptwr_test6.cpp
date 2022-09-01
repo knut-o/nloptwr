@@ -62,8 +62,6 @@ int opttest6(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
 
   nloptwr::NLOptWrapper optWr(oTarget, nThr);
   
-  optWr.setPreferedAlgorithm(nlopt::LD_SLSQP);
-
   // parallel evaluations need less time
   if (useGrad)
     maxTimeSec /= static_cast<int>(optWr.getNThreads());
@@ -108,7 +106,7 @@ int opttest6(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
 
   // expected solution:
   bool isOk = true;
-  if (false && dim == 120) {
+  if (dim == 120) {
 
     double fOptExpcted = -806.770403;
     // test
@@ -157,17 +155,20 @@ int opttest6(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
 int main(int argc, char *argv[]) {
   int dim = 120;
   int maxTimeSec = 300;
-  nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::LM;
+  nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L;
   bool useGrad = true;
 
   if (argc <= 2) {
     cout << endl
          << "cout usage:" << endl
-         << " " << argv[0] << " [dim] [useGrad] [maxTimeSec] " << endl
+         << " " << argv[0] << " [dim] [useGrad] [sStrat] [maxTimeSec] " << endl
          << " # dim=dimension of problem " << endl
          << " # grad=usage of gradients (1 means with gradients (default), "
             "otherwise gradients are not used) "
          << endl
+         << " # sStrat: L=Local, LM=Local Meta., ... (default: L) "
+            "R=Random (default='"
+         << getStrategyAsString(sStrat) << "')" << endl
          << " # maxTimeSec: max. time [s] (default=" << maxTimeSec << ") "
          << endl
          << endl;
@@ -179,6 +180,8 @@ int main(int argc, char *argv[]) {
     if (i == 2)
       useGrad = (string(argv[i]) == "1");
     if (i == 3)
+      sStrat = nloptwr::getStrategyFromString(argv[i]);
+    if (i == 4)
       maxTimeSec = atoi(argv[i]);
   }
 
@@ -186,9 +189,10 @@ int main(int argc, char *argv[]) {
     dim = 1;
   }
 
-  cout << "# dim: " << dim << " " << endl;
-  cout << "# useGrad: '" << useGrad << "' " << endl;
-  cout << "# sStrat: '" << getStrategyAsString(sStrat) << "' " << endl;
+  cout << "# dim       :  " << dim << " " << endl;
+  cout << "# useGrad   :  " << useGrad << " " << endl;
+  cout << "# sStrat    : '" << getStrategyAsString(sStrat) << "' " << endl;
+  cout << "# maxTimeSec:  " << maxTimeSec << " " << endl;
 
   int rc = opttest::opttest6(dim, useGrad, sStrat, maxTimeSec);
 

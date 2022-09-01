@@ -656,8 +656,7 @@ bool NLOptWrParamFactory::isMLSL(std::size_t idx) const {
 // static
 const std::vector<class NLOptWrAlgorithm> NLOptWrParamFactory::nlOptAlgorithms{
 
-    // enum(algorithm)                name(algorithm)                STRAT  GRAD
-    // NEC    nSUB  Min Max
+    // enum(algorithm), name(algorithm), STRAT, GRAD, NEC, nSUB, Min, Max
     {nlopt::LN_AUGLAG_EQ, "LN_AUGLAG_EQ", SSTRAT::N, false, true, true, 1, 0},
     {nlopt::LD_AUGLAG_EQ, "LD_AUGLAG_EQ", SSTRAT::N, true, true, true, 1, 0},
     {nlopt::AUGLAG_EQ, "AUGLAG_EQ", SSTRAT::N, true, true, true, 1, 0},
@@ -693,9 +692,12 @@ const std::vector<class NLOptWrAlgorithm> NLOptWrParamFactory::nlOptAlgorithms{
     {nlopt::LD_VAR2, "LD_VAR2", SSTRAT::L, true, false, false, 1, 0},
 
     // ----------------------------------------------------------------------------------------------------------
+    // The algortithms LD_MMA LD_CCSAQ are not able to handle equality constraints  
+    {nlopt::LD_MMA, "LD_MMA", SSTRAT::L, true, false, false, 1, 0},
+    {nlopt::LD_CCSAQ, "LD_CCSAQ", SSTRAT::L, true, false, false, 1, 0},
 
-    {nlopt::LD_MMA, "LD_MMA", SSTRAT::L, true, true, false, 1, 0},
-    {nlopt::LD_CCSAQ, "LD_CCSAQ", SSTRAT::L, true, true, false, 1, 0},
+    // ----------------------------------------------------------------------------------------------------------
+
     {nlopt::LD_SLSQP, "LD_SLSQP", SSTRAT::L, true, true, false, 1, 900},
 
     // ----------------------------------------------------------------------------------------------------------
