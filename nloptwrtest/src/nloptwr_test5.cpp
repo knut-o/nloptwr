@@ -35,7 +35,7 @@ int opttest5(int dim, int maxTimeSec, nloptwr::SSTRAT sstrat) {
   bool useAugLagBeforeMlsl = true;
 
   // select strategy
-  nloptwr::NLOptWrSStrat sStrategy(sstrat, useGrad, useAugLagBeforeMlsl);
+  nloptwr::NLOptWrSStrat sStrategy(sstrat, useGrad);
 
   // target function
   Rastrigin oRastrigin(dim);

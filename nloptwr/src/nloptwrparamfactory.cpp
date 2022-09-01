@@ -32,10 +32,9 @@ NLOptWrParamFactory::~NLOptWrParamFactory() {}
 
 vector<NLOptWrAlgorithm>
 NLOptWrParamFactory::getAlgorithm(SSTRAT searchStrategy, bool hasConstraints,
-                                  bool useGradient, bool useAugLagBeforeMlsl,
+                                  bool useGradient, 
                                   std::size_t xDim) const {
-  NLOptWrSearchAlgoParam3 p4pAlg3(searchStrategy, hasConstraints, useGradient,
-                                  useAugLagBeforeMlsl, xDim);
+  NLOptWrSearchAlgoParam3 p4pAlg3(searchStrategy, hasConstraints, useGradient, xDim);
   return getAlgorithm(p4pAlg3);
 }
 
@@ -57,12 +56,15 @@ vector<NLOptWrAlgorithm> NLOptWrParamFactory::getAlgorithm(
   if (p4pAlg0.getSearchStrategy() == SSTRAT::LM &&
       !p4pAlg0.getHasContraints()) {
     p4pAlg = NLOptWrSearchAlgoParam3(
-        SSTRAT::L, p4pAlg0.getHasContraints(), p4pAlg0.getUseGradient(),
-        p4pAlg0.getUseAugLagBeforeMLSL(), p4pAlg0.getDim());
+        SSTRAT::L, p4pAlg0.getHasContraints(), 
+        p4pAlg0.getUseGradient(),
+        p4pAlg0.getDim());
   }
 
   bool foundAlgorithm = false;
-  bool useAugLagBeforeMLSL = p4pAlg.getUseAugLagBeforeMLSL();
+  
+  bool useAugLagBeforeMLSL = true; // TODO
+  
   std::size_t xDim = p4pAlg.getDim();
 
   vector<NLOptWrAlgorithm> result;

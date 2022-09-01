@@ -44,12 +44,10 @@ public:
    * @param searchStrategy search strategy enum
    * @param hasConstraints constraints flag
    * @param useGradient use gradient
-   * @param useAugLagBeforeMlsl use Augmented Lagrangian before MLSL
    * @param xDim dimension of parameter x
    */
   std::vector<NLOptWrAlgorithm>
-  getAlgorithm(SSTRAT searchStrategy, bool hasConstraints, bool useGradient,
-               bool useAugLagBeforeMlsl, std::size_t xDim) const;
+  getAlgorithm(SSTRAT searchStrategy, bool hasConstraints, bool useGradient, std::size_t xDim) const;
 
   /**
    * get a set of agorithms

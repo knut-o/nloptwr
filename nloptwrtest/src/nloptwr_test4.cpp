@@ -54,8 +54,7 @@ int opttest4() {
   cout << "Start of optimization..." << endl;
 
   // select strategy: "L", "LM", "GM", "G" an "R"
-  nloptwr::NLOptWrSStrat sStrategy(nloptwr::SSTRAT::GM, useGrad,
-                                   useAugLagBeforeMlsl);
+  nloptwr::NLOptWrSStrat sStrategy(nloptwr::SSTRAT::GM, useGrad);
 
   nlopt::result opt_stat = nlopt::result::FAILURE;
 

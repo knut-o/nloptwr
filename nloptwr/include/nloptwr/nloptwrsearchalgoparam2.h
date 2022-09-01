@@ -26,7 +26,7 @@ public:
    * @param useAugLagBeforeMlsl use Augmented Lagrangian befoe MLSL flag
    */
   NLOptWrSearchAlgoParam2(SSTRAT searchStrat, bool hasConstr,
-                          bool useGrad = true, bool useAugLagBeforeMlsl = true);
+                          bool useGrad = true);
 
   /**
    * copy constructor
@@ -52,7 +52,7 @@ public:
    * get use augmented lagrangian before MLSL
    * @return value of use augmented lagrangian before MLSL flag
    */
-  bool getUseAugLagBeforeMLSL() const;
+  // bool getUseAugLagBeforeMLSL() const;
 
   /**
    * copmparision operator
@@ -65,7 +65,7 @@ public:
 
 private:
   /// use gradient flag
-  bool useAugLagBeforeMLSL;
+  //  TODO: bool useAugLagBeforeMLSL;
 };
 
 } // namespace nloptwr

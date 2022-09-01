@@ -157,7 +157,7 @@ int selAlgTestGenerate(const nloptwr::NLOptWrParamFactory &nlOptParamFactory,
           if (!(searchStrat == nloptwr::SSTRAT::R &&
                 (useGrad || needsSubopt))) {
             nloptwr::NLOptWrSearchAlgoParam3 searchAlgoParam3(
-                searchStrat, hasConstr, useGrad, uAugl, dim);
+                searchStrat, hasConstr, useGrad, dim);
             vector<nloptwr::NLOptWrAlgorithm> selectedAlgs =
                 nlOptParamFactory.getAlgorithm(searchAlgoParam3);
 
@@ -220,6 +220,7 @@ int selAlgTestCompare() {
       test0{
           // { nloptwr::P4PrefAlgorithm3( SerchStrat, Constr,  Grad, uALag, dim
           // )  = { Algorithm, ... } },
+/*
           {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::GM, false, false,
                                             false, 15),
            {nlopt::GN_MLSL, nlopt::LN_COBYLA}},
@@ -520,31 +521,32 @@ int selAlgTestCompare() {
           {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::G, true, true,
                                             false, 200),
            {nlopt::GD_MLSL, nlopt::LD_MMA}},
-          {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::G, false, false,
-                                            true, 200),
-           {nlopt::GN_DIRECT}},
-          {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::G, false, true,
-                                            true, 200),
-           {nlopt::GD_MLSL, nlopt::LD_LBFGS}},
-          {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::G, true, false,
-                                            true, 200),
-           {nlopt::AUGLAG, nlopt::GN_DIRECT}},
-          {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::G, true, true,
-                                            true, 200),
-           {nlopt::GD_MLSL, nlopt::LD_MMA}},
-          {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::R, false, false,
-                                            false, 200),
-           {nlopt::GN_CRS2_LM}},
-          {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::R, true, false,
-                                            false, 200),
-           {nlopt::GN_ISRES}},
-          {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::R, false, false,
-                                            true, 200),
-           {nlopt::GN_CRS2_LM}},
-          {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::R, true, false,
-                                            true, 200),
-           {nlopt::GN_ISRES}},
 
+          {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::G, false, false,
+                                            true, 200),
+           {nlopt::GN_DIRECT}},
+          {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::G, false, true,
+                                            true, 200),
+           {nlopt::GD_MLSL, nlopt::LD_LBFGS}},
+          {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::G, true, false,
+                                            true, 200),
+           {nlopt::AUGLAG, nlopt::GN_DIRECT}},
+          {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::G, true, true,
+                                            true, 200),
+           {nlopt::GD_MLSL, nlopt::LD_MMA}},
+          {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::R, false, false,
+                                            false, 200),
+           {nlopt::GN_CRS2_LM}},
+          {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::R, true, false,
+                                            false, 200),
+           {nlopt::GN_ISRES}},
+          {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::R, false, false,
+                                            true, 200),
+           {nlopt::GN_CRS2_LM}},
+          {nloptwr::NLOptWrSearchAlgoParam3(nloptwr::SSTRAT::R, true, false,
+                                            true, 200),
+           {nlopt::GN_ISRES}},
+*/
       };
   rc = selAlgTestCmp(nlOptParamFactory, test0);
   return rc;

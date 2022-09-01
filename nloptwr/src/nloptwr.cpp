@@ -262,12 +262,10 @@ std::vector<NLOptWrAlgorithm>
 NLOptWrapper::getSelectedAlgorithms(const NLOptWrSStrat &nloptWrSStrat) const {
   SSTRAT searchStrategy(nloptWrSStrat.getSearchStrategy());
   bool hasConstraints = (mDim > 0);
-  bool useAugLagBeforeMlsl = nloptWrSStrat.getUseAugLagBeforeMLSL();
   bool useGrad = nloptWrSStrat.getUseGradient();
 
   return (*nlOptParamFactory)
-      .getAlgorithm(searchStrategy, hasConstraints, useGrad,
-                    useAugLagBeforeMlsl, nDim);
+      .getAlgorithm(searchStrategy, hasConstraints, useGrad, nDim);
 }
 
 // ------------------------------------------------------------------------------------------------

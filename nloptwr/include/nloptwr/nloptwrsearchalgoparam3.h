@@ -21,8 +21,7 @@ public:
   /**
    * constructor
    */
-  NLOptWrSearchAlgoParam3(nloptwr::SSTRAT strat, bool constr, bool grad,
-                          bool uaugl, size_t d);
+  NLOptWrSearchAlgoParam3(nloptwr::SSTRAT strat, bool constr, bool grad, size_t d);
 
   /**
    * constructor
