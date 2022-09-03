@@ -3,7 +3,7 @@
 #include "nloptwr/nloptwralgorithm.h"
 
 #include "nloptwr/nloptwrsearchalgoparam.h"
-#include "nloptwr/nloptwrsearchalgoparam3.h"
+#include "nloptwr/nloptwrsearchalgoparamd.h"
 
 #include <algorithm>
 #include <cmath>
