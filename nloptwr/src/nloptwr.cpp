@@ -63,7 +63,7 @@ NLOptWrapper::NLOptWrapper(
   // ========================================
   if (static_cast<long int>(xTolAbs.size()) != nDim)
     xTolAbs.resize(nDim);
-  
+
   // ========================================
 
   setSubFactors(0.1);
@@ -75,7 +75,7 @@ NLOptWrapper::NLOptWrapper(
   setXTolRel();
 
   setTolMConstraints();
-  
+
   // ========================================
 
   calculateInitialStep();
@@ -319,7 +319,7 @@ nlopt::result NLOptWrapper::optimize(const NLOptWrSStrat &nloptWrSStrat,
     throw runtime_error(errMsg2);
   }
 
-  if (tolMConstraints.size() != mDim)  
+  if (tolMConstraints.size() != mDim)
     tolMConstraints.resize(mDim); // TODO
 
   // distance for differential

@@ -61,10 +61,10 @@ int opttest6(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
   oif::OptFknBase &oTarget = chainWithWeights;
 
   nloptwr::NLOptWrapper optWr(oTarget, nThr);
-  
+
   // NOTE: this is the default subalgorithm of AUGLAG
   optWr.setPreferedAlgorithm(nlopt::LD_LBFGS);
-  
+
   // parallel evaluations need less time
   if (useGrad)
     maxTimeSec /= static_cast<int>(optWr.getNThreads());
@@ -136,7 +136,8 @@ int opttest6(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
         0.172583,  0.175730,  0.178874,  0.182015,  0.185152,  0.188284,
         0.191414,  0.194539,  0.197661,  0.200779,  0.203893,  0.207002};
 
-    isOk = opttest::fvcompare(minf/fOptExpcted, 1.0, optWr.getX(), solution, 0.009);
+    isOk = opttest::fvcompare(minf / fOptExpcted, 1.0, optWr.getX(), solution,
+                              0.009);
   } else {
     cout << "The solution (dim!=120) is not checked!" << endl;
   }

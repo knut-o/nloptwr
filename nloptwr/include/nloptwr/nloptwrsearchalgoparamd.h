@@ -20,15 +20,16 @@ public:
   /**
    * constructor
    */
-    NLOptWrSearchAlgoParamD(nloptwr::SSTRAT strat, bool constr, bool grad, size_t d);
+  NLOptWrSearchAlgoParamD(nloptwr::SSTRAT strat, bool constr, bool grad,
+                          size_t d);
 
   /**
    * constructor
    */
-    NLOptWrSearchAlgoParamD(const NLOptWrSearchAlgoParam &alg, size_t d);
+  NLOptWrSearchAlgoParamD(const NLOptWrSearchAlgoParam &alg, size_t d);
 
   /// default constructor
-    NLOptWrSearchAlgoParamD() = delete;
+  NLOptWrSearchAlgoParamD() = delete;
 
   /// destructor
   virtual ~NLOptWrSearchAlgoParamD();

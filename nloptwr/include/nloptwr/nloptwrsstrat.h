@@ -69,7 +69,6 @@ protected:
 
   /// use gradient flag
   bool useGradient;
-
 };
 
 } // namespace nloptwr

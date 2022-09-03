@@ -11,8 +11,7 @@ using namespace std;
 namespace nloptwr {
 
 NLOptWrSStrat::NLOptWrSStrat(SSTRAT searchStrat, bool useGrad)
-    : searchStrategy(searchStrat), useGradient(useGrad)
-  {
+    : searchStrategy(searchStrat), useGradient(useGrad) {
   if (SSTRAT::R == searchStrat) {
     useGradient = false;
   }
@@ -35,11 +34,10 @@ bool NLOptWrSStrat::getUseGradient() const { return useGradient; }
 std::string NLOptWrSStrat::toString() const {
   stringstream ss;
 
-  ss 
-    << "NloptWrSStrat( "
-    << "searchStrategy=" << left << setw(2)
-    << getStrategyAsString(searchStrategy) << ", useGradient=" << useGradient
-    << " ) ";
+  ss << "NloptWrSStrat( "
+     << "searchStrategy=" << left << setw(2)
+     << getStrategyAsString(searchStrategy) << ", useGradient=" << useGradient
+     << " ) ";
 
   return ss.str();
 }

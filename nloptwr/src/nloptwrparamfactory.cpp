@@ -31,19 +31,18 @@ NLOptWrParamFactory::~NLOptWrParamFactory() {}
 
 vector<NLOptWrAlgorithm>
 NLOptWrParamFactory::getAlgorithm(SSTRAT searchStrategy, bool hasConstraints,
-                                  bool useGradient, 
-                                  std::size_t xDim) const {
-    NLOptWrSearchAlgoParamD p4pAlg3(searchStrategy, hasConstraints, useGradient, xDim);
+                                  bool useGradient, std::size_t xDim) const {
+  NLOptWrSearchAlgoParamD p4pAlg3(searchStrategy, hasConstraints, useGradient,
+                                  xDim);
   return getAlgorithm(p4pAlg3);
 }
 
 vector<NLOptWrAlgorithm>
 NLOptWrParamFactory::getAlgorithm(const NLOptWrSearchAlgoParam &p4pAlg,
                                   std::size_t xDim) const {
-    NLOptWrSearchAlgoParamD p4pAlg3(p4pAlg, xDim);
+  NLOptWrSearchAlgoParamD p4pAlg3(p4pAlg, xDim);
 
   return getAlgorithm(p4pAlg3);
-                                      
 }
 
 vector<NLOptWrAlgorithm> NLOptWrParamFactory::getAlgorithm(
@@ -51,20 +50,19 @@ vector<NLOptWrAlgorithm> NLOptWrParamFactory::getAlgorithm(
   // if (d) cout << "DEBUG: NlOptParamFactory::getAlgorithm[-1]: " <<
   // p4pAlg.toString() << endl;
 
-    NLOptWrSearchAlgoParamD p4pAlg(p4pAlg0);
+  NLOptWrSearchAlgoParamD p4pAlg(p4pAlg0);
   // local optimizations without constraints do not need meta algorithms at all
   if (p4pAlg0.getSearchStrategy() == SSTRAT::LM &&
       !p4pAlg0.getHasContraints()) {
-    p4pAlg = NLOptWrSearchAlgoParamD(
-        SSTRAT::L, p4pAlg0.getHasContraints(), 
-        p4pAlg0.getUseGradient(),
-        p4pAlg0.getDim());
+    p4pAlg =
+        NLOptWrSearchAlgoParamD(SSTRAT::L, p4pAlg0.getHasContraints(),
+                                p4pAlg0.getUseGradient(), p4pAlg0.getDim());
   }
 
   bool foundAlgorithm = false;
-  
+
   bool useAugLagBeforeMLSL = true; // TODO
-  
+
   std::size_t xDim = p4pAlg.getDim();
 
   vector<NLOptWrAlgorithm> result;
@@ -694,7 +692,8 @@ const std::vector<class NLOptWrAlgorithm> NLOptWrParamFactory::nlOptAlgorithms{
     {nlopt::LD_VAR2, "LD_VAR2", SSTRAT::L, true, false, false, 1, 0},
 
     // ----------------------------------------------------------------------------------------------------------
-    // The algortithms LD_MMA LD_CCSAQ are not able to handle equality constraints  
+    // The algortithms LD_MMA LD_CCSAQ are not able to handle equality
+    // constraints
     {nlopt::LD_MMA, "LD_MMA", SSTRAT::L, true, false, false, 1, 0},
     {nlopt::LD_CCSAQ, "LD_CCSAQ", SSTRAT::L, true, false, false, 1, 0},
 

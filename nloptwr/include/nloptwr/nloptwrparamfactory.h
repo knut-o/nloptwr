@@ -45,8 +45,10 @@ public:
    * @param useGradient use gradient
    * @param xDim dimension of parameter x
    */
-  std::vector<NLOptWrAlgorithm>
-  getAlgorithm(SSTRAT searchStrategy, bool hasConstraints, bool useGradient, std::size_t xDim) const;
+  std::vector<NLOptWrAlgorithm> getAlgorithm(SSTRAT searchStrategy,
+                                             bool hasConstraints,
+                                             bool useGradient,
+                                             std::size_t xDim) const;
 
   /**
    * get a set of agorithms

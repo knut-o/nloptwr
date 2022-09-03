@@ -32,8 +32,7 @@ std::string NLOptWrSearchAlgoParamD::toString() const {
      << "searchStrategy=nloptwr::SSTRAT::" << left << setw(2)
      << getStrategyAsString(getSearchStrategy())
      << ", hasContraints=" << getHasContraints()
-     << ", useGrad=" << getUseGradient()
-     << ", dim=" << setw(3) << dim << " ) ";
+     << ", useGrad=" << getUseGradient() << ", dim=" << setw(3) << dim << " ) ";
 
   return ss.str();
 }
@@ -45,8 +44,8 @@ std::string NLOptWrSearchAlgoParamD::toString2() const {
      << "nloptwr::SSTRAT::" << left << setw(2)
      << getStrategyAsString(getSearchStrategy()) << ", "
      << (getHasContraints() ? "true " : "false") << ", "
-     << (getUseGradient() ? "true " : "false") << ", "
-     << right << setw(4) << dim << " ) ";
+     << (getUseGradient() ? "true " : "false") << ", " << right << setw(4)
+     << dim << " ) ";
 
   return ss.str();
 }

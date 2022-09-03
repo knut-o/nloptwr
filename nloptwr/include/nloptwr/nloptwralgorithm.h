@@ -103,10 +103,9 @@ public:
    *  @param maxP maximal number of parameters
    */
   NLOptWrAlgorithm(nlopt::algorithm a, const std::string &n, SSTRAT rgl,
-                   bool hasGrad, bool neC, 
-                   // bool necO, 
-                   bool nSubopt, unsigned int minP,
-                   unsigned int maxP);
+                   bool hasGrad, bool neC,
+                   // bool necO,
+                   bool nSubopt, unsigned int minP, unsigned int maxP);
 
   /// default constructor
   NLOptWrAlgorithm() = delete;
@@ -241,10 +240,10 @@ private:
 
   /// ability to handle nonequal constraints
   bool neConstraints;
-  
+
   /// only ne constraints
   // bool neOnlyConstraints;
-  
+
   /// subopt required
   bool needsSubOpt;
 
