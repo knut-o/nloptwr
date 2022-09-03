@@ -204,7 +204,7 @@ public:
    * set tolerance of (no equal) nonlinear constraints
    * @param val tolerance for all nonlinear constraints (default: 1e-10)
    */
-  void setTolMConstraints(double val = 1.0E-10);
+  void setTolMConstraints(double val = 0.8E-8);
 
   /**
    * set tolerance of (no equal) nonlinear constraints

@@ -22,12 +22,13 @@ int opttest4() {
   int nThr = 0;
 
   // timeout of 2nd algorithm
-  int maxTimeSec = 20;
+  int maxTimeSec = 40;
 
+  // maximum of evaluation
   int maxEvals = 1000000000;
 
+  // gradient are used for optimization
   bool useGrad = true;
-  bool useAugLagBeforeMlsl = true;
 
   // a target function
   Griewank oGriewank(dim);
@@ -54,8 +55,7 @@ int opttest4() {
   cout << "Start of optimization..." << endl;
 
   // select strategy: "L", "LM", "GM", "G" an "R"
-  nloptwr::NLOptWrSStrat sStrategy(nloptwr::SSTRAT::GM, useGrad,
-                                   useAugLagBeforeMlsl);
+  nloptwr::NLOptWrSStrat sStrategy(nloptwr::SSTRAT::GM, useGrad);
 
   nlopt::result opt_stat = nlopt::result::FAILURE;
 

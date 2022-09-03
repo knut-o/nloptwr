@@ -61,8 +61,9 @@ int opttest6(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
   oif::OptFknBase &oTarget = chainWithWeights;
 
   nloptwr::NLOptWrapper optWr(oTarget, nThr);
-  
-  optWr.setPreferedAlgorithm(nlopt::LD_SLSQP);
+
+  // NOTE: this is the default subalgorithm of AUGLAG
+  optWr.setPreferedAlgorithm(nlopt::LD_LBFGS);
 
   // parallel evaluations need less time
   if (useGrad)
@@ -74,7 +75,7 @@ int opttest6(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
   optWr.setPopulation(1000);
 
   optWr.setDx(1e-8);
-  optWr.setXTolAbs(1e-6);
+  optWr.setXTolAbs(1e-7);
   optWr.setXTolRel(1e-8);
 
   // start opptimization
@@ -108,7 +109,7 @@ int opttest6(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
 
   // expected solution:
   bool isOk = true;
-  if (false && dim == 120) {
+  if (dim == 120) {
 
     double fOptExpcted = -806.770403;
     // test
@@ -135,9 +136,10 @@ int opttest6(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
         0.172583,  0.175730,  0.178874,  0.182015,  0.185152,  0.188284,
         0.191414,  0.194539,  0.197661,  0.200779,  0.203893,  0.207002};
 
-    isOk = opttest::fvcompare(minf, fOptExpcted, optWr.getX(), solution, 0.009);
+    isOk = opttest::fvcompare(minf / fOptExpcted, 1.0, optWr.getX(), solution,
+                              0.009);
   } else {
-    cout << "The solution (dim!=120) is checked!" << endl;
+    cout << "The solution (dim!=120) is not checked!" << endl;
   }
 
   if (!isOk) {
@@ -157,17 +159,20 @@ int opttest6(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
 int main(int argc, char *argv[]) {
   int dim = 120;
   int maxTimeSec = 300;
-  nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::LM;
+  nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L;
   bool useGrad = true;
 
   if (argc <= 2) {
     cout << endl
          << "cout usage:" << endl
-         << " " << argv[0] << " [dim] [useGrad] [maxTimeSec] " << endl
+         << " " << argv[0] << " [dim] [useGrad] [sStrat] [maxTimeSec] " << endl
          << " # dim=dimension of problem " << endl
          << " # grad=usage of gradients (1 means with gradients (default), "
             "otherwise gradients are not used) "
          << endl
+         << " # sStrat: L=Local, LM=Local Meta., ... (default: L) "
+            "R=Random (default='"
+         << getStrategyAsString(sStrat) << "')" << endl
          << " # maxTimeSec: max. time [s] (default=" << maxTimeSec << ") "
          << endl
          << endl;
@@ -179,6 +184,8 @@ int main(int argc, char *argv[]) {
     if (i == 2)
       useGrad = (string(argv[i]) == "1");
     if (i == 3)
+      sStrat = nloptwr::getStrategyFromString(argv[i]);
+    if (i == 4)
       maxTimeSec = atoi(argv[i]);
   }
 
@@ -186,9 +193,10 @@ int main(int argc, char *argv[]) {
     dim = 1;
   }
 
-  cout << "# dim: " << dim << " " << endl;
-  cout << "# useGrad: '" << useGrad << "' " << endl;
-  cout << "# sStrat: '" << getStrategyAsString(sStrat) << "' " << endl;
+  cout << "# dim       :  " << dim << " " << endl;
+  cout << "# useGrad   :  " << useGrad << " " << endl;
+  cout << "# sStrat    : '" << getStrategyAsString(sStrat) << "' " << endl;
+  cout << "# maxTimeSec:  " << maxTimeSec << " " << endl;
 
   int rc = opttest::opttest6(dim, useGrad, sStrat, maxTimeSec);
 

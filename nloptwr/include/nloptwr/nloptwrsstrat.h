@@ -22,8 +22,7 @@ public:
    * @param useGrad use gradient flag
    * @param useAugLagBeforeMlsl use Augmented Lagrangian before MLSL flag
    */
-  NLOptWrSStrat(SSTRAT searchStrat, bool useGrad = true,
-                bool useAugLagBeforeMlsl = true);
+  NLOptWrSStrat(SSTRAT searchStrat, bool useGrad = true);
 
   /// default constructor
   NLOptWrSStrat() = delete;
@@ -53,13 +52,6 @@ public:
   bool getNeedsSubOpt() const;
 
   /**
-   * get use Augmented Lagrangian before MLSL flag
-   * @return true if Augmented Lagrangian before MLSL flag is active, otherwise
-   * false
-   */
-  bool getUseAugLagBeforeMLSL() const;
-
-  /**
    * get string representation
    * @return string representation
    */
@@ -77,9 +69,6 @@ protected:
 
   /// use gradient flag
   bool useGradient;
-
-  /// use Augmented Lagrangian before MLSL
-  bool useAugLagBeforeMLSL; // TODO: Parameter in signature
 };
 
 } // namespace nloptwr

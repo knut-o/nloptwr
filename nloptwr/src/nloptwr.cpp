@@ -1,9 +1,4 @@
 
-#pragma warning(push)
-#pragma warning(disable : 26812)
-#pragma warning(disable : 6993)
-#pragma warning(disable : 4267)
-
 #include "nloptwr/nloptwr.h"
 #include <nlopt.hpp>
 
@@ -66,17 +61,10 @@ NLOptWrapper::NLOptWrapper(
     ub.resize(nDim);
 
   // ========================================
-
-  tolMConstraints.resize(mDim);
-  for (long int i = 0; i < mDim; i++) {
-    tolMConstraints[i] =
-        0; // xTolAbs[0]*000.1; // TODO: use tol;constraintFactor
-    fArgs.c[i] = 0.0;
-  }
-
-  // ========================================
   if (static_cast<long int>(xTolAbs.size()) != nDim)
     xTolAbs.resize(nDim);
+
+  // ========================================
 
   setSubFactors(0.1);
 
@@ -86,9 +74,13 @@ NLOptWrapper::NLOptWrapper(
   setXTolAbs();
   setXTolRel();
 
+  setTolMConstraints();
+
   // ========================================
 
   calculateInitialStep();
+
+  // ========================================
 
   if (optFknBases.size() != static_cast<size_t>(nThreads))
     optFknBases.resize(static_cast<size_t>(nThreads));
@@ -175,17 +167,17 @@ void NLOptWrapper::setDx(const std::vector<double> &vals) {
 }
 
 void NLOptWrapper::setTolMConstraints(double val) {
-  if (dX.size() != mDim)
-    dX.resize(mDim);
+  if (static_cast<long int>(tolMConstraints.size()) != mDim)
+    tolMConstraints.resize(mDim);
   for (size_t i = 0; i < mDim; i++)
-    dX[i] = val;
+    tolMConstraints[i] = val;
 }
 
 void NLOptWrapper::setTolMConstraints(const std::vector<double> &vals) {
-  if (dX.size() != mDim)
-    dX.resize(mDim);
+  if (static_cast<long int>(tolMConstraints.size()) != mDim)
+    tolMConstraints.resize(mDim);
   for (size_t i = 0; i < mDim && i < vals.size(); i++)
-    dX[i] = vals[i];
+    tolMConstraints[i] = vals[i];
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -262,12 +254,10 @@ std::vector<NLOptWrAlgorithm>
 NLOptWrapper::getSelectedAlgorithms(const NLOptWrSStrat &nloptWrSStrat) const {
   SSTRAT searchStrategy(nloptWrSStrat.getSearchStrategy());
   bool hasConstraints = (mDim > 0);
-  bool useAugLagBeforeMlsl = nloptWrSStrat.getUseAugLagBeforeMLSL();
   bool useGrad = nloptWrSStrat.getUseGradient();
 
   return (*nlOptParamFactory)
-      .getAlgorithm(searchStrategy, hasConstraints, useGrad,
-                    useAugLagBeforeMlsl, nDim);
+      .getAlgorithm(searchStrategy, hasConstraints, useGrad, nDim);
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -329,7 +319,8 @@ nlopt::result NLOptWrapper::optimize(const NLOptWrSStrat &nloptWrSStrat,
     throw runtime_error(errMsg2);
   }
 
-  tolMConstraints.resize(mDim); // TODO
+  if (tolMConstraints.size() != mDim)
+    tolMConstraints.resize(mDim); // TODO
 
   // distance for differential
   if (static_cast<long int>(dX.size()) != nDim) {

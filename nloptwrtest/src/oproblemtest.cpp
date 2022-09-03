@@ -64,18 +64,12 @@ int oproblemtest(bool log, int dim) {
 
   // NOTE: Non-Gradient methods do not need a numerical derivation!!!!!!
   bool useGrad = true;
-  bool useAugLagBeforeMlsl = true;
 
-  nloptwr::NLOptWrSStrat sStratL(nloptwr::SSTRAT::L, useGrad,
-                                 useAugLagBeforeMlsl);
-  nloptwr::NLOptWrSStrat sStratLM(nloptwr::SSTRAT::LM, useGrad,
-                                  useAugLagBeforeMlsl);
-  nloptwr::NLOptWrSStrat sStratR(nloptwr::SSTRAT::R, useGrad,
-                                 useAugLagBeforeMlsl);
-  nloptwr::NLOptWrSStrat sStratGM(nloptwr::SSTRAT::GM, useGrad,
-                                  useAugLagBeforeMlsl);
-  nloptwr::NLOptWrSStrat sStratG(nloptwr::SSTRAT::G, useGrad,
-                                 useAugLagBeforeMlsl);
+  nloptwr::NLOptWrSStrat sStratL(nloptwr::SSTRAT::L, useGrad);
+  nloptwr::NLOptWrSStrat sStratLM(nloptwr::SSTRAT::LM, useGrad);
+  nloptwr::NLOptWrSStrat sStratR(nloptwr::SSTRAT::R, useGrad);
+  nloptwr::NLOptWrSStrat sStratGM(nloptwr::SSTRAT::GM, useGrad);
+  nloptwr::NLOptWrSStrat sStratG(nloptwr::SSTRAT::G, useGrad);
 
   nloptwr::NLOptWrSStrat &sStrat = sStratL;
 
