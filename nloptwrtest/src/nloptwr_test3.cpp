@@ -28,9 +28,6 @@ int opttest3() {
   // use gradient
   bool useGrad = true;
 
-  // other parameter
-  bool useAugLagBeforeMlsl = true;
-
   // =====================================================
 
   // a target function
@@ -40,8 +37,7 @@ int opttest3() {
   oGriewank.initialize(-15.0, 15.0, 2.0);
 
   // it is used a local search (because of the speed)
-  nloptwr::NLOptWrSStrat sStrategy(nloptwr::SSTRAT::L, useGrad,
-                                   useAugLagBeforeMlsl);
+  nloptwr::NLOptWrSStrat sStrategy(nloptwr::SSTRAT::L, useGrad);
 
   // =====================================================
 

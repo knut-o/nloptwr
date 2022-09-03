@@ -28,6 +28,7 @@ int opttest2(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
   // number of threads ("0" means autodetect)
   int nThr = 0; // TODO
 
+  // maximum od evaluations
   int maxEvals = 1000000000;
 
   // create the search strategy object

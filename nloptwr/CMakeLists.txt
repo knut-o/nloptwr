@@ -5,8 +5,7 @@ set(NLOPWR_INCLUDE_FILES
     include/nloptwr/omphelper.h
     include/nloptwr/nloptwralgorithm.h
     include/nloptwr/nloptwrsearchalgoparam.h
-    include/nloptwr/nloptwrsearchalgoparam2.h
-    include/nloptwr/nloptwrsearchalgoparam3.h
+    include/nloptwr/nloptwrsearchalgoparamd.h
     include/nloptwr/nloptwrsstrat.h
     include/nloptwr/optfktnbase.h
     include/nloptwr/optfktnclass.h
@@ -22,8 +21,7 @@ set( nloptwr_SRCS
     src/omphelper.cpp
     src/nloptwralgorithm.cpp
     src/nloptwrsearchalgoparam.cpp
-    src/nloptwrsearchalgoparam2.cpp
-    src/nloptwrsearchalgoparam3.cpp
+    src/nloptwrsearchalgoparamd.cpp
     src/nloptwrsstrat.cpp
     src/optfktnbase.cpp
     src/optfktnclass.cpp

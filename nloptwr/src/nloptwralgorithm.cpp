@@ -103,13 +103,11 @@ SSTRAT getStrategyFromString(const std::string &src, SSTRAT sstratDefault) {
 }
 
 NLOptWrAlgorithm::NLOptWrAlgorithm(nlopt::algorithm a, const std::string &n,
-                                   SSTRAT rgl, bool hasGrad, 
-                                   bool neC, 
+                                   SSTRAT rgl, bool hasGrad, bool neC,
                                    // bool necO,
                                    bool nSubopt, unsigned int minP,
                                    unsigned int maxP)
-    : alg(a), name(n), pRGL(rgl), hasGradient(hasGrad), 
-      neConstraints(neC),
+    : alg(a), name(n), pRGL(rgl), hasGradient(hasGrad), neConstraints(neC),
       // neOnlyConstraints(necO),
       needsSubOpt(nSubopt), minParam(minP), maxParam(maxP) {}
 

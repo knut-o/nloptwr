@@ -89,10 +89,12 @@ double ChainWithWeights::optFktn(const std::vector<double> &x,
   double diffL = (diffX * diffX + diffH * diffH) - li * li;
 
   // equality constraint has two inequality constraints
-  c[0] = (diffL > epsilon) ? fabs(diffL) : 0.0;
-  c[1] = (diffL < -epsilon) ? fabs(diffL) : 0.0;
-  c[2] = (diffX > 0.0) ? diffX : 0.0;
-  c[2] = (diffH > 0.0) ? diffH : 0.0;
+  c[0] = diffL;
+  c[1] = 0.0 - diffL;
+
+  // additionally nonequal constraints
+  c[2] = (diffX > 0.0) ? diffX * diffX : 0.0;
+  c[2] = (diffH > 0.0) ? diffH * diffH : 0.0;
 
   // W_pot/g => m*h => min
   double w_g = 0.0;
