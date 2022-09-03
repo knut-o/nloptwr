@@ -28,9 +28,6 @@ int opttest3() {
   // use gradient
   bool useGrad = true;
 
-  // other parameter
-  bool useAugLagBeforeMlsl = true;
-
   // =====================================================
 
   // a target function

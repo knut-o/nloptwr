@@ -63,6 +63,8 @@ NLOptWrapper::NLOptWrapper(
   // ========================================
   if (static_cast<long int>(xTolAbs.size()) != nDim)
     xTolAbs.resize(nDim);
+  
+  // ========================================
 
   setSubFactors(0.1);
 
@@ -72,18 +74,13 @@ NLOptWrapper::NLOptWrapper(
   setXTolAbs();
   setXTolRel();
 
-  // ========================================
-
-  tolMConstraints.resize(mDim);
-  for (long int i = 0; i < mDim; i++) {
-    // NOTE: Bugfix
-    tolMConstraints[i] = xTolAbs[0]*0.8;
-    fArgs.c[i] = 0.0;
-  }
-
+  setTolMConstraints();
+  
   // ========================================
 
   calculateInitialStep();
+
+  // ========================================
 
   if (optFknBases.size() != static_cast<size_t>(nThreads))
     optFknBases.resize(static_cast<size_t>(nThreads));
@@ -170,17 +167,17 @@ void NLOptWrapper::setDx(const std::vector<double> &vals) {
 }
 
 void NLOptWrapper::setTolMConstraints(double val) {
-  if (dX.size() != mDim)
-    dX.resize(mDim);
+  if (static_cast<long int>(tolMConstraints.size()) != mDim)
+    tolMConstraints.resize(mDim);
   for (size_t i = 0; i < mDim; i++)
-    dX[i] = val;
+    tolMConstraints[i] = val;
 }
 
 void NLOptWrapper::setTolMConstraints(const std::vector<double> &vals) {
-  if (dX.size() != mDim)
-    dX.resize(mDim);
+  if (static_cast<long int>(tolMConstraints.size()) != mDim)
+    tolMConstraints.resize(mDim);
   for (size_t i = 0; i < mDim && i < vals.size(); i++)
-    dX[i] = vals[i];
+    tolMConstraints[i] = vals[i];
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -322,7 +319,8 @@ nlopt::result NLOptWrapper::optimize(const NLOptWrSStrat &nloptWrSStrat,
     throw runtime_error(errMsg2);
   }
 
-  tolMConstraints.resize(mDim); // TODO
+  if (tolMConstraints.size() != mDim)  
+    tolMConstraints.resize(mDim); // TODO
 
   // distance for differential
   if (static_cast<long int>(dX.size()) != nDim) {
