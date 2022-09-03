@@ -58,7 +58,8 @@ int displayResult(const nloptwr::NLOptWrapper &optWr, nlopt::result opt_stat,
   cout << "minF     = " << minf << endl;
   cout << " " << endl;
   cout << "rc        = " << rc << endl;
-  cout << "optTime   = " << fixed << setw(6) << optWr.getOptTime();
+  cout << "optTime   = " << fixed << setw(6) << optWr.getOptTime() << endl << endl;
+  cout.flush();
 
   return rc;
 }

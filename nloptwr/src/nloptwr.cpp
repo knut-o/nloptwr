@@ -1,9 +1,4 @@
 
-#pragma warning(push)
-#pragma warning(disable : 26812)
-#pragma warning(disable : 6993)
-#pragma warning(disable : 4267)
-
 #include "nloptwr/nloptwr.h"
 #include <nlopt.hpp>
 
@@ -66,15 +61,6 @@ NLOptWrapper::NLOptWrapper(
     ub.resize(nDim);
 
   // ========================================
-
-  tolMConstraints.resize(mDim);
-  for (long int i = 0; i < mDim; i++) {
-    tolMConstraints[i] =
-        0; // xTolAbs[0]*000.1; // TODO: use tol;constraintFactor
-    fArgs.c[i] = 0.0;
-  }
-
-  // ========================================
   if (static_cast<long int>(xTolAbs.size()) != nDim)
     xTolAbs.resize(nDim);
 
@@ -85,6 +71,15 @@ NLOptWrapper::NLOptWrapper(
 
   setXTolAbs();
   setXTolRel();
+
+  // ========================================
+
+  tolMConstraints.resize(mDim);
+  for (long int i = 0; i < mDim; i++) {
+    // NOTE: Bugfix
+    tolMConstraints[i] = xTolAbs[0]*0.8;
+    fArgs.c[i] = 0.0;
+  }
 
   // ========================================
 
