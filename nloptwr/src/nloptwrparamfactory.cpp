@@ -692,7 +692,7 @@ const std::vector<class NLOptWrAlgorithm> NLOptWrParamFactory::nlOptAlgorithms{
     {nlopt::LD_VAR2, "LD_VAR2", SSTRAT::L, true, false, false, 1, 0},
 
     // ----------------------------------------------------------------------------------------------------------
-    // The algortithms LD_MMA LD_CCSAQ are not able to handle equality
+    // The algorithms LD_MMA LD_CCSAQ are not able to handle equality
     // constraints
     {nlopt::LD_MMA, "LD_MMA", SSTRAT::L, true, false, false, 1, 0},
     {nlopt::LD_CCSAQ, "LD_CCSAQ", SSTRAT::L, true, false, false, 1, 0},
