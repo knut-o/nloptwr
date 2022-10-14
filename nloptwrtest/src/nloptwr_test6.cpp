@@ -2,20 +2,27 @@
 #include "nloptwr/nloptwra.h"
 
 #include "nloptwrtest/chainwithweights.h"
+
 #include "nloptwrtest/griewank.h"
 #include "nloptwrtest/odisplay.h"
 #include "nloptwrtest/vcompare.h"
+
+#include "nloptwrtest/groundcos.h"
+#include "nloptwrtest/groundif.h"
+#include "nloptwrtest/groundlin.h"
 
 #include <cmath>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <vector>
 using namespace std;
 
 namespace opttest {
 
-int opttest6(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
+int opttest6(int dim, int nrOfGround = 0, bool useGrad = 1,
+             nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
              int maxTimeSec = 400) {
   // return code
   int rc = 0;
@@ -25,8 +32,12 @@ int opttest6(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
 
   int maxEvals = 1000000000;
 
-  double xN = static_cast<double>(dim);
-  double hN = 0.0;
+  XH xh0(0.0, 0.0);
+  XH xhn(dim, 0.0);
+
+  XH xg0(0.0, -3.0);
+  XH xgn(dim, -8.0);
+
   double lM = 1.3;
   double lI = 1.0;
 
@@ -45,7 +56,7 @@ int opttest6(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
   } else
   */
   if (dim >= 3) {
-    int iW = (dim - 1) / 2;
+    int iW = (dim + 1) / 2;
     cout << "iW =" << iW << endl;
     myWeights[iW] = singleWeight;
   }
@@ -55,8 +66,21 @@ int opttest6(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
 
   cout << "sStrategy.getUseGradient(): " << sStrategy.getUseGradient() << endl;
 
+  shared_ptr<GroundIf> groundIf;
+
+  if (nrOfGround == 1) {
+    GroundLin groundLin(xg0, xgn);
+    groundIf = shared_ptr<GroundIf>(groundLin.clone());
+  } else if (nrOfGround == 2) {
+    GroundCos groundCos(xg0, xgn);
+    groundIf = shared_ptr<GroundIf>(groundCos.clone());
+  } else if (nrOfGround != 0) {
+    cerr << "Value nrOfGround is out of range" << endl;
+  }
+
   // utl::OmpHelper ompHelper;
-  ChainWithWeights chainWithWeights(dim, xN, hN, lM, lI, myWeights);
+  ChainWithWeights chainWithWeights(dim, xhn, lM, lI, myWeights,
+                                    groundIf.get());
 
   oif::OptFknBase &oTarget = chainWithWeights;
 
@@ -99,7 +123,10 @@ int opttest6(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
 
   // save gnuplot file
   ofstream myfile;
-  myfile.open("nloptwr_test6.dat");
+  stringstream fns;
+  fns << "nloptwr_test6_" << ((groundIf) ? (*groundIf).getId() : 0) << ".dat";
+
+  myfile.open(fns.str());
   chainWithWeights.printResult(optWr.getX(), myfile);
   myfile.close();
   // ========================================================================
@@ -109,37 +136,80 @@ int opttest6(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
 
   // expected solution:
   bool isOk = true;
-  if (dim == 120) {
+  if (dim == 120 && sStrat == nloptwr::SSTRAT::L) {
 
-    double fOptExpcted = -806.770403;
-    // test
-    // expected solution:
-    vector<double> solution{
-        -0.210412, -0.207306, -0.204197, -0.201083, -0.197966, -0.194844,
-        -0.191719, -0.188591, -0.185458, -0.182321, -0.179182, -0.176038,
-        -0.172891, -0.169740, -0.166586, -0.163429, -0.160268, -0.157104,
-        -0.153937, -0.150767, -0.147594, -0.144418, -0.141239, -0.138057,
-        -0.134872, -0.131684, -0.128494, -0.125301, -0.122106, -0.118908,
-        -0.115707, -0.112504, -0.109299, -0.106092, -0.102882, -0.099671,
-        -0.096457, -0.093241, -0.090023, -0.086804, -0.083582, -0.080359,
-        -0.077134, -0.073908, -0.070680, -0.067451, -0.064219, -0.060987,
-        -0.057754, -0.054519, -0.051283, -0.048046, -0.044809, -0.041570,
-        -0.038330, -0.035089, -0.031848, -0.028606, -0.025364, -0.022121,
-        0.018560,  0.021804,  0.025047,  0.028289,  0.031531,  0.034773,
-        0.038013,  0.041253,  0.044492,  0.047730,  0.050967,  0.054203,
-        0.057438,  0.060671,  0.063903,  0.067135,  0.070364,  0.073592,
-        0.076819,  0.080044,  0.083267,  0.086489,  0.089709,  0.092926,
-        0.096143,  0.099356,  0.102568,  0.105778,  0.108986,  0.112191,
-        0.115394,  0.118595,  0.121793,  0.124989,  0.128182,  0.131372,
-        0.134560,  0.137745,  0.140928,  0.144107,  0.147283,  0.150457,
-        0.153628,  0.156795,  0.159959,  0.163120,  0.166278,  0.169432,
-        0.172583,  0.175730,  0.178874,  0.182015,  0.185152,  0.188284,
-        0.191414,  0.194539,  0.197661,  0.200779,  0.203893,  0.207002};
+    // expectes results
+    vector<double> fOptExpcted = {-806.761, -743.367, -731.047};
 
-    isOk = opttest::fvcompare(minf / fOptExpcted, 1.0, optWr.getX(), solution,
-                              0.009);
+    // expected solutions:
+    vector<vector<double>> solution{
+        {-0.210107, -0.207000, -0.203891, -0.200774, -0.197656, -0.194541,
+         -0.191413, -0.188281, -0.185149, -0.182012, -0.178872, -0.175730,
+         -0.172579, -0.169426, -0.166275, -0.163120, -0.159957, -0.156791,
+         -0.153624, -0.150462, -0.147280, -0.144105, -0.140924, -0.137746,
+         -0.134558, -0.131372, -0.128179, -0.124989, -0.121801, -0.118589,
+         -0.115393, -0.112190, -0.108984, -0.105770, -0.102570, -0.099354,
+         -0.096141, -0.092927, -0.089710, -0.086483, -0.083266, -0.080043,
+         -0.076822, -0.073593, -0.070363, -0.067137, -0.063902, -0.060672,
+         -0.057434, -0.054205, -0.050970, -0.047732, -0.044494, -0.041244,
+         -0.038005, -0.034772, -0.031527, -0.028289, -0.025045, -0.021804,
+         -0.018562, 0.022119,  0.025359,  0.028600,  0.031842,  0.035085,
+         0.038332,  0.041572,  0.044804,  0.048042,  0.051283,  0.054520,
+         0.057757,  0.060982,  0.064216,  0.067445,  0.070680,  0.073908,
+         0.077134,  0.080355,  0.083580,  0.086804,  0.090022,  0.093241,
+         0.096458,  0.099675,  0.102881,  0.106090,  0.109295,  0.112502,
+         0.115705,  0.118908,  0.122107,  0.125303,  0.128490,  0.131677,
+         0.134871,  0.138058,  0.141239,  0.144413,  0.147593,  0.150763,
+         0.153940,  0.157105,  0.160267,  0.163425,  0.166585,  0.169740,
+         0.172888,  0.176037,  0.179181,  0.182319,  0.185457,  0.188589,
+         0.191719,  0.194840,  0.197964,  0.201080,  0.204196,  0.207305},
+        {-0.240948, -0.234272, -0.227582, -0.220870, -0.214141, -0.207387,
+         -0.200620, -0.193836, -0.187027, -0.180204, -0.173367, -0.166514,
+         -0.159634, -0.152752, -0.145851, -0.138932, -0.132003, -0.125061,
+         -0.118102, -0.111137, -0.104158, -0.097170, -0.090172, -0.083168,
+         -0.076159, -0.069132, -0.062107, -0.055071, -0.048027, -0.041643,
+         -0.041643, -0.041643, -0.041643, -0.041642, -0.041643, -0.041643,
+         -0.041643, -0.041643, -0.041643, -0.041643, -0.041643, -0.041643,
+         -0.041643, -0.041643, -0.041643, -0.041643, -0.041643, -0.041643,
+         -0.041643, -0.041643, -0.041643, -0.041643, -0.041643, -0.041643,
+         -0.041643, -0.041643, -0.041643, -0.041643, -0.041643, -0.041643,
+         -0.041643, -0.041643, -0.041643, -0.041643, -0.041643, -0.041643,
+         -0.041643, -0.041643, -0.041643, -0.041643, -0.041643, -0.041643,
+         -0.041643, -0.040244, -0.033078, -0.025909, -0.018737, -0.011564,
+         -0.004389, 0.002790,  0.009963,  0.017136,  0.024310,  0.031477,
+         0.038645,  0.045808,  0.052964,  0.060116,  0.067272,  0.074405,
+         0.081540,  0.088665,  0.095776,  0.102879,  0.109975,  0.117058,
+         0.124130,  0.131196,  0.138236,  0.145272,  0.152285,  0.159293,
+         0.166282,  0.173250,  0.180202,  0.187142,  0.194059,  0.200955,
+         0.207837,  0.214696,  0.221534,  0.228356,  0.235155,  0.241930,
+         0.248675,  0.255406,  0.262117,  0.268799,  0.275455,  0.282084},
+        {-0.222279, -0.215583, -0.208859, -0.202130, -0.195370, -0.188599,
+         -0.181805, -0.175002, -0.168181, -0.161343, -0.154483, -0.147613,
+         -0.140730, -0.133835, -0.126917, -0.119998, -0.113066, -0.106124,
+         -0.099168, -0.092204, -0.085227, -0.078249, -0.071261, -0.064261,
+         -0.057260, -0.050253, -0.043241, -0.042766, -0.044044, -0.045292,
+         -0.046508, -0.047693, -0.048845, -0.049963, -0.051047, -0.052096,
+         -0.053110, -0.054087, -0.055027, -0.055929, -0.056793, -0.057618,
+         -0.058404, -0.059150, -0.059855, -0.060520, -0.061143, -0.061725,
+         -0.062264, -0.062761, -0.063215, -0.063627, -0.063994, -0.064319,
+         -0.064599, -0.064836, -0.065028, -0.065176, -0.065280, -0.065339,
+         -0.065354, -0.065325, -0.065250, -0.065132, -0.064969, -0.064762,
+         -0.064511, -0.064216, -0.063877, -0.063495, -0.057053, -0.049873,
+         -0.042687, -0.035493, -0.028297, -0.021097, -0.013901, -0.006697,
+         0.000507,  0.007709,  0.014911,  0.022113,  0.029312,  0.036506,
+         0.043694,  0.050886,  0.058068,  0.065240,  0.072410,  0.079573,
+         0.086728,  0.093870,  0.101004,  0.108129,  0.115248,  0.122347,
+         0.129437,  0.136510,  0.143573,  0.150625,  0.157657,  0.164675,
+         0.171677,  0.178660,  0.185622,  0.192574,  0.199506,  0.206417,
+         0.213303,  0.220177,  0.227022,  0.233851,  0.240656,  0.247441,
+         0.254198,  0.260931,  0.267647,  0.274328,  0.280995,  0.287628}};
+
+    isOk = opttest::fvcompare(minf / fOptExpcted[nrOfGround], 1.0, optWr.getX(),
+                              solution[nrOfGround], 0.009);
   } else {
-    cout << "The solution (dim!=120) is not checked!" << endl;
+    cout << "The solution (dim!=120 || sStrat != nloptwr::SSTRAT::L) is not "
+            "checked!"
+         << endl;
   }
 
   if (!isOk) {
@@ -161,12 +231,16 @@ int main(int argc, char *argv[]) {
   int maxTimeSec = 300;
   nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L;
   bool useGrad = true;
+  int noGround = 0;
 
   if (argc <= 2) {
     cout << endl
          << "cout usage:" << endl
-         << " " << argv[0] << " [dim] [useGrad] [sStrat] [maxTimeSec] " << endl
+         << " " << argv[0]
+         << " [dim] [noGround] [useGrad] [sStrat] [maxTimeSec] " << endl
          << " # dim=dimension of problem " << endl
+         << " # noGround=number of ground (0=no ground, 1=linear ground, 2=cos "
+            "ground), "
          << " # grad=usage of gradients (1 means with gradients (default), "
             "otherwise gradients are not used) "
          << endl
@@ -181,11 +255,17 @@ int main(int argc, char *argv[]) {
   for (int i = 1; i < argc; ++i) {
     if (i == 1)
       dim = atoi(argv[i]);
-    if (i == 2)
-      useGrad = (string(argv[i]) == "1");
+    if (i == 2) {
+      if (string(argv[i]) == "1")
+        noGround = 1;
+      if (string(argv[i]) == "2")
+        noGround = 2;
+    }
     if (i == 3)
-      sStrat = nloptwr::getStrategyFromString(argv[i]);
+      useGrad = (string(argv[i]) == "1");
     if (i == 4)
+      sStrat = nloptwr::getStrategyFromString(argv[i]);
+    if (i == 5)
       maxTimeSec = atoi(argv[i]);
   }
 
@@ -194,11 +274,12 @@ int main(int argc, char *argv[]) {
   }
 
   cout << "# dim       :  " << dim << " " << endl;
+  cout << "# noGround  :  " << noGround << " " << endl;
   cout << "# useGrad   :  " << useGrad << " " << endl;
   cout << "# sStrat    : '" << getStrategyAsString(sStrat) << "' " << endl;
   cout << "# maxTimeSec:  " << maxTimeSec << " " << endl;
 
-  int rc = opttest::opttest6(dim, useGrad, sStrat, maxTimeSec);
+  int rc = opttest::opttest6(dim, noGround, useGrad, sStrat, maxTimeSec);
 
   cout << endl;
 

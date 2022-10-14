@@ -2,7 +2,6 @@
 #ifndef O_PROBLEM_H
 #define O_PROBLEM_H
 
-#include "nloptwr/nloptwr.h"
 #include "nloptwr/optfktnbase.h"
 #include "nloptwr/optfktnclass.h"
 

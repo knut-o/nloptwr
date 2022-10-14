@@ -23,9 +23,9 @@ void OptFknClass::init(size_t dim, size_t nrOfNeConstraints, double lb,
   lB = shared_ptr<vector<double>>(new vector<double>(dim, lb));
   uB = shared_ptr<vector<double>>(new vector<double>(dim, ub));
   xInitial = shared_ptr<vector<double>>(new vector<double>(dim, xInit));
-  //
-  if (c.size() != mDim)
-    c.resize(mDim);
+
+  if (cConstr.size() != mDim)
+    cConstr.resize(mDim);
 }
 
 // virtual
@@ -95,7 +95,9 @@ std::vector<double> OptFknClass::getXInitial() const { return *xInitial; }
 // ===========================================================
 
 // virtual
-double OptFknClass::optF(const std::vector<double> &x) { return optFktn(x, c); }
+double OptFknClass::optF(const std::vector<double> &x) {
+  return optFktn(x, cConstr);
+}
 
 // virtual
 void OptFknClass::optC(const std::vector<double> &x, std::vector<double> &c) {
