@@ -154,7 +154,7 @@ protected:
   std::shared_ptr<std::vector<double>> xInitial;
 
   /// constraints
-  std::vector<double> c;
+  std::vector<double> cConstr;
 };
 
 } // namespace oif

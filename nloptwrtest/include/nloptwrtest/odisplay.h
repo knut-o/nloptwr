@@ -6,6 +6,7 @@
 #include "nloptwrtest/oproblem.h"
 #include "nloptwrtest/oproblemtest.h"
 
+#include "nloptwr/nloptwr.h"
 #include "nloptwr/nloptwralgorithm.h"
 #include "nloptwr/nloptwrsstrat.h"
 #include "nloptwr/optfktnbase.h"

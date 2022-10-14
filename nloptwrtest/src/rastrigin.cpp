@@ -1,7 +1,6 @@
 
 
 #include "nloptwrtest/rastrigin.h"
-#include "nloptwr/nloptwr.h"
 
 #include "nloptwr/optfktnbase.h"
 #include "nloptwr/optfktnclass.h"

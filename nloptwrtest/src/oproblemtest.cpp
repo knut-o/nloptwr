@@ -4,6 +4,7 @@
 #include "nloptwrtest/griewank.h"
 #include "nloptwrtest/oproblem.h"
 
+#include "nloptwr/nloptwr.h"
 #include "nloptwr/nloptwralgorithm.h"
 #include "nloptwr/nloptwrsstrat.h"
 #include "nloptwr/optfktnbase.h"

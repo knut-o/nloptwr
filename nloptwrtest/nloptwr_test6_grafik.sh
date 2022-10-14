@@ -20,7 +20,9 @@ cmake ..
 cmake --build .
 
 # call the program
-./nloptwrtest/nloptwr_test06
+./nloptwrtest/nloptwr_test06 120 0 1 L
+./nloptwrtest/nloptwr_test06 120 1 1 L
+./nloptwrtest/nloptwr_test06 120 2 1 L
 
 # create a pdf file
 ../nloptwrtest/nloptwr_test6.plt

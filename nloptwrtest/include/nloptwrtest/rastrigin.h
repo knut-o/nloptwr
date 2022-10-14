@@ -2,7 +2,6 @@
 #ifndef RASTRIGIN_H
 #define RASTRIGIN_H
 
-#include "nloptwr/nloptwr.h"
 #include "nloptwr/optfktnbase.h"
 #include "nloptwr/optfktnclass.h"
 

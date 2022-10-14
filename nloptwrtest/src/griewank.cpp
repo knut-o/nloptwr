@@ -1,6 +1,5 @@
 
 #include "nloptwrtest/griewank.h"
-#include "nloptwr/nloptwr.h"
 
 #include "nloptwr/optfktnbase.h"
 #include "nloptwr/optfktnclass.h"
