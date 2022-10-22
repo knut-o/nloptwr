@@ -3,11 +3,9 @@ cmake_minimum_required(VERSION 3.0)
 
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 
-### TODO
 SET(CMAKE_BUILD_TYPE Debug)
 
 # =========================================================================
-
 set(VCPKG_FLAG BOOL OFF)
 if (DEFINED ENV{CMAKE_TOOLCHAIN_FILE} )
     SET (CMAKE_TOOLCHAIN_FILE $ENV{CMAKE_TOOLCHAIN_FILE} )
@@ -116,6 +114,40 @@ include(GNUInstallDirs)
 
 add_subdirectory(nloptwr)
 add_subdirectory(nloptwrtest)
+
+# =========================================================================
+
+# =========================================================================
+# target  CPPCHECK:
+# get all project files for cppcheck and clangformat
+# =========================================================================
+file(GLOB_RECURSE ALL_SOURCE_FILES *.cpp *.h)
+
+# display all source files
+# message("ALL_SOURCE_FILES: ${ALL_SOURCE_FILES} ")
+
+# =========================================================================
+# target  CPPCHECK:
+# usage:
+#   cmake --build ../build --target cppcheck
+#   make clangformat
+# =========================================================================
+add_custom_target(
+        cppcheck
+        COMMAND /usr/bin/cppcheck --language=c++ --std=c++11 --enable=warning,unusedFunction,portability,performance --force  --template="[{severity}][{id}] {message} {callstack} \(On {file}:{line}\)" -q ${ALL_SOURCE_FILES}
+)
+
+# =========================================================================
+# target CLANGFORMAT:
+# usage:
+#   cmake --build ../build --target clangformat
+#   make clangformat
+# =========================================================================
+add_custom_target(
+        clangformat
+        # COMMAND /usr/bin/clang-format -style=LLVM -i ${ALL_SOURCE_FILES}
+        COMMAND /usr/bin/clang-format -style=file -i ${ALL_SOURCE_FILES}
+)
 
 # =========================================================================
 
