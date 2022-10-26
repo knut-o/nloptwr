@@ -69,7 +69,7 @@ public:
    */
   ChainWithWeights(
       int dim,
-      const XH &x_h = XH(1000, 250.0), // double xN = 1000, double hN = 250,
+      const XH &xhN = XH(1000, 250.0), // double xN = 1000, double hN = 250,
       double lM = 1, double lI = 1,
       const std::vector<double> &myWeights = std::vector<double>(),
       GroundIf *my_Ground = nullptr);

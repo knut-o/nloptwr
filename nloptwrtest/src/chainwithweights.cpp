@@ -24,9 +24,7 @@ const double ChainWithWeights::PI = std::atan(1.0) * 4.0;
 // static
 const double ChainWithWeights::epsilon = 5.0E-6;
 
-ChainWithWeights::ChainWithWeights(int dim,
-                                   const XH &xhN, // double xN, double hN,
-                                   double lM, double lI,
+ChainWithWeights::ChainWithWeights(int dim, const XH &xhN, double lM, double lI,
                                    const std::vector<double> &myWeights,
                                    GroundIf *my_Ground)
     : oif::OptFknClass(), nDim(dim), noOfChainLinks(dim + 1), xh0(0.0, 0.0),
@@ -41,13 +39,13 @@ ChainWithWeights::ChainWithWeights(int dim,
     myGround = shared_ptr<GroundIf>((*my_Ground).clone());
 
     // each chain link section is an additional constraint
-    mDim += 2; // noOfChainLinks;
+    mDim += 2;
 
     dxMaxGround = abs((*myGround).getDx());
   }
 
-  for (size_t i = 0; (i < dim) && (i < myWeights.size()); i++) {
-    weights[i + 1] = myWeights.at(i);
+  for (size_t i = 0; (i <= noOfChainLinks) && (i < myWeights.size()); i++) {
+    weights[i] = myWeights.at(i);
   }
   initialize();
   validate();
@@ -66,8 +64,8 @@ void ChainWithWeights::initialize() //  double lb, double ub, double xInit )
 
   // calculate positions of chain links (between two ends)
   for (size_t i = 0; i < nDim; i++) {
-    xh[i + 1].x = xh[i].x + li * cos(angleInit);
-    xh[i + 1].h = xh[i].h + li * sin(angleInit);
+    xh[i + 1].x = xh[i].x + lm * cos(angleInit);
+    xh[i + 1].h = xh[i].h + lm * sin(angleInit);
   }
 }
 
@@ -102,8 +100,8 @@ double ChainWithWeights::optFktn(const std::vector<double> &x,
 
   // copy variable x[i] into hc[i]
   for (size_t i = 0; i < nDim; i++) {
-    xh[i + 1].x = xh[i].x + li * cos(x[i]);
-    xh[i + 1].h = xh[i].h + li * sin(x[i]);
+    xh[i + 1].x = xh[i].x + lm * cos(x[i]);
+    xh[i + 1].h = xh[i].h + lm * sin(x[i]);
   }
 
   // ======================================================
@@ -112,8 +110,9 @@ double ChainWithWeights::optFktn(const std::vector<double> &x,
   // ======================================================
 
   double diffX = (xh[nDim].x - xhn.x);
-  // equality constraint as two inequality constraints
   double diffH = (xh[nDim].h - xhn.h);
+
+  // equality constraint as two inequality constraints
   // squared difference of length of chain link
   double diffL = (diffX * diffX + diffH * diffH) - (li * li);
 
@@ -216,15 +215,16 @@ void ChainWithWeights::catculateNEConstraints(std::vector<double> &c) {
 
     ciMaxTotal = max(ci, ciMaxTotal);
     if (ci > 0.0)
-      ciSumGtZero += ci;
+      ciSumGtZero += ci * (ci + 1.0);
 
     // reuse pA and hAB
     pA = pB;
   }
 
   // store constaints
-  c[2] = ciMaxTotal;
-  c[3] = ciSumGtZero;
+  c[2] = ciSumGtZero;
+  if (mDim > 3)
+    c[3] = ciMaxTotal;
 }
 
 void ChainWithWeights::printResult(const std::vector<double> &x,

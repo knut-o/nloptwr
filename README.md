@@ -159,11 +159,11 @@ Contributors and contact info:
 
 ## Links
 
-[NLOPT](https://nlopt.readthedocs.io/en/latest/#nlopt_1)
+[NLOpt](https://nlopt.readthedocs.io/en/latest/#nlopt_1)
 
-[NLOPT Algorithms](https://nlopt.readthedocs.io/en/latest/NLopt_Algorithms/)
+[NLOpt Algorithms](https://nlopt.readthedocs.io/en/latest/NLopt_Algorithms/)
 
-[NLOPT C++ Reference](https://nlopt.readthedocs.io/en/latest/NLopt_C-plus-plus_Reference/)
+[NLOpt C++ Reference](https://nlopt.readthedocs.io/en/latest/NLopt_C-plus-plus_Reference/)
 
 [OpenMP](https://de.wikipedia.org/wiki/OpenMP)
 

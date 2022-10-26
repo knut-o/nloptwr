@@ -268,7 +268,7 @@ public:
 
   /**
    * set tolerance
-   * @param val value (default: 1e-9)
+   * @param val value (default: 1e-7)
    */
   void setXTolAbs(double val = 1.0E-7);
 
