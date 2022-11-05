@@ -785,5 +785,3 @@ void NLOptWrapper::multi_constraint(
 // ===================================================================
 
 } // namespace nloptwr
-
-#pragma warning(pop)
