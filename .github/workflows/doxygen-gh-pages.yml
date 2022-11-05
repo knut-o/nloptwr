@@ -12,7 +12,7 @@ jobs:
       - name: Install docu tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y graphviz doxygen dot
+          sudo apt-get install -y graphviz doxygen
       - uses: DenverCoder1/doxygen-github-pages-action@v1.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
