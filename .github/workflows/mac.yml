@@ -23,10 +23,11 @@ jobs:
 
     steps:
     # ---------------------------------------------------------------
-    - name: Install vcpkg
+    - name: Install OMP
       run: |
-        brew update
-        brew install gcc --without-multilib
+        # brew update
+        brew install libomp
+        # brew install gcc --without-multilib
         brew install clang-omp
     # ---------------------------------------------------------------
     - name: checkout
