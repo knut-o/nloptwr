@@ -63,7 +63,7 @@ jobs:
         uname -a
         ${{github.workspace}}/VcPkg/vcpkg/vcpkg help triplet
         ${{github.workspace}}/VcPkg/vcpkg/vcpkg install --triplet=x64-osx
-        ${{github.workspace}}/VcPkg/vcpkg/vcpkg install --triplet=x64-osx nlopt
+        ${{github.workspace}}/VcPkg/vcpkg/vcpkg install nlopt
     # ---------------------------------------------------------------
 #    - name: Configure CMake for nloptwr
 #      run: |
