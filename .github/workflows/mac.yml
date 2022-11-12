@@ -1,4 +1,4 @@
-name: CMake
+name: Mac
 
 on:
   label:
@@ -59,8 +59,9 @@ jobs:
         git clone https://github.com/microsoft/vcpkg
         cd       ${{github.workspace}}/VcPkg/vcpkg
         ${{github.workspace}}/VcPkg/vcpkg/bootstrap-vcpkg.sh
-        ${{github.workspace}}/VcPkg/vcpkg/vcpkg integrate install 
-        ${{github.workspace}}/VcPkg/vcpkg/vcpkg install nlopt
+        ${{github.workspace}}/VcPkg/vcpkg/vcpkg integrate install
+        uname -a
+#        ${{github.workspace}}/VcPkg/vcpkg/vcpkg install nlopt
     # ---------------------------------------------------------------
 #    - name: Configure CMake for nloptwr
 #      run: |
