@@ -26,9 +26,9 @@ jobs:
     - name: Install OMP
       run: |
         # brew update
-        # brew install libomp
-        brew install gcc --without-multilib
-        # brew install clang-omp
+        brew install libomp
+        # brew install gcc --without-multilib
+        brew install clang-omp
     # ---------------------------------------------------------------
     - name: checkout
       uses: actions/checkout@v3
