@@ -36,6 +36,7 @@ jobs:
     # ---------------------------------------------------------------
     - name: Install nlopt
       run: |
+        echo "###"
         echo "Set environment variables"
         export PATH="$(brew --prefix llvm)/bin:$PATH"
         export COMPILER=/usr/local/opt/llvm/bin/clang++
