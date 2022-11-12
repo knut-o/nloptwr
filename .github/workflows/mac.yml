@@ -26,9 +26,10 @@ jobs:
     - name: Install OMP
       run: |
         # brew update
-        brew reinstall libomp
-        brew reinstall gcc
+        # brew reinstall libomp
+        # brew reinstall gcc
         # brew install clang-omp
+        brew install llvm libomp
     # ---------------------------------------------------------------
     - name: checkout
       uses: actions/checkout@v3
@@ -65,7 +66,22 @@ jobs:
 ##
 #    - name: Install vcpkg and nlopt
 #      run: |
-#        echo "vcpkg install nlopt"
+         echo "Set environment vaiables"
+				 export PATH="$(brew --prefix llvm)/bin:$PATH";
+				 export COMPILER=/usr/local/opt/llvm/bin/clang++
+				 export CFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
+				 export CXXFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
+				 export LDFLAGS="-L /usr/local/lib -L/usr/local/opt/llvm/lib"
+				 export CXX=${COMPILER}
+				 #
+				 # Bugfix for https://github.com/Homebrew/homebrew-core/issues/52461-mlinker-version=450
+				 # Otherwise, we get "ld: unknown option: -platform_version"
+				 # Not needed for all MacOS versions, apparently.
+				 # See if that works for you, and otherwise, leave out these two lines.
+				 ## export CXXFLAGS="${CXXFLAGS} -mlinker-version=450"
+				 ## export LDFLAGS="${LDFLAGS} -mlinker-version=450"
+				 #
+         echo "vcpkg install nlopt"
 #        mkdir -p ${{github.workspace}}/VcPkg
 #        cd       ${{github.workspace}}/VcPkg
 #        git clone https://github.com/microsoft/vcpkg
