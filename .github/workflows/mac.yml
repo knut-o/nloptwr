@@ -60,10 +60,12 @@ jobs:
         cd       ${{github.workspace}}/VcPkg/vcpkg
         ${{github.workspace}}/VcPkg/vcpkg/bootstrap-vcpkg.sh
         ${{github.workspace}}/VcPkg/vcpkg/vcpkg integrate install
-        uname -a
-        ${{github.workspace}}/VcPkg/vcpkg/vcpkg help triplet
+        # uname -a
+        # ${{github.workspace}}/VcPkg/vcpkg/vcpkg help triplet
         ${{github.workspace}}/VcPkg/vcpkg/vcpkg install --triplet=x64-osx
-        ${{github.workspace}}/VcPkg/vcpkg/vcpkg install nlopt
+        echo "OK (2)
+#        ${{github.workspace}}/VcPkg/vcpkg/vcpkg install nlopt
+        echo "OK (2)
     # ---------------------------------------------------------------
 #    - name: Configure CMake for nloptwr
 #      run: |
