@@ -36,7 +36,7 @@ jobs:
     # ---------------------------------------------------------------
     - name: Install nlopt
       run: |
-        echo "Set environment variables"
+        echo "Set environment variables I"
         export PATH="$(brew --prefix llvm)/bin:$PATH"
         export COMPILER=/usr/local/opt/llvm/bin/clang++
         export CFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
@@ -50,6 +50,9 @@ jobs:
         CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake vcpkg install --triplet=x64-osx
         # CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake vcpkg install nlopt
     # ---------------------------------------------------------------
+    - name: Install TEST
+      run: |
+        echo "Set environment variables II"
 #    - name: Configure CMake
 #      run: |
 #        echo "###"
