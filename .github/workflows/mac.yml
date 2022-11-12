@@ -36,6 +36,13 @@ jobs:
     # ---------------------------------------------------------------
     - name: Install nlopt
       run: |
+        echo "Set environment variables"
+		  	export PATH="$(brew --prefix llvm)/bin:$PATH";
+			  export COMPILER=/usr/local/opt/llvm/bin/clang++
+				export CFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
+				export CXXFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
+				export LDFLAGS="-L /usr/local/lib -L/usr/local/opt/llvm/lib"
+				export CXX=${COMPILER}
         which vcpkg
         # ls -l /usr/local/share/vcpkg
         # find /usr -type f -iname vcpkg.cmake
@@ -45,6 +52,14 @@ jobs:
     # ---------------------------------------------------------------
     - name: Configure CMake
       run: |
+        echo "Set environment variables"
+		  	export PATH="$(brew --prefix llvm)/bin:$PATH";
+			  export COMPILER=/usr/local/opt/llvm/bin/clang++
+				export CFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
+				export CXXFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
+				export LDFLAGS="-L /usr/local/lib -L/usr/local/opt/llvm/lib"
+				export CXX=${COMPILER}
+        which vcpkg
         echo "Configure CMake"
         mkdir -p ${{github.workspace}}/build
         ls -l /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
@@ -66,13 +81,6 @@ jobs:
 ##
 #    - name: Install vcpkg and nlopt
 #      run: |
-         echo "Set environment vaiables"
-				 export PATH="$(brew --prefix llvm)/bin:$PATH";
-				 export COMPILER=/usr/local/opt/llvm/bin/clang++
-				 export CFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
-				 export CXXFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
-				 export LDFLAGS="-L /usr/local/lib -L/usr/local/opt/llvm/lib"
-				 export CXX=${COMPILER}
 				 #
 				 # Bugfix for https://github.com/Homebrew/homebrew-core/issues/52461-mlinker-version=450
 				 # Otherwise, we get "ld: unknown option: -platform_version"
@@ -81,7 +89,7 @@ jobs:
 				 ## export CXXFLAGS="${CXXFLAGS} -mlinker-version=450"
 				 ## export LDFLAGS="${LDFLAGS} -mlinker-version=450"
 				 #
-         echo "vcpkg install nlopt"
+#         echo "vcpkg install nlopt"
 #        mkdir -p ${{github.workspace}}/VcPkg
 #        cd       ${{github.workspace}}/VcPkg
 #        git clone https://github.com/microsoft/vcpkg
