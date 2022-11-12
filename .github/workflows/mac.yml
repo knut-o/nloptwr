@@ -48,7 +48,7 @@ jobs:
         mkdir -p ${{github.workspace}}/build
         ls -l /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
         # cd       ${{github.workspace}}/build
-        CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -S . -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+        # CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -S . -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
         echo "Configure CMake completed?"
 
 ## =========================================
