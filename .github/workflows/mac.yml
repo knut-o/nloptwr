@@ -23,6 +23,9 @@ jobs:
 
     steps:
     # ---------------------------------------------------------------
+    - name: checkout
+      uses: actions/checkout@v3
+    # ---------------------------------------------------------------
     - name: Install OMP
       run: |
         # brew update
@@ -30,9 +33,6 @@ jobs:
         # brew reinstall gcc
         # brew install clang-omp
         brew install llvm libomp
-    # ---------------------------------------------------------------
-    - name: checkout
-      uses: actions/checkout@v3
     # ---------------------------------------------------------------
     - name: Install nlopt
       run: |
@@ -49,12 +49,11 @@ jobs:
         ls -l                /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
         CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake vcpkg install --triplet=x64-osx
         # CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake vcpkg install nlopt
-
     # ---------------------------------------------------------------
-    - name: Install TEST
-      run: |
-        echo "Set environment variables II"
-
+#    - name: Install TEST
+#      run: |
+#        echo "Set environment variables II"
+#
 #    - name: Configure CMake
 #      run: |
 #        echo "###"
