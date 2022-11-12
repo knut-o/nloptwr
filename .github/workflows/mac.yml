@@ -54,22 +54,22 @@ jobs:
       run: |
         echo "Set environment variables"
         export PATH="$(brew --prefix llvm)/bin:$PATH";
-        export COMPILER=/usr/local/opt/llvm/bin/clang++
-        export CFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
-        export CXXFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
-        export LDFLAGS="-L /usr/local/lib -L/usr/local/opt/llvm/lib"
-        export CXX=${COMPILER}
-		  	which vcpkg
-		  	echo "Configure CMake"
-        mkdir -p ${{github.workspace}}/build
-        ls -l /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
-        # cd       ${{github.workspace}}/build
-        #
-        which cmake
-        /bin/bash -c "find /usr/local -type f -iname findOMP\*\.cmake" 
-        #
-        # CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -S . -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-        echo "Configure CMake completed?"
+#        export COMPILER=/usr/local/opt/llvm/bin/clang++
+#        export CFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
+#        export CXXFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
+#        export LDFLAGS="-L /usr/local/lib -L/usr/local/opt/llvm/lib"
+#        export CXX=${COMPILER}
+#		  	which vcpkg
+#		  	echo "Configure CMake"
+#        mkdir -p ${{github.workspace}}/build
+#        ls -l /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
+#        # cd       ${{github.workspace}}/build
+#        #
+#        which cmake
+#        /bin/bash -c "find /usr/local -type f -iname findOMP\*\.cmake" 
+#        #
+#        # CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -S . -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+#        echo "Configure CMake completed?"
 
 ## =========================================
 ##
