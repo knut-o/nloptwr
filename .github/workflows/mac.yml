@@ -27,7 +27,7 @@ jobs:
       run: |
         # brew update
         brew reinstall libomp
-        # brew install gcc --without-multilib
+        brew reinstall gcc --without-multilib
         # brew install clang-omp
     # ---------------------------------------------------------------
     - name: checkout
