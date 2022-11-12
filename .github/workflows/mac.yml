@@ -23,6 +23,12 @@ jobs:
 
     steps:
     # ---------------------------------------------------------------
+    - name: Install vcpkg
+      run: |
+        brew update
+        brew install gcc --without-multilib
+        brew install clang-omp
+    # ---------------------------------------------------------------
     - name: checkout
       uses: actions/checkout@v3
     # ---------------------------------------------------------------
