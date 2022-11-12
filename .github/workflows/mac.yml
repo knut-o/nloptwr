@@ -49,10 +49,12 @@ jobs:
         ls -l                /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
         CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake vcpkg install --triplet=x64-osx
         # CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake vcpkg install nlopt
+
     # ---------------------------------------------------------------
     - name: Install TEST
       run: |
         echo "Set environment variables II"
+
 #    - name: Configure CMake
 #      run: |
 #        echo "###"
