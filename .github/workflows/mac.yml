@@ -50,9 +50,9 @@ jobs:
         CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake vcpkg install --triplet=x64-osx
         # CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake vcpkg install nlopt
     # ---------------------------------------------------------------
-    - name: Configure CMake
-      run: |
-        echo "###"
+#    - name: Configure CMake
+#      run: |
+#        echo "###"
 #        echo "Set environment variables"
 #        export PATH="$(brew --prefix llvm)/bin:$PATH";
 #        export COMPILER=/usr/local/opt/llvm/bin/clang++
@@ -70,7 +70,7 @@ jobs:
 #        /bin/bash -c "find /usr/local -type f -iname findOMP\*\.cmake" 
 #        #
 #        # CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -S . -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-        echo "Configure CMake completed?"
+#        echo "Configure CMake completed?"
 
 ## =========================================
 ##
