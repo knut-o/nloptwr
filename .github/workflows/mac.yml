@@ -63,13 +63,13 @@ jobs:
         echo "Configure CMake"
         mkdir -p ${{github.workspace}}/build
         ls -l /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
-#        # cd       ${{github.workspace}}/build
-#        #
-#        which cmake
-#        /bin/bash -c "find /usr/local -type f -iname findOMP\*\.cmake" 
+        # cd       ${{github.workspace}}/build
+        #
+        which cmake
+        /bin/bash -c "find /usr/local -type f -iname findOMP\*\.cmake" 
 #        #
 #        # CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -S . -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-#        echo "Configure CMake completed?"
+        echo "Configure CMake completed?"
 
 ## =========================================
 ##
