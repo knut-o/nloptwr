@@ -61,13 +61,14 @@ jobs:
         echo "OpenMP_C_LIB_NAMES  ${OpenMP_C_LIB_NAMES} "
         echo "github.workspace: ${github.workspace} "
         mkdir -p ${{github.workspace}}/build
-        # export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake 
+        # set CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake 
         set VCPKG_DEFAULT_TRIPLET=x64-windows
         set VCPKG_TRIPLET=x64-windows
         echo "pwd:"
         echo "Configuration:"
+        cd       ${{github.workspace}}/build
+        cmake -S i.. -B ${github.workspace}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 #        cmake -S . -B ${github.workspace}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-#         cd       ${{github.workspace}}/build
 
 ##
 ##    - name: Install nlopt
