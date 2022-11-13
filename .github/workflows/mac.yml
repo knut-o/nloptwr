@@ -38,6 +38,7 @@ jobs:
         # brew reinstall gcc
         # brew install clang-omp
         # brew install llvm libomp
+
     - name: Install nlopt
       run: |
         echo "Set environment variables I"
@@ -54,6 +55,7 @@ jobs:
         CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake vcpkg install --triplet=x64-osx
         # CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake vcpkg install nlopt
 # ---------------------------------------------------------------
+
     - name: Configure CMake
       run: |
         echo "Set environment variables"
