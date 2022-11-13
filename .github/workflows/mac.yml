@@ -82,6 +82,9 @@ jobs:
         echo "OpenMP_C_FLAGS:     ${OpenMP_C_FLAGS} " 
         echo "OpenMP_C_LIB_NAMES  ${OpenMP_C_LIB_NAMES} "
         mkdir -p ${{github.workspace}}/build
+        ls -l /usr/local/opt/llvm/bin/clang++
+        which gcc
+        which g++
         ls -l /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
         echo "Configure CMake completed?"
         export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake 
