@@ -58,13 +58,13 @@ jobs:
         set CMAKE_TOOLCHAIN_FILE=${{VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake 
         echo "VCPKG_ROOT=${{VCPKG_ROOT}}"
         echo "CMAKE_TOOLCHAIN_FILE=${{CMAKE_TOOLCHAIN_FILE}}"
-        mkdir -p ${{github.workspace}}/build
-        echo "BUILD_DIR=${github.workspace}/build"
-        set VCPKG_DEFAULT_TRIPLET=x64-windows
-        set VCPKG_TRIPLET=x64-windows
-        echo "pwd:"
-        echo "Configuration:"
-        cd       ${{github.workspace}}/build
+#        mkdir -p ${{github.workspace}}/build
+#        echo "BUILD_DIR=${github.workspace}/build"
+#        set VCPKG_DEFAULT_TRIPLET=x64-windows
+#        set VCPKG_TRIPLET=x64-windows
+#        echo "pwd:"
+#        echo "Configuration:"
+#        cd       ${{github.workspace}}/build
 #        cmake -DCMAKE_TOOLCHAIN_FILE="${{VCMAKE_TOOLCHAIN_FILE}}" -S .. -B ${github.workspace}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 ##        cmake -S . -B ${github.workspace}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
