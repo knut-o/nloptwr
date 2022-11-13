@@ -46,6 +46,28 @@ jobs:
         # echo "vcpkg install --triplet x64-windows # done"
         # ${{github.workspace}}\VcPkg\vcpkg\vcpkg.exe install nlopt:x64-windows
         echo "install nlopt done"
+
+    - name: Configure CMake
+      run: |
+        echo "Set environment variables"
+        which vcpkg
+        echo "Configure CMake"
+        echo "COMPILER:  ${COMPILER}"
+        echo "CFLAGS:    ${CFLAGS}"
+        echo "CXXFLAGS:  ${CXXFLAGS}"
+        echo "LDFLAGS:   ${LDFLAGS}"
+        echo "CXX:       ${LDFLAGS}"
+        echo "OpenMP_C_FLAGS:     ${OpenMP_C_FLAGS} " 
+        echo "OpenMP_C_LIB_NAMES  ${OpenMP_C_LIB_NAMES} "
+        mkdir -p ${{github.workspace}}/build
+        export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake 
+        export VCPKG_DEFAULT_TRIPLET=x64-windows
+        export VCPKG_TRIPLET=x64-windows
+        echo "pwd:"
+        echo "Configuration:"
+        cmake -S . -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+#         cd       ${{github.workspace}}/build
+
 ##
 ##    - name: Install nlopt
 ##      run: |
