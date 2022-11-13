@@ -6,9 +6,9 @@ on:
       - created
       - edited
   push:
-    branches: [ "main", "dev" ]
+    branches: [ "main", "dev", "dev-workflow" ]
   pull_request:
-    branches: [ "main", "dev" ]
+    branches: [ "main", "dev", "dev-workflow" ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -33,7 +33,7 @@ jobs:
         # brew reinstall gcc
         # brew install clang-omp
         brew install llvm libomp
-    # ---------------------------------------------------------------
+# ---------------------------------------------------------------
     - name: Install nlopt
       run: |
         echo "Set environment variables I"
