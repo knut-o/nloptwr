@@ -32,7 +32,7 @@ jobs:
 
     - name: Install OMP
       run: |
-        brew install llvm xcodegen
+        brew install llvm clang clang++ xcodegen
         brew --prefix libomp
         #brew install llvm libomp 
         # brew install clang
