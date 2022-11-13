@@ -18,14 +18,17 @@ env:
 jobs:
 
 # ====================================================================
+
   build:
     runs-on: macos-latest
 
     steps:
-    # ---------------------------------------------------------------
+# ---------------------------------------------------------------
+
     - name: checkout
       uses: actions/checkout@v3
-    # ---------------------------------------------------------------
+# ---------------------------------------------------------------
+
     - name: Install OMP
       run: |
         # brew update
@@ -33,9 +36,9 @@ jobs:
         # brew reinstall gcc
         # brew install clang-omp
         brew install llvm libomp
-#
+
 # ---------------------------------------------------------------
-#
+
     - name: Install nlopt
       run: |
         echo "Set environment variables I"
