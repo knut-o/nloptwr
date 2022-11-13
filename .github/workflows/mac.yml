@@ -32,7 +32,7 @@ jobs:
 
     - name: Install OMP
       run: |
-        brew install llvm clang clang-omp libomp
+        brew install llvm
         brew --prefix libomp
         #brew install llvm libomp 
         # brew install clang
