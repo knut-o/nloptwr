@@ -52,8 +52,7 @@ jobs:
         ls -l /usr/local/share/vcpkg
         ls -l                /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
         export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake 
-        vcpkg install --triplet=x64-osx nlopt
-
+        vcpkg install --triplet=x64-osx
     - name: Configure CMake
       run: |
         echo "Set environment variables"
@@ -68,9 +67,9 @@ jobs:
         mkdir -p ${{github.workspace}}/build
         ls -l /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
         cd       ${{github.workspace}}/build
+        echo "Configure CMake completed?"
 #        /bin/bash -c "find /usr/local -type f -iname findOMP\*\.cmake" 
 #        CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -S . -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-        echo "Configure CMake completed?"
 
 ## =========================================
 ##
