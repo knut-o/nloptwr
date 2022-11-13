@@ -31,7 +31,7 @@ jobs:
     - name: checkout
       uses: actions/checkout@v3
 
-    - name: Install NLOPT
+    - name: Install NLOpt
       run: |
         echo "vcpkg install nlopt"
         echo "github.workspace: ${{github.workspace}} "
@@ -55,9 +55,9 @@ jobs:
         echo "Configure CMake"
         echo "github.workspace: ${{github.workspace}} "
         set VCPKG_ROOT=${github.workspace}\VcPkg\vcpkg
-#        set CMAKE_TOOLCHAIN_FILE="${{VCPKG_ROOT}}/scripts/buildsystems/vcpkg.cmake" 
-#        echo "VCPKG_ROOT=${{VCPKG_ROOT}}"
-#        echo "CMAKE_TOOLCHAIN_FILE=${{CMAKE_TOOLCHAIN_FILE}}"
+        set CMAKE_TOOLCHAIN_FILE=${{VCPKG_ROOT}}\scripts\buildsystems\vcpkg.cmake" 
+        echo "VCPKG_ROOT:          ${{VCPKG_ROOT}}"
+        echo "CMAKE_TOOLCHAIN_FILE:${{CMAKE_TOOLCHAIN_FILE}}"
 #        mkdir -p ${{github.workspace}}/build
 #        echo "BUILD_DIR=${github.workspace}/build"
 #        set VCPKG_DEFAULT_TRIPLET=x64-windows
