@@ -51,7 +51,9 @@ jobs:
         which vcpkg
         ls -l /usr/local/share/vcpkg
         ls -l                /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
-        export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake 
+        export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
+        export VCPKG_DEFAULT_TRIPLET=x64-osx
+        export VCPKG_TRIPLET=x64-osx
         vcpkg install --triplet=x64-osx
         vcpkg install nlopt
     - name: Configure CMake
@@ -68,6 +70,8 @@ jobs:
         ls -l /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
         echo "Configure CMake completed?"
         export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake 
+        export VCPKG_DEFAULT_TRIPLET=x64-osx
+        export VCPKG_TRIPLET=x64-osx
         cmake -S . -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 #         cd       ${{github.workspace}}/build
 #        /bin/bash -c "find /usr/local -type f -iname findOMP\*\.cmake" 
