@@ -30,14 +30,15 @@ jobs:
 #      run: |
 #        which vcpkg
 
-#    - name: Install OMP
-#      run: |
-#        brew install llvm libomp 
-#        # brew install clang
-#        # brew reinstall gcc
-#        # brew install clang-omp
-#        # brew install llvm libomp
-#        # brew update
+    - name: Install OMP
+      run: |
+        brew install llvm clang clang++ libomp
+        #brew install llvm libomp 
+        # brew install clang
+        # brew reinstall gcc
+        # brew install clang-omp
+        # brew install llvm libomp
+        # brew update
 
     - name: Install nlopt
       run: |
@@ -61,12 +62,16 @@ jobs:
       run: |
         echo "Set environment variables"
         which vcpkg
+        export OpenMP_C_FLAGS=-L
+        export OpenMP_C_LIB_NAMES=-lomp
         echo "Configure CMake"
         echo "COMPILER:  ${COMPILER}"
         echo "CFLAGS:    ${CFLAGS}"
         echo "CXXFLAGS:  ${CXXFLAGS}"
         echo "LDFLAGS:   ${LDFLAGS}"
         echo "CXX:       ${LDFLAGS}"
+        echo "OpenMP_C_FLAGS:     ${OpenMP_C_FLAGS} " 
+        echo "OpenMP_C_LIB_NAMES  ${OpenMP_C_LIB_NAMES} "
         mkdir -p ${{github.workspace}}/build
         ls -l /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
         echo "Configure CMake completed?"
