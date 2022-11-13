@@ -60,7 +60,7 @@ jobs:
         echo "OpenMP_C_FLAGS:     ${OpenMP_C_FLAGS} " 
         echo "OpenMP_C_LIB_NAMES  ${OpenMP_C_LIB_NAMES} "
         mkdir -p ${{github.workspace}}/build
-        export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake 
+        # export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake 
         export VCPKG_DEFAULT_TRIPLET=x64-windows
         export VCPKG_TRIPLET=x64-windows
         echo "pwd:"
