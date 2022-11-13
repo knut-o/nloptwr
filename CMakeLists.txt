@@ -98,7 +98,7 @@ if (VCPKG_FLAG)
 	message("VCPKG_FLAG=${VCPKG_FLAG}")
 
     find_package(NLopt CONFIG REQUIRED)
-	message("NLOPT_LIBRARIES (vcpkg):      NLopt::nlopt ")
+	  message("NLOPT_LIBRARIES (vcpkg):      NLopt::nlopt ")
 
     # target_link_libraries(main PRIVATE NLopt::nlopt)
     SET(NLOPTCXX_LIBS NLopt::nlopt )

@@ -41,6 +41,7 @@ jobs:
         cd       ${{github.workspace}}\VcPkg\vcpkg
         echo "cd  ${{github.workspace}}\VcPkg\vcpkg done"
         ${{github.workspace}}\VcPkg\vcpkg\bootstrap-vcpkg.bat
+        set VCPKG_ROOT=${{github.workspace}}\VcPkg\vcpkg
         echo "bootstrap done"
         vcpkg install --triplet x64-windows
         # echo "vcpkg install --triplet x64-windows # done"
@@ -52,16 +53,10 @@ jobs:
         echo "Set environment variables"
         which vcpkg
         echo "Configure CMake"
-        echo "COMPILER:  ${COMPILER}"
-        echo "CFLAGS:    ${CFLAGS}"
-        echo "CXXFLAGS:  ${CXXFLAGS}"
-        echo "LDFLAGS:   ${LDFLAGS}"
-        echo "CXX:       ${LDFLAGS}"
-        echo "OpenMP_C_FLAGS:     ${OpenMP_C_FLAGS} " 
-        echo "OpenMP_C_LIB_NAMES  ${OpenMP_C_LIB_NAMES} "
         echo "github.workspace: ${github.workspace} "
         mkdir -p ${{github.workspace}}/build
-        # set CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake 
+        set VCPKG_ROOT=${{github.workspace}}\VcPkg\vcpkg
+        set CMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake 
         set VCPKG_DEFAULT_TRIPLET=x64-windows
         set VCPKG_TRIPLET=x64-windows
         echo "pwd:"
