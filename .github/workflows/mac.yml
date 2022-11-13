@@ -52,8 +52,7 @@ jobs:
         ls -l /usr/local/share/vcpkg
         ls -l                /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
         export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake 
-        vcpkg install --triplet=x64-osx
-        vcpkg install nlopt
+        vcpkg install --triplet=x64-osx nlopt
 
     - name: Configure CMake
       run: |
