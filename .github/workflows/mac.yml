@@ -35,8 +35,7 @@ jobs:
         # brew reinstall libomp
         # brew reinstall gcc
         # brew install clang-omp
-        brew install llvm libomp
-     
+        brew install llvm libomp 
     - name: Install nlopt
       run: |
         echo "Set environment variables I"
