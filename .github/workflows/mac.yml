@@ -32,7 +32,7 @@ jobs:
 
     - name: Install OMP
       run: |
-        brew install llvm
+        brew install llvm xcode
         brew --prefix libomp
         #brew install llvm libomp 
         # brew install clang
@@ -63,6 +63,12 @@ jobs:
       run: |
         echo "Set environment variables"
         which vcpkg
+        export PATH="$(brew --prefix llvm)/bin:$PATH";
+        export COMPILER=/usr/local/opt/llvm/bin/clang++
+        export CFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
+        export CXXFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
+        export LDFLAGS="-L /usr/local/lib -L/usr/local/opt/llvm/lib"
+        export CXX=${COMPILER}
         export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
         export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
         echo "Configure CMake"
