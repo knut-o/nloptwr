@@ -63,8 +63,8 @@ jobs:
       run: |
         echo "Set environment variables"
         which vcpkg
-        export OpenMP_C_FLAGS=-L
-        export OpenMP_C_LIB_NAMES=-lomp
+        export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
+        export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
         echo "Configure CMake"
         echo "COMPILER:  ${COMPILER}"
         echo "CFLAGS:    ${CFLAGS}"
