@@ -42,9 +42,9 @@ jobs:
         echo "cd  ${{github.workspace}}\VcPkg\vcpkg done"
         ${{github.workspace}}\VcPkg\vcpkg\bootstrap-vcpkg.bat
         echo "bootstrap done"
-        # vcpkg install --triplet x64-windows
+        vcpkg install --triplet x64-windows
         # echo "vcpkg install --triplet x64-windows # done"
-        ${{github.workspace}}\VcPkg\vcpkg\vcpkg.exe install nlopt:x64-windows
+        # ${{github.workspace}}\VcPkg\vcpkg\vcpkg.exe install nlopt:x64-windows
         echo "install nlopt done"
 ##
 ##    - name: Install nlopt
