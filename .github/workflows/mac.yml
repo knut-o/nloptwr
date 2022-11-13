@@ -32,8 +32,8 @@ jobs:
 
     - name: Install OMP
       run: |
-        brew reinstall libomp
-        brew install clang
+        brew install llvm libomp 
+        # brew install clang
         # brew reinstall gcc
         # brew install clang-omp
         # brew install llvm libomp
