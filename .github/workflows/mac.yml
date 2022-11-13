@@ -9,11 +9,11 @@ on:
     branches: 
       - main
       - dev
-      - dev-workflow
+#      - dev-workflow
   pull_request:
       - main
       - dev
-      - dev-workflow
+#      - dev-workflow
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)

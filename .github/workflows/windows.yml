@@ -25,31 +25,27 @@ jobs:
 
 # ====================================================================
   build:
-#  build:
-    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
-    # You can convert this to a matrix build if you need cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     runs-on: windows-latest
 
     steps:
     - name: checkout
       uses: actions/checkout@v3
 
-#    - name: Install NLOPT
-#      run: |
-#        echo "vcpkg install nlopt"
-#        mkdir -p ${{github.workspace}}\VcPkg
-#        cd       ${{github.workspace}}\VcPkg
-#        git clone https://github.com/microsoft/vcpkg
-#        echo "clone done"
-#        cd       ${{github.workspace}}\VcPkg\vcpkg
-#        echo "cd  ${{github.workspace}}\VcPkg\vcpkg done"
-#        ${{github.workspace}}\VcPkg\vcpkg\bootstrap-vcpkg.bat
-#        echo "bootstrap done"
-#        # vcpkg install --triplet x64-windows
-#        # echo "vcpkg install --triplet x64-windows # done"
-#        ${{github.workspace}}\VcPkg\vcpkg\vcpkg.exe install nlopt:x64-windows
-#        echo "install nlopt done"
+    - name: Install NLOPT
+      run: |
+        echo "vcpkg install nlopt"
+        mkdir -p ${{github.workspace}}\VcPkg
+        cd       ${{github.workspace}}\VcPkg
+        git clone https://github.com/microsoft/vcpkg
+        echo "clone done"
+        cd       ${{github.workspace}}\VcPkg\vcpkg
+        echo "cd  ${{github.workspace}}\VcPkg\vcpkg done"
+        ${{github.workspace}}\VcPkg\vcpkg\bootstrap-vcpkg.bat
+        echo "bootstrap done"
+        # vcpkg install --triplet x64-windows
+        # echo "vcpkg install --triplet x64-windows # done"
+        ${{github.workspace}}\VcPkg\vcpkg\vcpkg.exe install nlopt:x64-windows
+        echo "install nlopt done"
 ##
 ##    - name: Install nlopt
 ##      run: |
