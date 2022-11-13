@@ -30,38 +30,33 @@ jobs:
 #      run: |
 #        which vcpkg
 
-    - name: Install OMP
-      run: |
-        brew install llvm libomp 
-        # brew install clang
-        # brew reinstall gcc
-        # brew install clang-omp
-        # brew install llvm libomp
-        # brew update
+#    - name: Install OMP
+#      run: |
+#        brew install llvm libomp 
+#        # brew install clang
+#        # brew reinstall gcc
+#        # brew install clang-omp
+#        # brew install llvm libomp
+#        # brew update
 
     - name: Install nlopt
       run: |
         echo "Set environment variables I"
-        export PATH="$(brew --prefix llvm)/bin:$PATH"
-        export COMPILER=/usr/local/opt/llvm/bin/clang++
-        export CFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
-        export CXXFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
-        export LDFLAGS="-L /usr/local/lib -L/usr/local/opt/llvm/lib"
-        export CXX=${COMPILER}
+        echo "Configure CMake"
+        echo "COMPILER:  ${COMPILER}"
+        echo "CFLAGS:    ${CFLAGS}"
+        echo "CXXFLAGS:  ${CXXFLAGS}"
+        echo "LDFLAGS:   ${LDFLAGS}"
+        echo "CXX:       ${LDFLAGS}"
         which vcpkg
         ls -l /usr/local/share/vcpkg
         ls -l                /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
         export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake 
-        vcpkg install --triplet=x64-osx
+        vcpkg install nlopt
+#        vcpkg install --triplet=x64-osx
     - name: Configure CMake
       run: |
         echo "Set environment variables"
-        export PATH="$(brew --prefix llvm)/bin:$PATH";
-        export COMPILER=/usr/local/opt/llvm/bin/clang++
-        export CFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
-        export CXXFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
-        export LDFLAGS="-L /usr/local/lib -L/usr/local/opt/llvm/lib"
-        export CXX=${COMPILER}
         which vcpkg
         echo "Configure CMake"
         echo "COMPILER:  ${COMPILER}"
@@ -76,7 +71,13 @@ jobs:
         cmake -S . -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 #         cd       ${{github.workspace}}/build
 #        /bin/bash -c "find /usr/local -type f -iname findOMP\*\.cmake" 
-
+#
+#        export PATH="$(brew --prefix llvm)/bin:$PATH";
+#        export COMPILER=/usr/local/opt/llvm/bin/clang++
+#        export CFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
+#        export CXXFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
+#        export LDFLAGS="-L /usr/local/lib -L/usr/local/opt/llvm/lib"
+#        export CXX=${COMPILER}
 ## =========================================
 ##
 ## =========================================
