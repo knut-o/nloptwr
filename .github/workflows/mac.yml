@@ -29,16 +29,17 @@ jobs:
       uses: actions/checkout@v3
 # ---------------------------------------------------------------
 
-    - name: Install OMP
-      run: |
-        # brew update
-        # brew reinstall libomp
-        # brew reinstall gcc
-        # brew install clang-omp
-        brew install llvm libomp
     - name: TEST001
     	run: |
     	  which vcpkg
+    - name: Install OMP
+      run: |
+        # brew update
+        brew reinstall libomp
+        brew install clang
+        # brew reinstall gcc
+        # brew install clang-omp
+        # brew install llvm libomp
     - name: Install nlopt
       run: |
         echo "Set environment variables I"
