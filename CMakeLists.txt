@@ -93,9 +93,12 @@ endif()
 
 # =========================================================================
 
+message("#1.) VCPKG_FLAG=${VCPKG_FLAG}")
+message("#1.) CMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE} ")
+
 if (VCPKG_FLAG)
     # use vcpkg
-	message("VCPKG_FLAG=${VCPKG_FLAG}")
+	  message("VCPKG_FLAG=${VCPKG_FLAG}")
 
     find_package(NLopt CONFIG REQUIRED)
 	  message("NLOPT_LIBRARIES (vcpkg):      NLopt::nlopt ")
