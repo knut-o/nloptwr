@@ -25,9 +25,11 @@ jobs:
     steps:
     - name: checkout
       uses: actions/checkout@v3
+
     - name: test001
-    	run: |
-    	  which vcpkg
+      run: |
+        which vcpkg
+
     - name: Install OMP
       run: |
         # brew update
