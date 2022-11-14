@@ -9,12 +9,11 @@ on:
     branches: 
       - main
       - dev
-#      - dev-workflow
+      - dev-workflow
   pull_request:
       - main
       - dev
       - dev-workflow
-
 
 jobs:
   windows:
