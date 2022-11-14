@@ -25,12 +25,12 @@ jobs:
           mkdir ${{github.workspace}}\build
           cd ${{github.workspace}}\build
           echo "XYZ0"
-          set CMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
-          echo "XYZ1"
-          dir ${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
-          echo "XYZ2"
+#          set CMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
+#          echo "XYZ1"
+#          dir ${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
+#          echo "XYZ2"
 #          cmake -DCMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
-          echo "XYZ2"
+#          echo "XYZ2"
 #          vcpkg install --triplet x64-windows
 #          echo "ZZZ"
 #          cmake --build . --config Release --target install
