@@ -18,8 +18,8 @@ jobs:
           set CMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
           echo "bootstrap done"
           vcpkg install --triplet x64-windows
-#
-#          cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install .
+					cd ${{github.workspace}}
+          cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install .
 #          cmake --build . --config Release --target install
 #          xcopy %cd%\install\bin\nlopt.dll %cd%\src\swig
 #          xcopy %cd%\install\Lib\site-packages\_nlopt*.pyd %cd%\src\swig
