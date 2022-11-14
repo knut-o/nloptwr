@@ -9,6 +9,7 @@ jobs:
         shell: cmd
         run: |
           echo "bootstrap done"
+          vcpkg install nlopt
           mkdir ${{github.workspace}}\build
           cd ${{github.workspace}}\build
           echo "YYY"
@@ -25,6 +26,7 @@ jobs:
 #          .\bootstrap-vcpkg.bat
 #          vcpkg install --triplet x64-windows
 #          vcpkg install nlopt
+#          cmake -DCMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
 #
 #          set VCPKG_ROOT=${{github.workspace}}\VcPkg\vcpkg
 #          set CMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
