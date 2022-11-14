@@ -8,28 +8,28 @@ jobs:
       - name: Build
         shell: cmd
         run: |
-          echo "### Configuring VCPKG ..."
+          echo "# 1a.) Configuring VCPKG ..."
           mkdir -p ${{github.workspace}}\VcPkg
           cd       ${{github.workspace}}\VcPkg
           git clone https://github.com/microsoft/vcpkg
-          echo "### VCPKG: clone done"
+          echo "# 1b.) VCPKG: clone done"
           cd ${{github.workspace}}\VcPkg\vcpkg
           bootstrap-vcpkg.sh -disableMetrics
           set VCPKG_DEFAULT_TRIPLET=x64-windows
           set VCPKG_TRIPLET=x64-windows
           vcpkg install
-          echo "### VCPKG installed"
+          echo "# 1c.) VCPKG installed"
           mkdir ${{github.workspace}}\build
           cd ${{github.workspace}}\build
-          echo "### build directory created"
+          echo "# 1d.) build directory created"
           set CMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
           set CMAKE_TOOLCHAIN_FILE=${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
           echo "CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}"
-          echo "### Configuring CMake for NLOptWr ..."
-          cmake -DCMAKE_TOOLCHAIN_FILE=CMAKE_TOOLCHAIN_FILE=D:/a/nloptwr/nloptwr/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
+          echo "# 2.) Configuring CMake for NLOptWr ..."
+          cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
           echo "### Building NLOptWr ..."
           cmake --build . --config Release --target install
-          echo "### Testing NLOptWr ..."
+          echo "# 3.) Testing NLOptWr ..."
           ctest -C Release --output-on-failure --timeout 100
-          echo "### NLOptWr: test finished"
+          echo "# 4.) NLOptWr: test finished"
 
