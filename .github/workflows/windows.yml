@@ -17,6 +17,7 @@ jobs:
           bootstrap-vcpkg.sh -disableMetrics
           dir
           vcpkg install --triplet x64-windows
+          vcpkg install nlopt
           dir
           echo "vcpkg installed"
 #          mkdir ${{github.workspace}}\build
