@@ -43,23 +43,13 @@ jobs:
         set VCPKG_ROOT=${{github.workspace}}\VcPkg\vcpkg
         echo "bootstrap done"
         vcpkg install --triplet x64-windows
-#        # echo "vcpkg install --triplet x64-windows # done"
-#        # ${{github.workspace}}\VcPkg\vcpkg\vcpkg.exe install nlopt:x64-windows
-#        echo "install nlopt done"
-
-    - name: Configure CMake
-      shell: 
-      run: |
-        echo "Set environment variables"
-        echo "Configure CMake"
-        echo "github.workspace: ${{github.workspace}} "
 #        mkdir D:\a\nloptwr\nloptwr\
 #        mkdir ${{github.workspace}}\build
 #        cd    ${{github.workspace}}\build
 #        cd    D:\a\nloptwr\nloptwr\
 #         pwd
 #        echo "### "
-        cmake -DCMAKE_TOOLCHAIN_FILE="D:\a\nloptwr\nloptwr\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake" -DCMAKE_INSTALL_PREFIX=c:/dev/projects/nloptwr/install .. 
+##        cmake -DCMAKE_TOOLCHAIN_FILE="D:\a\nloptwr\nloptwr\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake" -DCMAKE_INSTALL_PREFIX=c:/dev/projects/nloptwr/install .. 
 #        cmake --build . --config Release --target install
 #        ctest -C Release --output-on-failure --timeout 300  
 #
