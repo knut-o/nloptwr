@@ -24,11 +24,11 @@ jobs:
           echo "YYY"
           cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
           echo "ZZZ"
-#          cmake --build . --config Release --target install
+          cmake --build . --config Release --target install
+#          ctest -C Release --output-on-failure --timeout 100
 #          xcopy %cd%\install\bin\nlopt.dll %cd%\src\swig
 #          xcopy %cd%\install\Lib\site-packages\_nlopt*.pyd %cd%\src\swig
 #          dir /p %cd%\src\swig
-#          ctest -C Release --output-on-failure --timeout 100
 #
 #
 #jobs:
