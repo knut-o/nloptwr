@@ -12,8 +12,10 @@ jobs:
           cd       ${{github.workspace}}\VcPkg
           git clone https://github.com/microsoft/vcpkg
           echo "clone done"
-          ${{github.workspace}}\VcPkg\vcpkg\bootstrap-vcpkg.bat
+          cd ${{github.workspace}}\VcPkg\vcpkg
+          .\bootstrap-vcpkg.bat
           set VCPKG_ROOT=${{github.workspace}}\VcPkg\vcpkg
+          set CMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
           echo "bootstrap done"
           vcpkg install --triplet x64-windows
 #
