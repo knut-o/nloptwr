@@ -16,7 +16,9 @@ jobs:
           cd ${{github.workspace}}\VcPkg\vcpkg
           dir
           .\bootstrap-vcpkg.bat
+          dir
           .\vcpkg install --triplet x64-windows
+          dir
           echo "vcpkg installed"
 #          mkdir ${{github.workspace}}\build
 #          cd ${{github.workspace}}\build
