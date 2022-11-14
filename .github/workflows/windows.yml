@@ -1,19 +1,5 @@
 name: Build
-# on: [push, pull_request]
-on:
-  label:
-    types:
-      - created
-      - edited
-  push:
-    branches: 
-      - main
-      - dev
-      - dev-workflow
-  pull_request:
-      - main
-      - dev
-      - dev-workflow
+on: [push, pull_request]
 
 jobs:
   windows:
