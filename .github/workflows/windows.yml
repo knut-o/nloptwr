@@ -31,9 +31,12 @@ jobs:
           dir  ${{github.workspace}}\VcPkg\vcpkg\scripts\
           dir  ${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\
           echo "XYZ2"
+          set CMAKE_TOOLCHAIN_FILE=${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
+          echo "XYZ3"
           dir  ${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
           echo "XYZ3"
-          cmake -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
+          echo "XYZ3"
+#          cmake -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
 #          echo "XYZ4"
 #          vcpkg install --triplet x64-windows
 #          echo "ZZZ"
