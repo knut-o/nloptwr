@@ -17,8 +17,9 @@ jobs:
           bootstrap-vcpkg.sh -disableMetrics
           set VCPKG_DEFAULT_TRIPLET=x64-windows
           set VCPKG_TRIPLET=x64-windows
-          vcpkg install --triplet x64-windows
-          vcpkg install --triplet x64-windows nlopt
+          vcpkg install
+#          vcpkg install --triplet x64-windows
+#          vcpkg install --triplet x64-windows nlopt
           echo "### VCPKG installed"
           mkdir ${{github.workspace}}\build
           cd ${{github.workspace}}\build
@@ -26,7 +27,7 @@ jobs:
           set CMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
           set CMAKE_TOOLCHAIN_FILE=${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
           echo "CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}"
-          dir  "${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake"
+#          dir  "${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake"
           echo "### Configuring CMake for NLOptWr ..."
           cmake -DCMAKE_TOOLCHAIN_FILE=CMAKE_TOOLCHAIN_FILE=D:/a/nloptwr/nloptwr/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
           echo "### Building NLOptWr ..."
