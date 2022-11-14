@@ -39,7 +39,7 @@ jobs:
           echo "XYZ5"
           cmake -DCMAKE_TOOLCHAIN_FILE=CMAKE_TOOLCHAIN_FILE=D:/a/nloptwr/nloptwr/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
           cmake --build . --config Release --target install
-#          cmake --build . --config Release --target install
+          ctest -C Release --output-on-failure --timeout 100
 #          echo "XYZ6"
 #          vcpkg install --triplet x64-windows
 #          echo "ZZZ"
@@ -64,6 +64,7 @@ jobs:
 #          xcopy %cd%\install\Lib\site-packages\_nlopt*.pyd %cd%\src\swig
 #          dir /p %cd%\src\swig
 #
+#          cmake --build . --config Release --target install
 #
 #jobs:
 #  windows:
