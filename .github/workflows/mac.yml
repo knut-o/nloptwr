@@ -15,7 +15,7 @@ jobs:
 
     - name: Install OMP
       run: |
-        brew install llvm libomp gcc
+        brew install llvm libomp
         g++ --version
         ls -l /usr/local/opt/llvm/bin/clang*
         ls -l /usr/local/Cellar/llvm/
@@ -84,114 +84,8 @@ jobs:
         pwd
         ls -l .
         echo "Configuration:"
-        cmake -S . -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-#         cd       ${{github.workspace}}/build
-#        /bin/bash -c "find /usr/local -type f -iname findOMP\*\.cmake" 
-#
-#        export PATH="$(brew --prefix llvm)/bin:$PATH";
-#        export COMPILER=/usr/local/opt/llvm/bin/clang++
-#        export CFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
-#        export CXXFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
-#        export LDFLAGS="-L /usr/local/lib -L/usr/local/opt/llvm/lib"
-#        export CXX=${COMPILER}
-## =========================================
-##
-## =========================================
-##    - name: Install vcpkg
-##      run: |
-##        brew update
-##        # brew vcpkg
-##
-#    - name: Install vcpkg and nlopt
-#      run: |
-#				 #
-#				 # Bugfix for https://github.com/Homebrew/homebrew-core/issues/52461-mlinker-version=450
-#				 # Otherwise, we get "ld: unknown option: -platform_version"
-#				 # Not needed for all MacOS versions, apparently.
-#				 # See if that works for you, and otherwise, leave out these two lines.
-#				 ## export CXXFLAGS="${CXXFLAGS} -mlinker-version=450"
-#				 ## export LDFLAGS="${LDFLAGS} -mlinker-version=450"
-#				 #
-#         echo "vcpkg install nlopt"
-#        mkdir -p ${{github.workspace}}/VcPkg
-#        cd       ${{github.workspace}}/VcPkg
-#        git clone https://github.com/microsoft/vcpkg
-#        cd       ${{github.workspace}}/VcPkg/vcpkg
-#        ${{github.workspace}}/VcPkg/vcpkg/bootstrap-vcpkg.sh
-#        ${{github.workspace}}/VcPkg/vcpkg/vcpkg integrate install
-#        # uname -a
-#        # ${{github.workspace}}/VcPkg/vcpkg/vcpkg help triplet
-#        ${{github.workspace}}/VcPkg/vcpkg/vcpkg install --triplet=x64-osx
-#        echo "OK (2)
-#        ${{github.workspace}}/VcPkg/vcpkg/vcpkg install nlopt
-#        echo "OK (2)
-    # ---------------------------------------------------------------
-#    - name: Configure CMake for nloptwr
-#      run: |
-#        echo "Configure CMake"
-#        CMAKE_TOOLCHAIN_FILE=${{github.workspace}}/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-#        echo "Configure CMake completed?"
-#
-#    # ---------------------------------------------------------------
-#    - name: Build
-#      run: |
-#           echo "Find nlopt.hpp"
-#           # find / -type f -iname nlopt.hpp 2> /dev/null
-#           echo "TODO: Build"
-#           cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
-#    # ---------------------------------------------------------------
-#    - name: Test
-#      run: |
-#        mkdir -p ${{github.workspace}}/build
-#        cd       ${{github.workspace}}/build
-#        ctest -C ${{env.BUILD_TYPE}}
-#
-# ====================================================================
-#
-#  build:
-#    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
-#    # You can convert this to a matrix build if you need cross-platform coverage.
-#    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-#    runs-on: macos-latest
-#
-#    steps:
-#    - name: checkout
-#      uses: actions/checkout@v3
-#
-#    - name: Install vcpkg
-#      run: |
-#        brew update
-#        # brew vcpkg
-#
-#    - name: Install NLOPT
-#      run: |
-#        echo "vcpkg install nlopt"
-#        # xcode-select --install
-#        mkdir -p ${{github.workspace}}/VcPkg
-#        cd       ${{github.workspace}}/VcPkg
-#        git clone https://github.com/microsoft/vcpkg
-#        cd       ${{github.workspace}}/VcPkg/vcpkg
-#        ${{github.workspace}}/VcPkg/vcpkg/bootstrap-vcpkg.sh
-#        ${{github.workspace}}/VcPkg/vcpkg/vcpkg install nlopt
-#
-#    - name: Configure CMake
-#      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-#      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-#      run: |
-#        echo "Configure CMake"
-#        CMAKE_TOOLCHAIN_FILE=${{github.workspace}}/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
-#        echo "Configure CMake completed?"
-#
-#    - name: Build
-#      run: |
-#           echo "Find nlopt.hpp"
-#           # find / -type f -iname nlopt.hpp 2> /dev/null
-#           echo "TODO: Build"
-#           cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
-#
-#    - name: Test
-#      run: |
-#        mkdir -p ${{github.workspace}}/build
-#        cd       ${{github.workspace}}/build
-#        ctest -C ${{env.BUILD_TYPE}}
-#
+        cd       ${{github.workspace}}/build
+        cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} ..
+        cmake --build . -j 2
+        ctest
+
