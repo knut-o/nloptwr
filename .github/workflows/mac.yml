@@ -26,6 +26,7 @@ jobs:
         export CXX=/usr/local/bin/clang-omp++
         export LDFLAGS="-L/us/local/opt/llvm/lib"
         export CPPFLAGS="-I/usr/local/opt/llvm/include"
+        cat /usr/local/Cellar/cmake/3.24.2/share/cmake/Modules/FindOpenMP.cmake
 
     - name: Install nlopt
       run: |
@@ -51,14 +52,17 @@ jobs:
         which vcpkg
         export PATH="$(brew --prefix llvm)/bin:$PATH";
         export COMPILER=/usr/local/opt/llvm/bin/clang++
-        export CFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
-        export CXXFLAGS="-I /usr/local/include -I/usr/local/opt/llvm/include"
-        export LDFLAGS="-L /usr/local/lib -L/usr/local/opt/llvm/lib"
-        export CXX=${COMPILER}
-        export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
-        export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
+        export CFLAGS="-I/usr/local/include -I/usr/local/opt/llvm/include"
+        export CXXFLAGS="-I/usr/local/include -I/usr/local/opt/llvm/include"
+        export LDFLAGS="-L/usr/local/lib -L/usr/local/opt/llvm/lib"
+        export LDFLAGS="-L/us/local/opt/llvm/lib"
+        export CPPFLAGS="-I/usr/local/opt/llvm/include"
         export OpenMP_C=/usr/local/bin/clang-omp
         export OpenMP_CXX=/usr/local/bin/clang-omp++
+        export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
+        export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
+        export CC=${OpenMP_C}
+        export CXX=${OpenMP_CXX}
         echo "Configure CMake"
         echo "COMPILER:  ${COMPILER}"
         echo "CFLAGS:    ${CFLAGS}"
