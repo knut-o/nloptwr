@@ -1,4 +1,4 @@
-name: Build
+name: Mac
 on: [push, pull_request]
 # on: [pull_request]
 
@@ -16,7 +16,7 @@ jobs:
     - name: Install OMP
       run: |
         brew install llvm libomp
-        ls -l /usr/local/bin/clang-omp*
+        ls -l /usr/local/opt/llvm/bin/clang*
 # ln -s /usr/local/opt/llvm/bin/clang    /usr/local/bin/clang-omp 
 # ln -s /usr/local/opt/llvm/bin/clang++  /usr/local/bin/clang-omp++
 
