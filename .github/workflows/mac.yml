@@ -9,15 +9,15 @@ on:
     branches: 
       - main
       - dev
-#      - dev-workflow
+      - dev-workflow
   pull_request:
       - main
       - dev
-#      - dev-workflow
+      - dev-workflow
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: RelWithDebInfo
+  BUILD_TYPE: Release
 
 
 jobs:
@@ -37,16 +37,10 @@ jobs:
 
     - name: Install OMP
       run: |
-        brew install llvm 
-        brew install xcodegen
-        brew install gcc
-        brew --prefix libomp
-        # brew install llvm libomp 
-        # brew install clang
-        # brew reinstall gcc
-        # brew install clang-omp
-        # brew install llvm libomp
-        # brew update
+        brew install llvm libomp
+        ls -l /usr/local/bin/clang-omp*
+        # ln -s /usr/local/opt/llvm/bin/clang    /usr/local/bin/clang-omp 
+        # ln -s /usr/local/opt/llvm/bin/clang++  /usr/local/bin/clang-omp++
 
     - name: Install nlopt
       run: |
