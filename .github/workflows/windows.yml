@@ -28,6 +28,8 @@ jobs:
           set CMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
           echo "XYZ1"
           echo ${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
+          dir  ${{github.workspace}}\VcPkg\vcpkg\scripts\
+          dir  ${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\
           dir  ${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
           echo "XYZ2"
 #          cmake -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
