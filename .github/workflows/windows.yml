@@ -8,7 +8,11 @@ jobs:
       - name: Build
         shell: cmd
         run: |
-          pip install numpy
+          mkdir -p ${{github.workspace}}\VcPkg
+          cd       ${{github.workspace}}\VcPkg
+          git clone https://github.com/microsoft/vcpkg
+          echo "clone done"
+#
 #          cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install .
 #          cmake --build . --config Release --target install
 #          xcopy %cd%\install\bin\nlopt.dll %cd%\src\swig
