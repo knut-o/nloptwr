@@ -37,10 +37,13 @@ jobs:
           echo "XYZ4"
           dir  "${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake"
           echo "XYZ5"
-          cmake -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
+          cmake -DCMAKE_TOOLCHAIN_FILE=CMAKE_TOOLCHAIN_FILE=D:/a/nloptwr/nloptwr/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
+          cmake --build . --config Release --target install
+#          cmake --build . --config Release --target install
 #          echo "XYZ6"
 #          vcpkg install --triplet x64-windows
 #          echo "ZZZ"
+#          cmake -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
 #          cmake --build . --config Release --target install
 # ===================================
 #        	vcpkg install nlopt
