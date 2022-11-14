@@ -15,7 +15,7 @@ jobs:
 
     - name: Install OMP
       run: |
-        brew install llvm libomp g++
+        brew install llvm libomp gcc
         g++ --version
         ls -l /usr/local/opt/llvm/bin/clang*
         ls -l /usr/local/Cellar/llvm/
