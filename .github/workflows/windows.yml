@@ -61,7 +61,7 @@ jobs:
 #        cd    ${{github.workspace}}\build
 #        cd    D:\a\nloptwr\nloptwr\
 #         pwd
-#        echo "### "
+        echo "### "
 #
 ##        echo ${{VCPKG_ROOT}}
 #        echo "CMAKE_TOOLCHAIN_FILE: $CMAKE_TOOLCHAIN_FILE"
