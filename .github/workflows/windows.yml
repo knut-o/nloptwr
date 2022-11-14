@@ -59,9 +59,9 @@ jobs:
         echo "### "
         mkdir ${{github.workspace}}\build
 #        mkdir D:\a\nloptwr\nloptwr\
-#        cd    ${{github.workspace}}\build
-#        pwd
+        cd    ${{github.workspace}}\build
 #        cd    D:\a\nloptwr\nloptwr\
+#        pwd
 #
 ##        echo ${{VCPKG_ROOT}}
 #        echo "CMAKE_TOOLCHAIN_FILE: $CMAKE_TOOLCHAIN_FILE"
