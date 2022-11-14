@@ -18,14 +18,14 @@ jobs:
           dir
           set VCPKG_DEFAULT_TRIPLET=x64-windows
           set VCPKG_TRIPLET=x64-windows
-          vcpkg install
-          vcpkg install nlopt
+          vcpkg install --triplet x64-windows
+          vcpkg install --triplet x64-windows nlopt
           dir
           echo "vcpkg installed"
           mkdir ${{github.workspace}}\build
           cd ${{github.workspace}}\build
           echo "YYY"
-#          cmake -DCMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
+          cmake -DCMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
 #          vcpkg install --triplet x64-windows
 #          echo "ZZZ"
 #          cmake --build . --config Release --target install
