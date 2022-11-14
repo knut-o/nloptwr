@@ -17,8 +17,8 @@ jobs:
       run: |
         brew install llvm libomp
         ls -l /usr/local/opt/llvm/bin/clang*
-        ls -l /usr/local/Cellar/llvm/"
-        ls -l /usr/local/Cellar/llvm/5.0.1/"
+        ls -l /usr/local/Cellar/llvm/
+        ls -l /usr/local/Cellar/llvm/5.0.1/
         sudo ln -s /usr/local/opt/llvm/bin/clang    /usr/local/bin/clang-omp 
         sudo ln -s /usr/local/opt/llvm/bin/clang++  /usr/local/bin/clang-omp++
         export CC=/usr/local/bin/clang-omp
