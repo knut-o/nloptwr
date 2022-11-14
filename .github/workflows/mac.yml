@@ -57,6 +57,8 @@ jobs:
         export CXX=${COMPILER}
         export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
         export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
+        export OpenMP_C=/usr/local/bin/clang-omp
+        export OpenMP_CXX=/usr/local/bin/clang-omp++
         echo "Configure CMake"
         echo "COMPILER:  ${COMPILER}"
         echo "CFLAGS:    ${CFLAGS}"
