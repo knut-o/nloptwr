@@ -15,6 +15,7 @@ jobs:
           cd ${{github.workspace}}\VcPkg\vcpkg
           .\bootstrap-vcpkg.bat
           vcpkg install --triplet x64-windows
+          vcpkg install nlopt
           set VCPKG_ROOT=${{github.workspace}}\VcPkg\vcpkg
           set CMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
           echo "bootstrap done"
