@@ -57,7 +57,7 @@ jobs:
         set CMAKE_TOOLCHAIN_FILE="${github.workspace}/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake"
         set VCPKG_ROOT="${github.workspace}/VcPkg/vcpkg"
         echo "### "
-        echo ${VCPKG_ROOT}
+##        echo ${{VCPKG_ROOT}}
 #        echo "CMAKE_TOOLCHAIN_FILE: $CMAKE_TOOLCHAIN_FILE"
 #        mkdir -p ${{github.workspace}}/build
 #        echo "BUILD_DIR=${github.workspace}/build"
@@ -67,8 +67,10 @@ jobs:
 #        echo "Configuration:"
 #        cd  ${{github.workspace}}/build
 #
-        mkdir ${{github.workspace}}\build
-        cd    ${{github.workspace}}\build
+#        mkdir ${{github.workspace}}\build
+        mkdir D:\a\nloptwr\nloptwr\
+        cd    D:\a\nloptwr\nloptwr\
+#        cd    ${{github.workspace}}\build
 #        cmake -DCMAKE_TOOLCHAIN_FILE="${{github.workspace}}/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake" .. 
         #  cmake -DCMAKE_TOOLCHAIN_FILE="D:\a\nloptwr\nloptwr\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake" -S .. -B ${github.workspace}/build ..
         ### -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
