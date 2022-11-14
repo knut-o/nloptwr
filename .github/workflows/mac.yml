@@ -14,17 +14,15 @@ on:
       - main
       - dev
       - dev-workflow
-
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
-
 
 jobs:
 
 # ====================================================================
 
-  build:
+  build: Mac
     runs-on: macos-latest
 
     steps:
