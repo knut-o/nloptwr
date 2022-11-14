@@ -66,9 +66,10 @@ jobs:
 #        echo "pwd:"
 #        echo "Configuration:"
 #        cd  ${{github.workspace}}/build
-        mkdir D:/a/nloptwr/nloptwr/build
-        cd    D:/a/nloptwr/nloptwr/build
-        cmake -DCMAKE_TOOLCHAIN_FILE="D:/a/nloptwr/nloptwr/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake" .. 
+#
+#        mkdir D:/a/nloptwr/nloptwr/build
+#        cd    D:/a/nloptwr/nloptwr/build
+#        cmake -DCMAKE_TOOLCHAIN_FILE="D:/a/nloptwr/nloptwr/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake" .. 
         #  cmake -DCMAKE_TOOLCHAIN_FILE="D:/a/nloptwr/nloptwr/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake" -S .. -B ${github.workspace}/build ..
         ### -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 ##        cmake -S . -B ${github.workspace}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
