@@ -57,7 +57,7 @@ jobs:
         set CMAKE_TOOLCHAIN_FILE="${github.workspace}/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake"
         set VCPKG_ROOT="${github.workspace}/VcPkg/vcpkg"
         echo "### "
-#        mkdir ${{github.workspace}}\build
+        mkdir ${{github.workspace}}\build
 #        mkdir D:\a\nloptwr\nloptwr\
 #        cd    ${{github.workspace}}\build
 #        pwd
