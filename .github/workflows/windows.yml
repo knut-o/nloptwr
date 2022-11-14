@@ -16,14 +16,17 @@ jobs:
           cd ${{github.workspace}}\VcPkg\vcpkg
           bootstrap-vcpkg.sh -disableMetrics
           dir
-          vcpkg install --triplet x64-windows
+          set VCPKG_DEFAULT_TRIPLET=x64-windows
+          set VCPKG_TRIPLET=x64-windows
+          vcpkg install
           vcpkg install nlopt
           dir
           echo "vcpkg installed"
-#          mkdir ${{github.workspace}}\build
-#          cd ${{github.workspace}}\build
-#          echo "YYY"
+          mkdir ${{github.workspace}}\build
+          cd ${{github.workspace}}\build
+          echo "YYY"
 #          cmake -DCMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
+#          vcpkg install --triplet x64-windows
 #          echo "ZZZ"
 #          cmake --build . --config Release --target install
 # ===================================
@@ -85,8 +88,6 @@ jobs:
 ##        echo "CMAKE_TOOLCHAIN_FILE: $CMAKE_TOOLCHAIN_FILE"
 ##        mkdir -p ${{github.workspace}}/build
 ##        echo "BUILD_DIR=${github.workspace}/build"
-##        set VCPKG_DEFAULT_TRIPLET=x64-windows
-##        set VCPKG_TRIPLET=x64-windows
 ##        echo "pwd:"
 ##        echo "Configuration:"
 ##        cd  ${{github.workspace}}/build
