@@ -18,12 +18,9 @@ on:
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: RelWithDebInfo
-
+  BUILD_TYPE: Release
 
 jobs:
-
-# ====================================================================
   build:
     runs-on: windows-latest
 
@@ -32,6 +29,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Install NLOpt
+      shell: 
       run: |
         echo "vcpkg install nlopt"
         echo "github.workspace: ${{github.workspace}} "
@@ -45,24 +43,28 @@ jobs:
         set VCPKG_ROOT=${{github.workspace}}\VcPkg\vcpkg
         echo "bootstrap done"
         vcpkg install --triplet x64-windows
-        # echo "vcpkg install --triplet x64-windows # done"
-        # ${{github.workspace}}\VcPkg\vcpkg\vcpkg.exe install nlopt:x64-windows
-        echo "install nlopt done"
+#        # echo "vcpkg install --triplet x64-windows # done"
+#        # ${{github.workspace}}\VcPkg\vcpkg\vcpkg.exe install nlopt:x64-windows
+#        echo "install nlopt done"
 
     - name: Configure CMake
+      shell: 
       run: |
         echo "Set environment variables"
         echo "Configure CMake"
         echo "github.workspace: ${{github.workspace}} "
-        set CMAKE_TOOLCHAIN_FILE="${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake"
-        set VCPKG_ROOT="${github.workspace}\VcPkg\vcpkg"
 #        mkdir D:\a\nloptwr\nloptwr\
 #        mkdir ${{github.workspace}}\build
 #        cd    ${{github.workspace}}\build
 #        cd    D:\a\nloptwr\nloptwr\
 #         pwd
-        echo "### "
+#        echo "### "
+        cmake -DCMAKE_TOOLCHAIN_FILE="D:\a\nloptwr\nloptwr\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake" -DCMAKE_INSTALL_PREFIX=c:/dev/projects/nloptwr/install .. 
+#        cmake --build . --config Release --target install
+#        ctest -C Release --output-on-failure --timeout 300  
 #
+#        set CMAKE_TOOLCHAIN_FILE="${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake"
+#        set VCPKG_ROOT="${github.workspace}\VcPkg\vcpkg"
 ##        echo ${{VCPKG_ROOT}}
 #        echo "CMAKE_TOOLCHAIN_FILE: $CMAKE_TOOLCHAIN_FILE"
 #        mkdir -p ${{github.workspace}}/build
