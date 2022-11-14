@@ -56,12 +56,12 @@ jobs:
         echo "github.workspace: ${{github.workspace}} "
         set CMAKE_TOOLCHAIN_FILE="${github.workspace}/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake"
         set VCPKG_ROOT="${github.workspace}/VcPkg/vcpkg"
-        echo "### "
-        mkdir ${{github.workspace}}\build
-#        mkdir D:\a\nloptwr\nloptwr\
+        mkdir D:\a\nloptwr\nloptwr\
+#        mkdir ${{github.workspace}}\build
 #        cd    ${{github.workspace}}\build
 #        cd    D:\a\nloptwr\nloptwr\
-        pwd
+#         pwd
+        echo "### "
 #
 ##        echo ${{VCPKG_ROOT}}
 #        echo "CMAKE_TOOLCHAIN_FILE: $CMAKE_TOOLCHAIN_FILE"
