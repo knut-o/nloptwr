@@ -20,8 +20,8 @@ jobs:
         sudo ln -s /usr/local/opt/llvm/bin/clang++  /usr/local/bin/clang-omp++
         export CC=/usr/local/bin/clang-omp
         export CXX=/usr/local/bin/clang-omp++
-        export LDFLAGS="-L/us/local/opt/llvm/lib"
         export CPPFLAGS="-I/usr/local/opt/llvm/include"
+        export LDFLAGS="-L/usr/local/opt/llvm/lib"
         export OpenMP_C=${CC}
         export OpenMP_CXX=${CXX}
         export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
@@ -30,13 +30,14 @@ jobs:
         export VCPKG_DEFAULT_TRIPLET=x64-osx
         export VCPKG_TRIPLET=x64-osx
 
-    - name: Install nlopt
+    - name: Install NLOpt
       run: |
         echo "Set environment variables "
         export CC=/usr/local/bin/clang-omp
         export CXX=/usr/local/bin/clang-omp++
-        export LDFLAGS="-L/us/local/opt/llvm/lib"
+        export LDFLAGS="-L/usr/local/opt/llvm/lib"
         export CPPFLAGS="-I/usr/local/opt/llvm/include"
+        export CXXFLAGS="-I/usr/local/opt/llvm/include"
         export OpenMP_C=${CC}
         export OpenMP_CXX=${CXX}
         export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
@@ -48,7 +49,7 @@ jobs:
         echo "VCPKG_DEFAULT_TRIPLET: ${VCPKG_DEFAULT_TRIPLET}"
         echo "VCPKG_TRIPLET:         ${VCPKG_TRIPLET}"
         echo " "
-        echo "CFLAGS:                ${CFLAGS}"
+        echo "CPPFLAGS:              ${CPPFLAGS}"
         echo "CXXFLAGS:              ${CXXFLAGS}"
         echo "LDFLAGS:               ${LDFLAGS}"
         echo "CXX:                   ${LDFLAGS}"
@@ -61,8 +62,9 @@ jobs:
         echo "Check environment variables:"
         export CC=/usr/local/bin/clang-omp
         export CXX=/usr/local/bin/clang-omp++
-        export LDFLAGS="-L/us/local/opt/llvm/lib"
+        export LDFLAGS="-L/usr/local/opt/llvm/lib"
         export CPPFLAGS="-I/usr/local/opt/llvm/include"
+        export CXXFLAGS="-I/usr/local/opt/llvm/include"
         export OpenMP_C=${CC}
         export OpenMP_CXX=${CXX}
         export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
@@ -74,8 +76,8 @@ jobs:
         echo "VCPKG_DEFAULT_TRIPLET: ${VCPKG_DEFAULT_TRIPLET}"
         echo "VCPKG_TRIPLET:         ${VCPKG_TRIPLET}"
         echo " "
-        echo "CFLAGS:             ${CFLAGS}"
-        echo "CXXFLAGS:           ${CXXFLAGS}"
+        echo "CPPFLAGS:              ${CPPFLAGS}"
+        echo "CXXFLAGS:              ${CXXFLAGS}"
         echo "LDFLAGS:            ${LDFLAGS}"
         echo "CXX:                ${LDFLAGS}"
         echo "OpenMP_C_FLAGS:     ${OpenMP_C_FLAGS} " 
