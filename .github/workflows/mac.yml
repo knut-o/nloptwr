@@ -13,48 +13,13 @@ jobs:
     - name: checkout
       uses: actions/checkout@v3
 
-    - name: Install OMP
+    - name: Install OpenMP and set environment variables
       run: |
         brew install llvm libomp
-        g++ --version
-        ls -l /usr/local/opt/llvm/bin/clang*
-        ls -l /usr/local/Cellar/llvm/
-        ls -l /usr/local/Cellar/llvm/*/
         sudo ln -s /usr/local/opt/llvm/bin/clang    /usr/local/bin/clang-omp 
         sudo ln -s /usr/local/opt/llvm/bin/clang++  /usr/local/bin/clang-omp++
         export CC=/usr/local/bin/clang-omp
         export CXX=/usr/local/bin/clang-omp++
-        export LDFLAGS="-L/us/local/opt/llvm/lib"
-        export CPPFLAGS="-I/usr/local/opt/llvm/include"
-        cat /usr/local/Cellar/cmake/3.24.2/share/cmake/Modules/FindOpenMP.cmake
-
-    - name: Install nlopt
-      run: |
-        echo "Set environment variables I"
-        echo "Configure CMake"
-        echo "COMPILER:  ${COMPILER}"
-        echo "CFLAGS:    ${CFLAGS}"
-        echo "CXXFLAGS:  ${CXXFLAGS}"
-        echo "LDFLAGS:   ${LDFLAGS}"
-        echo "CXX:       ${LDFLAGS}"
-        which vcpkg
-        ls -l /usr/local/share/vcpkg
-        ls -l                /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
-        export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
-        export VCPKG_DEFAULT_TRIPLET=x64-osx
-        export VCPKG_TRIPLET=x64-osx
-        vcpkg install
-#        vcpkg install --triplet=x64-osx
-#        vcpkg install nlopt
-    - name: Configure CMake
-      run: |
-        echo "Set environment variables"
-        which vcpkg
-        export PATH="$(brew --prefix llvm)/bin:$PATH";
-        export COMPILER=/usr/local/opt/llvm/bin/clang++
-        export CFLAGS="-I/usr/local/include -I/usr/local/opt/llvm/include"
-        export CXXFLAGS="-I/usr/local/include -I/usr/local/opt/llvm/include"
-        export LDFLAGS="-L/usr/local/lib -L/usr/local/opt/llvm/lib"
         export LDFLAGS="-L/us/local/opt/llvm/lib"
         export CPPFLAGS="-I/usr/local/opt/llvm/include"
         export OpenMP_C=/usr/local/bin/clang-omp
@@ -63,29 +28,45 @@ jobs:
         export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
         export CC=${OpenMP_C}
         export CXX=${OpenMP_CXX}
-        echo "Configure CMake"
-        echo "COMPILER:  ${COMPILER}"
-        echo "CFLAGS:    ${CFLAGS}"
-        echo "CXXFLAGS:  ${CXXFLAGS}"
-        echo "LDFLAGS:   ${LDFLAGS}"
-        echo "CXX:       ${LDFLAGS}"
-        echo "OpenMP_C_FLAGS:     ${OpenMP_C_FLAGS} " 
-        echo "OpenMP_C_LIB_NAMES  ${OpenMP_C_LIB_NAMES} "
-        mkdir -p ${{github.workspace}}/build
-        ls -l /usr/local/opt/llvm/bin/clang++
-        which gcc
-        which g++
-        ls -l /usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
-        echo "Configure CMake completed?"
-        export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake 
+        export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
         export VCPKG_DEFAULT_TRIPLET=x64-osx
         export VCPKG_TRIPLET=x64-osx
-        echo "pwd:"
-        pwd
-        ls -l .
+
+    - name: Install nlopt
+      run: |
+        echo "Set environment variables "
+        echo "CMAKE_TOOLCHAIN_FILE:  ${CMAKE_TOOLCHAIN_FILE}"
+        echo "VCPKG_DEFAULT_TRIPLET: ${VCPKG_DEFAULT_TRIPLET}"
+        echo "VCPKG_TRIPLET:         ${VCPKG_TRIPLET}"
+        echo " "
+        echo "CFLAGS:                ${CFLAGS}"
+        echo "CXXFLAGS:              ${CXXFLAGS}"
+        echo "LDFLAGS:               ${LDFLAGS}"
+        echo "CXX:                   ${LDFLAGS}"
+        echo "OpenMP_C_FLAGS:        ${OpenMP_C_FLAGS} " 
+        echo "OpenMP_C_LIB_NAMES:    ${OpenMP_C_LIB_NAMES} "
+        vcpkg install
+
+    - name: Install NLOptWr and Test
+      run: |
+        echo "Check environment variables:"
+        echo "CMAKE_TOOLCHAIN_FILE:  ${CMAKE_TOOLCHAIN_FILE}"
+        echo "VCPKG_DEFAULT_TRIPLET: ${VCPKG_DEFAULT_TRIPLET}"
+        echo "VCPKG_TRIPLET:         ${VCPKG_TRIPLET}"
+        echo " "
+        echo "CFLAGS:             ${CFLAGS}"
+        echo "CXXFLAGS:           ${CXXFLAGS}"
+        echo "LDFLAGS:            ${LDFLAGS}"
+        echo "CXX:                ${LDFLAGS}"
+        echo "OpenMP_C_FLAGS:     ${OpenMP_C_FLAGS} " 
+        echo "OpenMP_C_LIB_NAMES: ${OpenMP_C_LIB_NAMES} "
+        mkdir -p ${{github.workspace}}/build
+        echo "Configure CMake completed?"
         echo "Configuration:"
         cd       ${{github.workspace}}/build
         cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} ..
+        echo "compilation:"
         cmake --build . -j 2
+        echo "test: "
         ctest
 
