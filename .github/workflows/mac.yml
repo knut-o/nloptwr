@@ -22,12 +22,10 @@ jobs:
         export CXX=/usr/local/bin/clang-omp++
         export LDFLAGS="-L/us/local/opt/llvm/lib"
         export CPPFLAGS="-I/usr/local/opt/llvm/include"
-        export OpenMP_C=/usr/local/bin/clang-omp
-        export OpenMP_CXX=/usr/local/bin/clang-omp++
+        export OpenMP_C=${CC}
+        export OpenMP_CXX=${CXX}
         export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
         export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
-        export CC=${OpenMP_C}
-        export CXX=${OpenMP_CXX}
         export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
         export VCPKG_DEFAULT_TRIPLET=x64-osx
         export VCPKG_TRIPLET=x64-osx
@@ -35,6 +33,17 @@ jobs:
     - name: Install nlopt
       run: |
         echo "Set environment variables "
+        export CC=/usr/local/bin/clang-omp
+        export CXX=/usr/local/bin/clang-omp++
+        export LDFLAGS="-L/us/local/opt/llvm/lib"
+        export CPPFLAGS="-I/usr/local/opt/llvm/include"
+        export OpenMP_C=${CC}
+        export OpenMP_CXX=${CXX}
+        export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
+        export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
+        export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
+        export VCPKG_DEFAULT_TRIPLET=x64-osx
+        export VCPKG_TRIPLET=x64-osx
         echo "CMAKE_TOOLCHAIN_FILE:  ${CMAKE_TOOLCHAIN_FILE}"
         echo "VCPKG_DEFAULT_TRIPLET: ${VCPKG_DEFAULT_TRIPLET}"
         echo "VCPKG_TRIPLET:         ${VCPKG_TRIPLET}"
@@ -50,6 +59,17 @@ jobs:
     - name: Install NLOptWr and Test
       run: |
         echo "Check environment variables:"
+        export CC=/usr/local/bin/clang-omp
+        export CXX=/usr/local/bin/clang-omp++
+        export LDFLAGS="-L/us/local/opt/llvm/lib"
+        export CPPFLAGS="-I/usr/local/opt/llvm/include"
+        export OpenMP_C=${CC}
+        export OpenMP_CXX=${CXX}
+        export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
+        export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
+        export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
+        export VCPKG_DEFAULT_TRIPLET=x64-osx
+        export VCPKG_TRIPLET=x64-osx
         echo "CMAKE_TOOLCHAIN_FILE:  ${CMAKE_TOOLCHAIN_FILE}"
         echo "VCPKG_DEFAULT_TRIPLET: ${VCPKG_DEFAULT_TRIPLET}"
         echo "VCPKG_TRIPLET:         ${VCPKG_TRIPLET}"
