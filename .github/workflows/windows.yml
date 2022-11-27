@@ -34,4 +34,3 @@ jobs:
           echo "# 3.) Testing NLOptWr ..."
           ctest -C Release --output-on-failure --timeout 100
           echo "# 4.) NLOptWr: test finished"
-

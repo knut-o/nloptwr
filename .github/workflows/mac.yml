@@ -16,7 +16,7 @@ jobs:
     - name: Install OpenMP and set environment variables
       run: |
         brew install llvm libomp
-        sudo ln -s /usr/local/opt/llvm/bin/clang    /usr/local/bin/clang-omp 
+        sudo ln -s /usr/local/opt/llvm/bin/clang    /usr/local/bin/clang-omp
         sudo ln -s /usr/local/opt/llvm/bin/clang++  /usr/local/bin/clang-omp++
         export CC=/usr/local/bin/clang-omp
         export CXX=/usr/local/bin/clang-omp++
@@ -54,7 +54,7 @@ jobs:
         echo "CXXFLAGS:              ${CXXFLAGS}"
         echo "LDFLAGS:               ${LDFLAGS}"
         echo "CXX:                   ${LDFLAGS}"
-        echo "OpenMP_C_FLAGS:        ${OpenMP_C_FLAGS} " 
+        echo "OpenMP_C_FLAGS:        ${OpenMP_C_FLAGS} "
         echo "OpenMP_C_LIB_NAMES:    ${OpenMP_C_LIB_NAMES} "
         vcpkg install
 
@@ -81,7 +81,7 @@ jobs:
         echo "CXXFLAGS:              ${CXXFLAGS}"
         echo "LDFLAGS:               ${LDFLAGS}"
         echo "CXX:                   ${LDFLAGS}"
-        echo "OpenMP_C_FLAGS:        ${OpenMP_C_FLAGS} " 
+        echo "OpenMP_C_FLAGS:        ${OpenMP_C_FLAGS} "
         echo "OpenMP_C_LIB_NAMES:    ${OpenMP_C_LIB_NAMES} "
         mkdir -p ${{github.workspace}}/build
         echo "Configure CMake completed?"
@@ -92,4 +92,3 @@ jobs:
         cmake --build . -j 2
         echo "test: "
         ctest
-

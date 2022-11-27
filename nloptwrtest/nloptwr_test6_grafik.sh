@@ -30,4 +30,3 @@ cmake --build .
 # display result
 xdg-open nloptwr_test6.pdf
 cd ../nloptwrtest/
-

@@ -16,7 +16,7 @@ set ytic auto                          # set ytics automatically
 set mytics 4
 set mxtics 5
 
-set style line 1 linecolor rgb '#0060ad' linetype 1 linewidth 1 pointtype 7 pointsize 0.3 
+set style line 1 linecolor rgb '#0060ad' linetype 1 linewidth 1 pointtype 7 pointsize 0.3
 set style line 2 linecolor rgb '#ff000f' linetype 1 linewidth 1 pointtype 7 pointsize 0.3
 
 set key center top
