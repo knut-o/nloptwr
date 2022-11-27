@@ -2,31 +2,28 @@
 cmake_minimum_required(VERSION 3.0)
 
 SET(CMAKE_VERBOSE_MAKEFILE ON)
+SET(CMAKE_BUILD_TYPE Debug)
 
 # =========================================================================
-
-<<<<<<< HEAD
-=======
-set(VCPKG_FLAG BOOL false)
-if (DEFINED $ENV{CMAKE_TOOLCHAIN_FILE} )
+set(VCPKG_FLAG BOOL OFF)
+if (DEFINED ENV{CMAKE_TOOLCHAIN_FILE} )
     SET (CMAKE_TOOLCHAIN_FILE $ENV{CMAKE_TOOLCHAIN_FILE} )
     MESSAGE("CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}")
-    SET(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake )
-    set(VCPKG_FLAG BOOL true)
+    set(VCPKG_FLAG BOOL ON)
 elseif (DEFINED ENV{VCPKG_ROOT})
-    SET(VCPKG_ROOT $ENV{VCPKG_ROOT} )
-    SET(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake )
-    MESSAGE("VCPKG_ROOT=${VCPKG_ROOT}")
+    SET(VCPKG_ROOT_VAR $ENV{VCPKG_ROOT} )
+    SET(CMAKE_TOOLCHAIN_FILE ${VCPKG_ROOT_VAR}/scripts/buildsystems/vcpkg.cmake )
+    MESSAGE("VCPKG_ROOT=${VCPKG_ROOT_VAR}")
     MESSAGE("CMAKE_TOOLCHAIN_FILE:= ${CMAKE_TOOLCHAIN_FILE}")
-    # MESSAGE("VCPKG_INSTALLED_DIR:  ${VCPKG_INSTALLED_DIR}")
-    set(VCPKG_FLAG BOOL true)
+    set(VCPKG_FLAG BOOL ON)
+else()
+    MESSAGE("VCPKG not found..")
 endif()
+
+# =========================================================================
 
 MESSAGE("VCPKG found: ${VCPKG_FLAG}")
 
-# =========================================================================
-
->>>>>>> devel
 project(NLOPTWR_EXAMPLE)
 
 # =========================================================================
@@ -65,47 +62,23 @@ if (OPENMP_FOUND)
     SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} ")
 endif()
 
-# =========================================================================
-
-<<<<<<< HEAD
-# do not use vcpkg
-find_package(NLOPT  REQUIRED)
-if (NLOPT_FOUND)
-    message("  NLOPT_LIBRARY: ${NLOPT_LIBRARY} ")
-else(NLOPT_FOUND)
-    message("NLOPT not found. ")
-endif(NLOPT_FOUND)
-
-find_package(NLOPTCXX REQUIRED)
-if (NLOPTCXX_FOUND)
-    message("  NLOPTCXX_LIBRARIES: ${NLOPTCXX_LIBRARIES} ")
-else(NLOPTCXX_FOUND)
-    message("NLOPTCXX not found. ")
-endif(NLOPTCXX_FOUND)
-
-SET(NLOPTCXX_LIBS ${NLOPT_LIBRARY} ${NLOPTCXX_LIBRARY} )
 
 # =========================================================================
 
-find_package(NLOPTWR  REQUIRED)
-if (NLOPTWR_FOUND)
-    message("  NLOPTWR_LIBRARY: ${NLOPTWR_LIBRARY} ")
-else(NLOPTWR_FOUND)
-    message("NLOPTWR not found. ")
-endif(NLOPTWR_FOUND)
-
-=======
+message("#1.) VCPKG_FLAG=${VCPKG_FLAG}")
+message("#1.) CMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE} ")
 
 if (VCPKG_FLAG)
     # use vcpkg
+	  message("VCPKG_FLAG=${VCPKG_FLAG}")
 
     find_package(NLopt CONFIG REQUIRED)
-	message("NLOPT_LIBRARIES (vcpkg):      NLopt::nlopt ")
+	  message("NLOPT_LIBRARIES (vcpkg):      NLopt::nlopt ")
 
     # target_link_libraries(main PRIVATE NLopt::nlopt)
     SET(NLOPTCXX_LIBS NLopt::nlopt )
 
-    MESSAGE("VCPKG_INSTALLED_DIR:  ${VCPKG_INSTALLED_DIR}")
+    # MESSAGE("VCPKG_INSTALLED_DIR:  ${VCPKG_INSTALLED_DIR}")
     set(VCPKG_INCL "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/include")
     MESSAGE("VCPKG_INSTALLED_DIR/VCPKG_TARGET_TRIPLET/include:  ${VCPKG_INCL}")
 
@@ -129,25 +102,14 @@ else()
     SET(NLOPTCXX_LIBS ${NLOPT_LIBRARY} ${NLOPTCXX_LIBRARY} )
 
 endif()
->>>>>>> devel
 
 # =========================================================================
 
 include_directories(
-<<<<<<< HEAD
-    ${NLOPTCXX_INCLUDE_DIR}
-    ${NLOPT_INCLUDE_DIR}
     ${NLOPTWR_INCLUDE_DIR}
-=======
-    # .
-    ### ${VCPKG_INCL}
-    #### Nlopt::nlopt
     # HACK
     ${NLOPTCXX_INCLUDE_DIR}
     ${NLOPT_INCLUDE_DIR}
-    # /usr/local/share/vcpkg/installed/x64-linux/include/
-    $# {PROJECT_SOURCE_DIR}/nloptwr/include
->>>>>>> devel
 )
 
 
@@ -156,17 +118,10 @@ add_executable(${NLOPTWR_EXPAMPLE1} ${nloptw_example_SRCS})
 
 TARGET_LINK_LIBRARIES(
         ${NLOPTWR_EXPAMPLE1}
-<<<<<<< HEAD
         ${NLOPTWR_LIBRARY}
         ${NLOPTCXX_LIBS}
         OpenMP::OpenMP_CXX
-=======
-        # nloptwrtest
         nloptwr
-        OpenMP::OpenMP_CXX
-        ${NLOPTCXX_LIBS}
-
->>>>>>> devel
 )
 
 

@@ -58,20 +58,50 @@ endif()
 
 # =========================================================================
 
+if (APPLE AND XCODE)
+    set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp -I/usr/local/opt/libomp/include" CACHE INTERNAL "OpenMP flags for Xcode toolchain.")
+    set(OpenMP_CXX_LIB_NAMES "omp" CACHE INTERNAL "OpenMP lib name for Xcode toolchain.")
+    set(OpenMP_omp_LIBRARY "/usr/local/opt/libomp/lib/libomp.dylib" CACHE INTERNAL "OpenMP lib name for Xcode toolchain.")
+endif()
+
+# Find OpenMP
+if(APPLE AND USE_OpenMP)
+    if(CMAKE_C_COMPILER_ID MATCHES "Clang")
+        set(OpenMP_C "${CMAKE_C_COMPILER}")
+        set(OpenMP_C_FLAGS "-fopenmp=libomp -Wno-unused-command-line-argument")
+        set(OpenMP_C_LIB_NAMES "libomp" "libgomp" "libiomp5")
+        set(OpenMP_libomp_LIBRARY ${OpenMP_C_LIB_NAMES})
+        set(OpenMP_libgomp_LIBRARY ${OpenMP_C_LIB_NAMES})
+        set(OpenMP_libiomp5_LIBRARY ${OpenMP_C_LIB_NAMES})
+    endif()
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+      set(OpenMP_CXX "${CMAKE_CXX_COMPILER}")
+      set(OpenMP_CXX_FLAGS "-fopenmp=libomp -Wno-unused-command-line-argument")
+      set(OpenMP_CXX_LIB_NAMES "libomp" "libgomp" "libiomp5")
+      set(OpenMP_libomp_LIBRARY ${OpenMP_CXX_LIB_NAMES})
+      set(OpenMP_libgomp_LIBRARY ${OpenMP_CXX_LIB_NAMES})
+      set(OpenMP_libiomp5_LIBRARY ${OpenMP_CXX_LIB_NAMES})
+    endif()
+endif()
+
 FIND_PACKAGE (OpenMP  REQUIRED)
 if (OPENMP_FOUND)
+		message("OpenMP found.")
     SET (HAVE_OPENMP 1)
     SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} ")
 endif()
 
 # =========================================================================
 
+message("#1.) VCPKG_FLAG=${VCPKG_FLAG}")
+message("#1.) CMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE} ")
+
 if (VCPKG_FLAG)
     # use vcpkg
-	message("VCPKG_FLAG=${VCPKG_FLAG}")
+	  message("VCPKG_FLAG=${VCPKG_FLAG}")
 
     find_package(NLopt CONFIG REQUIRED)
-	message("NLOPT_LIBRARIES (vcpkg):      NLopt::nlopt ")
+	  message("NLOPT_LIBRARIES (vcpkg):      NLopt::nlopt ")
 
     # target_link_libraries(main PRIVATE NLopt::nlopt)
     SET(NLOPTCXX_LIBS NLopt::nlopt )

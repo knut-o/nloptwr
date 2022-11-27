@@ -86,7 +86,7 @@ int opttest1(bool useGrad) {
   double minf = 1.0e33;
 
   // select strategy: "L", "LM", "GM", "G" and "R"
-  nloptwr::NLOptWrSStrat sStrat(nloptwr::L, useGrad);
+  nloptwr::NLOptWrSStrat sStrat(nloptwr::SSTRAT::L, useGrad);
 
   // Instantiate the optimization task
   opttest::Demo01 pDemo01;
@@ -99,7 +99,10 @@ int opttest1(bool useGrad) {
     maxTimeSec /= static_cast<int>(optWr.getNThreads());
 
   // start optimization
-  nlopt::result opt_stat = optWr.optimize(minf, sStrat, maxTimeSec, maxEvals);
+  nlopt::result opt_stat = optWr.optimize(sStrat, maxTimeSec, maxEvals);
+
+  // get result
+  minf = optWr.getLastOptimumValue();
 
   // get the solution
   vector<double> x = optWr.getX();

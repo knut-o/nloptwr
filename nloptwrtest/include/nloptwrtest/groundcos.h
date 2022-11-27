@@ -60,7 +60,7 @@ private:
   double b;
 
   /// scale factor of x
-  double faktor;
+  double factor;
 
   /// step size
   double dx;
