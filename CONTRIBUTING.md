@@ -1,7 +1,7 @@
 # Contributing to NLOptWR
 
 The NLOptWR team encourages community feedback and contributions.
-Thank you for your interest in making NLOptWR better! 
+Thank you for your interest in making NLOptWR better!
 
 There are several
 ways you can get involved.
@@ -12,8 +12,8 @@ If you find that the project is not working properly, please file a report.
 But label the Bug Report accordingly.
 
 We are happy to hear your ideas for how to further improve NLOptWR,
-ensuring it suits your needs. 
-We look at upvoted items in [Issues](https://github.com/knut-o/nloptwr/issues) and when we decide what to work on next. 
+ensuring it suits your needs.
+We look at upvoted items in [Issues](https://github.com/knut-o/nloptwr/issues) and when we decide what to work on next.
 We read the comments and we look forward to hearing your input.
 
 ## Contributions we accept
@@ -25,7 +25,7 @@ guidelines:
 
 ### DOs
 
-* **DO** create one pull request per Issue, and ensure that the Issue is linked in the pull request. 
+* **DO** create one pull request per Issue, and ensure that the Issue is linked in the pull request.
 
 * **DO** follow our [Coding and Style](#style-guidelines) guidelines, and keep code
 changes as small as possible.
@@ -57,7 +57,7 @@ To learn how to build the code and run tests, follow the instructions in the [RE
 
 ### Style guidelines
 
-The code should contain comments which can be used 
+The code should contain comments which can be used
 by [doxygen](https://doxygen.nl/) for documentation.
 
 ### Code formatting
@@ -92,12 +92,12 @@ Tests can made with [ctest](https://cmake.org/cmake/help/latest/module/CTest.htm
 
 The core principle of the project, when it comes to Git workflows is that the
 `main` branch should always be in a healthy state which is ready for release.
-Every commit on master should be deployable on push. 
+Every commit on master should be deployable on push.
 To ensure this, pull request
-**must not** be made directly on master. 
-**Each change** should either be made in the **development branch** 
-(named a variation of development, i.e. `dev`) 
-or in a separate branch, 
+**must not** be made directly on master.
+**Each change** should either be made in the **development branch**
+(named a variation of development, i.e. `dev`)
+or in a separate branch,
 named as a short summary of the change.
 
 If your change is complex, please clean up the branch history before submitting a
@@ -129,9 +129,9 @@ git commit -m "my normal commit message [ci skip]"
 
 ## Review process
 
-After submitting a pull request, members of the team will review your code. 
+After submitting a pull request, members of the team will review your code.
 
-We will assign the request to an appropriate reviewer (if applicable). 
+We will assign the request to an appropriate reviewer (if applicable).
 Any member of the community may participate in the review, but at least one member of the project team will ultimately approve the request.
 
-Often, multiple iterations or discussions will be needed to responding to feedback from reviewers. 
+Often, multiple iterations or discussions will be needed to responding to feedback from reviewers.

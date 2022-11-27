@@ -14,12 +14,12 @@ The program has the following functionalities:
 
 1. ***C++ API***
 2. ***rule based selection of algorithms***
-3. ***numerical calculation of gradients*** in parallel 
+3. ***numerical calculation of gradients*** in parallel
 with [OpenMP](https://de.wikipedia.org/wiki/OpenMP) if needed
 
 Because of numerical calculation of gradients a lot of algorithms is available.
 
-In case of many parameters the calculation 
+In case of many parameters the calculation
 the calculation of gradients can be done in parallel.
 
 The program does not require a implementation of object serialization with the  [boost](https://www.boost.org/doc/libs/1_80_0/libs/serialization/doc/index.html) library.
@@ -109,14 +109,14 @@ The directory "cmake" contains some files (FindNLOPT.cmake, FindNLOPTCXX.cmake  
 To build the library and the demo programs a C++ compiler ([gcc](https://gcc.gnu.org/) or clang) and [CMake](https://cmake.org/) are needed.
 On LINUX thise packages can be install with the package managers of the system.
 
-It is necessary to install the **NLOpt** library.  
-This library can be installed with [vcpkg](https://github.com/microsoft/vcpkg). In this case the environment variable **CMAKE_TOOLCHAIN_FILE** (or **VCPKG_ROOT**) should be set properly. 
+It is necessary to install the **NLOpt** library.
+This library can be installed with [vcpkg](https://github.com/microsoft/vcpkg). In this case the environment variable **CMAKE_TOOLCHAIN_FILE** (or **VCPKG_ROOT**) should be set properly.
 
 On LINUX the **NLOpt** package can be install with the package managers of the system as well.
 
-### LINUX 
+### LINUX
 
-The sources can be downloaded 
+The sources can be downloaded
 and build with the following commands:
 
 ```bash
@@ -128,19 +128,19 @@ cd    build
 rm -rf ../build/* && cmake .. && cmake --build ../build --target clangformat && cmake --build . -j 4
 ```
 
-After a successful compilation the tests can be launched: 
+After a successful compilation the tests can be launched:
 
 ```bash
 ctest
 ../NLOptWrtest/NLOptWr_test6_grafik.sh
 ```
-This script generates a file 
+This script generates a file
 [nloptwr_test6.pdf](docu/nloptwr_test6.pdf)
 and shows it in a viewer.
 
 Packages can be build as well:
 ```bash
-cpack 
+cpack
 ```
 
 ### Windows with Cygwin
@@ -150,7 +150,7 @@ The installation is similar to the LINUX installation (see above).
 ### Windows VisualC
 
 The [CMake](https://cmake.org/) program has to be installed as well.
-It is necessary to install the NLOpt library.  
+It is necessary to install the NLOpt library.
 This library can be installed with [vcpkg](https://github.com/microsoft/vcpkg).
 
 ```bash
@@ -159,7 +159,7 @@ vcpkg.exe install nlopt
 
 
 ```bash
-rm -r ..\build\* ; cmake -DCMAKE_BUILD_TYPE=Debug .. ; cmake --build . -j 4 ; ctest -C Debug 
+rm -r ..\build\* ; cmake -DCMAKE_BUILD_TYPE=Debug .. ; cmake --build . -j 4 ; ctest -C Debug
 ```
 
 ### Executing program
@@ -204,14 +204,14 @@ In the same file the usage of the is explained:
 
 7. other tasks (display the result, check the result, print the selected algorithms)
 
-The progams can be linked with **-lnloptwr -lnlopt -lm**. 
+The progams can be linked with **-lnloptwr -lnlopt -lm**.
 
 ## Alternaltives
 
-There are many alternatives. 
+There are many alternatives.
 Two of them are the following:
 
-* [PaGMO](https://github.com/esa/pagmo2) 
+* [PaGMO](https://github.com/esa/pagmo2)
   is a C++ scientific library for massively parallel optimization.
  [NLOpt](https://nlopt.readthedocs.io/en/latest/#nlopt_1) can be used with [PaGMO](https://github.com/esa/pagmo2).
 
@@ -244,5 +244,5 @@ Contributors and contact info:
 ## License
 
 See the
-[LICENSE](https://github.com/knut-o/NLOptWr/blob/main/LICENSE) 
+[LICENSE](https://github.com/knut-o/NLOptWr/blob/main/LICENSE)
 file for details.

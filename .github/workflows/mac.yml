@@ -92,4 +92,3 @@ jobs:
         cmake --build . -j 2
         echo "test: "
         ctest
-
