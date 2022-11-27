@@ -42,7 +42,7 @@ namespace opttest {
  *         x0    xc[1]   xc[2] xc[3] ... xn
  *     =xh[0].x                         =xh[nDim+1].x
  *
- *  nDim = number of free paramters (angles)
+ *  nDim = number of free parameters (angles)
  *  w1, w2, ... = additional weights
  *  h = height
  *  xh[i].h = height at position
@@ -147,7 +147,7 @@ private:
   /// the number of nonequal constraints to express eqality constraints
   int offSetByEqualConstraints;
 
-  /// calculate non-equality constraints (internaly used by method "optFktn")
+  /// calculate non-equality constraints (internally used by method "optFktn")
   void catculateNEConstraints(std::vector<double> &c1);
 
   /// the maximal step size of x

@@ -30,6 +30,33 @@ set( nloptwr_SRCS
 )
 
 # =========================================================================
+# TODO
+# https://stackoverflow.com/questions/16398937/cmake-and-finding-other-projects-and-their-dependencies
+
+function(my_export_target _target _include_dir)
+    file(
+        WRITE "${CMAKE_CURRENT_BINARY_DIR}/${_target}Config.cmake"
+        "
+            include(\"\$\{CMAKE_CURRENT_LIST_DIR\}/${_target}Targets.cmake\")
+            set_property(
+                TARGET ${ _target }
+                APPEND PROPERTY
+                    INTERFACE_INCLUDE_DIRECTORIES \"${ _include_dir }\"
+            )
+        "
+    )
+
+    export(TARGETS ${_target} FILE "${CMAKE_CURRENT_BINARY_DIR}/${_target}Targets.cmake")
+
+    # NOTE: The following call can pollute your PC's CMake package registry
+    #       See comments/alternatives below
+    export(PACKAGE ${_target})
+endfunction(my_export_target)
+
+# add_executable(${PROJECT_NAME} ${my_sources_SRC})
+# target_link_libraries(${PROJECT_NAME} myCoolLibrary)
+
+# =========================================================================
 
 # include directories
 include_directories(
@@ -59,6 +86,7 @@ add_library( nloptwr STATIC ${nloptwr_SRCS} )
 
 set_target_properties(nloptwr PROPERTIES PUBLIC_HEADER "${MY_PUBLIC_HEADERS_OPTWR}")
 
+
 target_include_directories(nloptwr
         PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
@@ -67,6 +95,7 @@ target_include_directories(nloptwr
         $<INSTALL_INTERFACE:include>
         )
 
+# target_link_libraries(${PROJECT_NAME} myCoolLibrary)
 TARGET_LINK_LIBRARIES(
         nloptwr
         OpenMP::OpenMP_CXX
@@ -78,6 +107,8 @@ target_compile_features(nloptwr PRIVATE cxx_std_${CMAKE_CXX_STANDARD} )
 
 # =========================================================================
 
+# my_export_target( nloptwr ${CMAKE_CURRENT_SOURCE_DIR}/include )
+# https://stackoverflow.com/questions/49857596/cmake-simple-config-file-example
 set (CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 install(

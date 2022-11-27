@@ -81,7 +81,7 @@ oif::OptFknBase *ChainWithWeights::clone() const {
 double ChainWithWeights::optFktn(const std::vector<double> &x,
                                  std::vector<double> &c) {
   // ======================================================
-  // initialzation
+  // initialization
   // ======================================================
 
   // left side
@@ -95,7 +95,7 @@ double ChainWithWeights::optFktn(const std::vector<double> &x,
     c[i] = 0.0;
 
   // ======================================================
-  // calculate the coordinate betwee left and right sides
+  // calculate the coordinate between left and right sides
   // ======================================================
 
   // copy variable x[i] into hc[i]

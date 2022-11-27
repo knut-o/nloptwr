@@ -21,6 +21,7 @@ jobs:
         export CC=/usr/local/bin/clang-omp
         export CXX=/usr/local/bin/clang-omp++
         export CPPFLAGS="-I/usr/local/opt/llvm/include"
+        export CXXFLAGS="-I/usr/local/opt/llvm/include"
         export LDFLAGS="-L/usr/local/opt/llvm/lib"
         export OpenMP_C=${CC}
         export OpenMP_CXX=${CXX}
@@ -78,10 +79,10 @@ jobs:
         echo " "
         echo "CPPFLAGS:              ${CPPFLAGS}"
         echo "CXXFLAGS:              ${CXXFLAGS}"
-        echo "LDFLAGS:            ${LDFLAGS}"
-        echo "CXX:                ${LDFLAGS}"
-        echo "OpenMP_C_FLAGS:     ${OpenMP_C_FLAGS} " 
-        echo "OpenMP_C_LIB_NAMES: ${OpenMP_C_LIB_NAMES} "
+        echo "LDFLAGS:               ${LDFLAGS}"
+        echo "CXX:                   ${LDFLAGS}"
+        echo "OpenMP_C_FLAGS:        ${OpenMP_C_FLAGS} " 
+        echo "OpenMP_C_LIB_NAMES:    ${OpenMP_C_LIB_NAMES} "
         mkdir -p ${{github.workspace}}/build
         echo "Configure CMake completed?"
         echo "Configuration:"

@@ -143,7 +143,7 @@ int opttest6(int dim, int nrOfGround = 0, bool useGrad = 1,
   bool isOk = true;
   if (dim == 119) {
 
-    // expectes results
+    // expects results
     vector<double> fOptExpcted = {-4938.24, -4261.37, -4247.22};
 
     vector<double> v;
