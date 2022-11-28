@@ -88,7 +88,7 @@ jobs:
           cd       ${{github.workspace}}/build
           #
           ### cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} ..
-          cmake  -DNLOPTWR_BUILD_EXAMPLES=OFF -DNLOPTWR_BUILD_TESTS=OFF -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}  -H${{github.workspace}} 
+          cmake  -DNLOPTWR_BUILD_EXAMPLES=OFF -DNLOPTWR_BUILD_TESTS=ON -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}  -H${{github.workspace}} 
           echo "compilation:"
           cmake --build . -j 2 --target install 
           echo "test: "

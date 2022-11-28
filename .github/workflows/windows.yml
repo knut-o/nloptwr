@@ -30,7 +30,7 @@ jobs:
           echo "CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}"
           echo "# 2.) Configuring CMake for NLOptWr ..."
           ## cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
-          cmake -DNLOPTWR_BUILD_EXAMPLES=OFF -DNLOPTWR_BUILD_TESTS=OFF -Wno-dev -DCMAKE_PREFIX_PATH=%cd:\=/%/install -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
+          cmake -DNLOPTWR_BUILD_EXAMPLES=OFF -DNLOPTWR_BUILD_TESTS=ON -Wno-dev -DCMAKE_PREFIX_PATH=%cd:\=/%/install -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..
           echo "### Building NLOptWr ..."
           cmake --build . --config Release --target install
           echo "# 3.) Testing NLOptWr ..."
