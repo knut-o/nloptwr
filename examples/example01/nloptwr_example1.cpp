@@ -140,19 +140,13 @@ int opttest1(bool useGrad) {
 } // namespace opttest
 
 int main() {
-  int rc1 = 0;
-  int rc2 = 0;
+  int rc = 0;
 
   cout << "Test: " << endl << endl;
 
-  cout << "1.) Optimization with gradients: " << endl;
-  rc1 = opttest::opttest1(true);
+  cout << "Optimization with gradients: " << endl;
 
-  cout << endl
-       << "===========================================================" << endl;
+  rc = opttest::opttest1(true);
 
-  cout << "2.) Optimization without gradients:" << endl;
-  rc2 = opttest::opttest1(false);
-
-  return (rc1 + rc2);
+  return rc;
 }
