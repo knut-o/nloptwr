@@ -12,8 +12,8 @@ jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
-		  fail-fast: false
-		  matrix:
+    fail-fast: false
+      matrix:
 			  os: [ubuntu-latest]
 			  build_type: [Release]
 			  nlopt_flags: '-DBUILD_SHARED_LIBS=OFF -DNLOPT_CXX=ON -DNLOPT_PYTHON=OFF -DNLOPT_GUILE=OFF -DNLOPT_SWIG=OFF -DNLOPT_OCTAVE=OFF -DNLOPT_MATLAB=OFF -DNLOPT_TESTS=OFF -Wno-dev '
