@@ -7,9 +7,9 @@ on:
       - created
       - edited
   push:
-    branches: ["mainx", "devx", "dev2x"]
+    branches: ["mainx", "dev", "dev2"]
   pull_request:
-    branches: ["mainx", "devx", "dev2x"]
+    branches: ["main", "dev", "dev2"]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -38,7 +38,7 @@ jobs:
           echo "Configure CMake for nloptwr"
           mkdir -p $HOME/install
           export nloptwr_DIR=$HOME/install
-          CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -Wno-dev -DCMAKE_PREFIX_PATH=$HOME/install -DCMAKE_INSTALL_PREFIX=$HOME/install
+          CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -Wno-dev -DCMAKE_PREFIX_PATH=$HOME/install -DCMAKE_INSTALL_PREFIX=$HOME/install --target install 
           echo "Configure CMake completed?"
 
       - name: Build
