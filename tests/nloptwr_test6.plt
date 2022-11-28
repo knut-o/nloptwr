@@ -1,6 +1,5 @@
 #! /usr/bin/env gnuplot
 
-
 # labels
 set xlabel 'x [m]'
 set ylabel 'h [m]'
