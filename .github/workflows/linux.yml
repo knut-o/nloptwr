@@ -36,7 +36,8 @@ jobs:
         # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
         run: |
           echo "Configure CMake for nloptwr"
-          CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+          mkdir -p $HOME/install
+          CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} cmake -Wno-dev -DCMAKE_PREFIX_PATH=$HOME/install -DCMAKE_INSTALL_PREFIX=$HOME/install
           echo "Configure CMake completed?"
 
       - name: Build
