@@ -110,48 +110,10 @@ if (OPENMP_FOUND)
     SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} ")
 endif()
 
-# if (VCPKG_FLAG)
-#    # use vcpkg
-#	  message("VCPKG_FLAG=${VCPKG_FLAG}")
-#
-#    find_package(NLopt CONFIG REQUIRED)
-#	  message("NLOPT_LIBRARIES (vcpkg):      NLopt::nlopt ")
-#
-#    # target_link_libraries(main PRIVATE NLopt::nlopt)
-#    SET(NLOPTCXX_LIBS NLopt::nlopt )
-#
-#    # MESSAGE("VCPKG_INSTALLED_DIR:  ${VCPKG_INSTALLED_DIR}")
-#    set(VCPKG_INCL "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/include")
-#    MESSAGE("VCPKG_INSTALLED_DIR/VCPKG_TARGET_TRIPLET/include:  ${VCPKG_INCL}")
-
-#else()
-#    # do not use vcpkg
-#
-#    find_package(NLOPT  REQUIRED)
-#    if (NLOPT_FOUND)
-#	    message("NLOPT_LIBRARY (no vcpkg): ${NLOPT_LIBRARY} ")
-#    else(NLOPT_FOUND)
-#        message("NLOPT not found. ")
-#    endif(NLOPT_FOUND)
-#
-#    find_package(NLOPTCXX REQUIRED)
-#    if (NLOPTCXX_FOUND)
-#        message("  NLOPTCXX_LIBRARIES: ${NLOPTCXX_LIBRARIES} ")
-#    else(NLOPTCXX_FOUND)
-#        message("NLOPTCXX not found. ")
-#    endif(NLOPTCXX_FOUND)
-#
-#    SET(NLOPTCXX_LIBS ${NLOPT_LIBRARY} ${NLOPTCXX_LIBRARY} )
-#
-#endif()
-
 # =========================================================================
 
 # check if Doxygen is installed
 find_package(Doxygen)
-
-SET (NLOPTWR_VERSION_MAJOR "0")
-SET (NLOPTWR_VERSION_MINOR "1")
 
 # =========================================================================
 if(NLOPTWR_BUILD_EXAMPLES)
@@ -266,7 +228,7 @@ ENDIF (UNIX)
 # build a CPack driven installer package
 SET (CPACK_RESOURCE_FILE_LICENSE "${NLOPTWR_SOURCE_DIR}/LICENSE")
 
-SET (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Description of NLOPTWR")
+SET (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Description of NLoptWr")
 SET (CPACK_PACKAGE_VENDOR "opherden")
 SET (CPACK_PACKAGE_DESCRIPTION_FILE "${NLOPTWR_SOURCE_DIR}/README.md")
 SET (CPACK_PACKAGE_VENDOR " Team")
@@ -285,3 +247,4 @@ include (CPack)
 ENABLE_TESTING()
 
 # =========================================================================
+

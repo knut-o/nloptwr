@@ -17,6 +17,7 @@ if (OPENMP_FOUND)
     SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} ")
 endif()
 
+find_path(NLOPT_INCLUDES NAMES nlopt.hpp)
 find_package(NLopt CONFIG REQUIRED)
 if (VCPKG_FLAG)
     # MESSAGE("VCPKG_INSTALLED_DIR:  ${VCPKG_INSTALLED_DIR}")
@@ -54,10 +55,6 @@ set(SOURCES
 )
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX source FILES ${SOURCES})
-
-### HACK
-find_path(NLOPT_INCLUDES NAMES nlopt.hpp)
-
 
 include_directories(
     ${NLOPTWR_INCLUDE_DIR}/lib/include
@@ -139,3 +136,5 @@ export(
     FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/nloptwrTargets.cmake"
     NAMESPACE nloptwr::
 )
+
+
