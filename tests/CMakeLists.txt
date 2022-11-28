@@ -13,7 +13,8 @@ if (OPENMP_FOUND)
     SET (HAVE_OPENMP 1)
     SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} ")
 endif()
-# find_package(NLoptWr REQUIRED)
+
+find_package(nlopt CONFIG REQUIRED)
 find_package(nloptwr REQUIRED)
 
 include_directories(

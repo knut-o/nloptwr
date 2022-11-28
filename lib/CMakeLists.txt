@@ -7,7 +7,7 @@ include(CMakePackageConfigHelpers)
 #
 # Dependencies
 #
-# find_package(nlopt CONFIG REQUIRED)
+find_package(nlopt CONFIG REQUIRED)
 
 # Sources
 set(HEADERS_PUB_ROOT
