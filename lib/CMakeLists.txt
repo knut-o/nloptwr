@@ -18,6 +18,11 @@ if (OPENMP_FOUND)
 endif()
 
 find_package(NLopt CONFIG REQUIRED)
+if (VCPKG_FLAG)
+    # MESSAGE("VCPKG_INSTALLED_DIR:  ${VCPKG_INSTALLED_DIR}")
+    set(VCPKG_INCL "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/include")
+    MESSAGE("VCPKG_INSTALLED_DIR/VCPKG_TARGET_TRIPLET/include:  ${VCPKG_INCL}")
+endif()
 
 # Sources
 set(HEADERS_PUB_ROOT
@@ -50,10 +55,16 @@ set(SOURCES
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX source FILES ${SOURCES})
 
+### HACK
+find_path(NLOPT_INCLUDES NAMES nlopt.hpp)
+
+
 include_directories(
     ${NLOPTWR_INCLUDE_DIR}/lib/include
     ${NLOPTCXX_INCLUDE_DIR}
     ${NLOPT_INCLUDE_DIR}
+    # HACK:
+    ${NLOPT_INCLUDES}
 )
 
 #
