@@ -7,7 +7,17 @@ include(CMakePackageConfigHelpers)
 #
 # Dependencies
 #
-find_package(nlopt CONFIG REQUIRED)
+# define dependencies
+if (OPENMP_FOUND)
+    find_package(OpenMP REQUIRED)
+endif()
+if (OPENMP_FOUND)
+     message("OpenMP found.")
+    SET (HAVE_OPENMP 1)
+    SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} ")
+endif()
+
+find_package(NLopt CONFIG REQUIRED)
 
 # Sources
 set(HEADERS_PUB_ROOT
