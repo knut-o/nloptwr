@@ -1,29 +1,29 @@
 ---
 name: Build and Test
 on:
-	push:
-	  branches: ["main", "dev", "dev2"]
+  push:
+    branches: ["main", "dev", "dev2"]
 	pull_request:
 	  branches: ["main", "dev", "dev2"]
 # schedule:
 #   - cron: '0 0 * * 0' # weekly
 
 jobs:
-	build:
+  build:
     runs-on: ${{ matrix.os }}
     strategy:
-			fail-fast: false
-			matrix:
+		  fail-fast: false
+		  matrix:
 			  os: [ubuntu-latest]
 			  build_type: [Release]
 			  nlopt_flags: '-DBUILD_SHARED_LIBS=OFF -DNLOPT_CXX=ON -DNLOPT_PYTHON=OFF -DNLOPT_GUILE=OFF -DNLOPT_SWIG=OFF -DNLOPT_OCTAVE=OFF -DNLOPT_MATLAB=OFF -DNLOPT_TESTS=OFF -Wno-dev '
 			  inst_path: ${{github.workspace}}/install
 			  include:
-			    - os: ubuntu-latest
-			      triplet: 'x86-linux'
-			      cmake_flags: '${{ nlopt_flags }} -DCMAKE_PREFIX_PATH=${{ inst_path }} -DCMAKE_INSTALL_PREFIX=${{ inst_path }}'
-	  steps:
-	    - name: "Install NLopt"
+          - os: ubuntu-latest
+            triplet: 'x86-linux'
+            cmake_flags: '${{ nlopt_flags }} -DCMAKE_PREFIX_PATH=${{ inst_path }} -DCMAKE_INSTALL_PREFIX=${{ inst_path }}'
+    steps:
+      - name: "Install NLopt"
 	      run: |
 	      	mkdir -p ${{github.workspace}}/install
 	        mkdir -p tmp/nlopt/build
@@ -31,4 +31,4 @@ jobs:
 	        git clone git@github.com:stevengj/nlopt.git
 	        cd nlopt/build
 	        cmake -DBUILD_SHARED_LIBS=OFF -DNLOPT_CXX=ON -DNLOPT_PYTHON=OFF -DNLOPT_GUILE=OFF -DNLOPT_SWIG=OFF -DNLOPT_OCTAVE=OFF -DNLOPT_MATLAB=OFF -DNLOPT_TESTS=OFF -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -H.. && cmake --build . -j 4 --target install
-	        
+
