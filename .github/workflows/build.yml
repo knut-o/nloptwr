@@ -2,9 +2,11 @@
 name: Build and Test
 on:
   push:
+    branches: [dev2]
   pull_request:
-  schedule:
-    - cron:  '0 0 * * 0' # weekly
+    branches: [dev2]
+#  schedule:
+#    - cron:  '0 0 * * 0' # weekly
 
 jobs:
   build:
