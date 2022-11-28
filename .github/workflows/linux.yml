@@ -7,9 +7,9 @@ on:
       - created
       - edited
   push:
-    branches: ["main", "dev", "dev2"]
+    branches: ["main", "dev", "devx"]
   pull_request:
-    branches: ["main", "dev", "dev2"]
+    branches: ["main", "dev", "devx"]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
