@@ -35,9 +35,9 @@ jobs:
         shell: cmd
         run: |
           pwd
+          dir "vcpkg.cmake*" /s
+          Get-ChildItem -Path D:\a\nloptwr -Recurse -ErrorAction SilentlyContinue
           vcpkg env
-          cd D:\a\nloptwr
-          dir "\vcpkg.cmake*" /s
         
       - name: "Build NLopt"
         run: |
