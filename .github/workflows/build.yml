@@ -35,8 +35,9 @@ jobs:
         shell: cmd
         run: |
           pwd
-          where /r D:\a\nloptwr vcpkg.cmake
-          where /r D:\a vcpkg.cmake
+          vcpkg env
+          cd D:\a\nloptwr
+          dir "\vcpkg.cmake*" /s
         
       - name: "Build NLopt"
         run: |
