@@ -72,8 +72,9 @@ jobs:
         if: ${{ contains(matrix.os, 'windows') }}
         run: |
           echo "Configure NLoptWr for windows"
-          Get-ChildItem -Path D:\ -Recurse vcpkg.cmake
-          Get-ChildItem -Path C:\ -Recurse vcpkg.cmake
+          Get-ChildItem -Path D:\PowerShell -File | Select vcpkg.cmake
+          Get-ChildItem -Path C:\PowerShell -File | Select vcpkg.cmake
+          $env:CMAKE_TOOLCHAIN_FILE="$ENV{VCPKG_ROOT}//scripts//buildsystems//vcpkg.cmake"
           mkdir ${{github.workspace}}\build
           echo "# 1.) build directory created"
           cd ${{github.workspace}}\build
