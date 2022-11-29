@@ -48,10 +48,22 @@ jobs:
           echo "prepare NLoptWr"
           if: ${{ contains(matrix.os, 'macos') }}
           run: |
-            echo "Build NLopt for macos"
-            echo "Check environment variables:"
+            echo "Configure NLoptWr for macos"
+            brew install llvm libomp
+            sudo ln -s /usr/local/opt/llvm/bin/clang    /usr/local/bin/clang-omp
+            sudo ln -s /usr/local/opt/llvm/bin/clang++  /usr/local/bin/clang-omp++
             export CC=/usr/local/bin/clang-omp
-
+            export CXX=/usr/local/bin/clang-omp++
+            export CPPFLAGS="-I/usr/local/opt/llvm/include"
+            export CXXFLAGS="-I/usr/local/opt/llvm/include"
+            export LDFLAGS="-L/usr/local/opt/llvm/lib"
+            export OpenMP_C=${CC}
+            export OpenMP_CXX=${CXX}
+            export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
+            export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
+            export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
+            export VCPKG_DEFAULT_TRIPLET=x64-osx
+            export VCPKG_TRIPLET=x64-osx
 
 #jobs:
 #  build:
