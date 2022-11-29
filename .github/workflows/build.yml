@@ -38,13 +38,13 @@ jobs:
         if: ${{ !contains(matrix.os, 'windows') }}
         run: |
           echo "Build NLopt for Non-Windows"
-          echo "pwd=`pwd`"          
+          # echo "pwd=`pwd`"          
           echo "# 1a.) Configuring VCPKG ..."
           vcpkg install
 
       - name: "build nlopt (win)"
         if: ${{ contains(matrix.os, 'windows') }}
-        shell: cmd
+        # shell: cmd
         run: |
           echo "Build NLopt for Windows"
           echo "# 1a.) Configuring VCPKG ..."
