@@ -35,10 +35,8 @@ jobs:
         shell: cmd
         run: |
           pwd
-          # where /r ${{github.workspace}} vcpkg.cmake
           where /r D:\a\nloptwr vcpkg.cmake
           where /r D:\a vcpkg.cmake
-          # where /r C:\ vcpkg.cmake
         
       - name: "Build NLopt"
         run: |
