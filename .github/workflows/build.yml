@@ -41,7 +41,7 @@ jobs:
         run: |
           echo "Build NLopt"
           echo "# 1a.) Configuring VCPKG ..."
-          vcpkg --triplet=${{triplet}} install
+          vcpkg install
 
       - name: "prepare NLoptWr"
         if: ${{ contains(matrix.os, 'macos') }}
