@@ -20,12 +20,15 @@ jobs:
           - os: ubuntu-latest
             triplet: 'x64-linux'
             CMAKE_TOOLCHAIN_FILE: '${{ github.workspace }}/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake'
+            CMAKE_BUILD_TYPE: Release
           - os: macos-latest
             triplet: 'x64-osx'
             CMAKE_TOOLCHAIN_FILE: '${{ github.workspace }}/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake'
+            CMAKE_BUILD_TYPE: Release
           - os: windows-latest
             triplet: 'x64-windows'
             CMAKE_TOOLCHAIN_FILE: '${{ github.workspace }}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake'
+            CMAKE_BUILD_TYPE: Release
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
@@ -60,7 +63,7 @@ jobs:
             export VCPKG_TRIPLET=x64-osx
             mkdir -p ${{github.workspace}}/build
             cd       ${{github.workspace}}/build
-            cmake  -DNLOPTWR_BUILD_EXAMPLES=OFF -DNLOPTWR_BUILD_TESTS=ON -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}  -H${{github.workspace}} 
+            cmake  -DNLOPTWR_BUILD_EXAMPLES=OFF -DNLOPTWR_BUILD_TESTS=ON -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=${{CMAKE_BUILD_TYPE}}  -H${{github.workspace}} 
             echo "config done"
 
 #jobs:
