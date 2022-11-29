@@ -137,8 +137,8 @@ target_include_directories(nloptwrtest
 target_link_libraries(nloptwrtest
     PRIVATE
         nloptwr
-        NLopt::nlopt
-        OpenMP::OpenMP_CXX
+#        NLopt::nlopt
+#        OpenMP::OpenMP_CXX
 )
 
 #
