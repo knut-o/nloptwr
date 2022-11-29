@@ -37,6 +37,8 @@ jobs:
           pwd
           dir /b/s "vcpkg.cmake"
           vcpkg env
+          dir C:\vcpkg\vcpkg.cmake
+          dir C:\vcpkg\scripts\buildsystems\vcpkg.cmake
         
       - name: "Build NLopt"
         run: |
