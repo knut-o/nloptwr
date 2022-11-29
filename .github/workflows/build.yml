@@ -19,16 +19,16 @@ jobs:
         include:
           - os: ubuntu-latest
             triplet: 'x64-linux'
-            prefix_path=$HOME/install
-            tmp_path=$HOME/tmp
+            prefix_path: '$HOME/install'
+            tmp_path: '${{ HOME }}/tmp'
           - os: macos-latest
             triplet: 'x64-osx'
-            prefix_path=$HOME/install
-            tmp_path=$HOME/tmp
+            prefix_path: '$HOME/install'
+            tmp_path: '${{ HOME }}/tmp'
           - os: windows-latest
             triplet: 'x64-windows'
-            prefix_path=%cd:\=/%/install
-            tmp_path=%cd:\=/%/tmp
+            prefix_path: '%cd:\=/%/install'
+            tmp_path: '%cd:\=/%/tmp'
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
@@ -39,7 +39,7 @@ jobs:
           
       - name: build nlopt
         run: |
-          echo "Build NLopt"
+          echo "Build NLopt tmp_path: ${{ tmp_path }}, prefix_path: ${{ prefix_path }}"
           mkdir ${{ tmp_path }}
           mkdir ${{ prefix_path }}
           cd    ${{ prefix_path }}
