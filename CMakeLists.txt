@@ -6,7 +6,8 @@ project(NLOPTWR LANGUAGES CXX)
 # =========================================================================
 
 option(NLOPTWR_BUILD_VERBOSE "Verbose build." ON)
-option(NLOPTWR_BUILD_EXAMPLES "Build NLOPTWR examples." ON)
+
+option(NLOPTWR_BUILD_EXAMPLES "Build NLOPTWR examples." OFF)
 option(NLOPTWR_BUILD_TESTS "Build NLOPTWR unit tests." ON)
 
 # =========================================================================
@@ -133,11 +134,6 @@ add_subdirectory(lib)
 
 if(NLOPTWR_BUILD_EXAMPLES)
     add_subdirectory(examples)
-endif()
-
-if(NLOPTWR_BUILD_TESTS)
-    enable_testing()
-    add_subdirectory(tests)
 endif()
 
 # =========================================================================
