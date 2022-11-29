@@ -46,7 +46,9 @@ jobs:
         run: |
           echo "Build NLopt for Windows"
           echo "# 1a.) Configuring VCPKG ..."
-          vcpkg install --triplet x64-windows
+          set VCPKG_DEFAULT_TRIPLET=${{triplet}}
+          set VCPKG_TRIPLET=${{triplet}}
+          vcpkg install nlopt
 
 #jobs:
 #  build:
