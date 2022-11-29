@@ -19,10 +19,13 @@ jobs:
         include:
           - os: ubuntu-latest
             triplet: 'x64-linux'
+            CMAKE_TOOLCHAIN_FILE: '${{ github.workspace }}/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake'
           - os: macos-latest
             triplet: 'x64-osx'
+            CMAKE_TOOLCHAIN_FILE: '${{ github.workspace }}/VcPkg/vcpkg/scripts/buildsystems/vcpkg.cmake'
           - os: windows-latest
             triplet: 'x64-windows'
+            CMAKE_TOOLCHAIN_FILE: '${{ github.workspace }}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake'
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
@@ -49,14 +52,6 @@ jobs:
         shell: cmd
         run: |
           echo "Build NLopt for Windows"
-          mkdir tmp
-          cd tmp
-          mkdir install
-          git clone git@github.com:stevengj/nlopt.git
-          cd nlopt
-          mkdir build
-          cd    build
-          echo "pwd=`pwd`"          
           echo "# 1a.) Configuring VCPKG ..."
           mkdir -p ${{github.workspace}}\VcPkg
           cd       ${{github.workspace}}\VcPkg
@@ -71,8 +66,7 @@ jobs:
           mkdir ${{github.workspace}}\build
           cd ${{github.workspace}}\build
           echo "# 1d.) build directory created"
-          set CMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
-          set CMAKE_TOOLCHAIN_FILE=${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
+          set CMAKE_TOOLCHAIN_FILE=${{ github.workspace }}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
           echo "CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}"
 
 #jobs:
