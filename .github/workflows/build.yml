@@ -33,10 +33,10 @@ jobs:
           
       - name: build nlopt
         run: |
-          echo "Build NLopt tmp_path ${{ tmp_path }}, prefix_path ${{ prefix_path }}"
-          mkdir ${{ tmp_path }}
-          mkdir ${{ prefix_path }}
-          cd    ${{ prefix_path }}
+          echo "Build NLopt"
+          mkdir tmp
+          cd tmp
+          mkdir install
           # git clone git@github.com:stevengj/nlopt.git
           # cd nlopt
           # mkdir build
