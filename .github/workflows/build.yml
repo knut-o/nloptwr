@@ -93,20 +93,9 @@ jobs:
           echo "config done"
 
       - name: "Build NLoptWr (lib)"
-        if: ${{ !contains(matrix.os, 'windows') }}
         run: |
           echo "Build starting"
           cd       ${{github.workspace}}/build
-          export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
-          cmake --build . --config Release --target install
-          echo "Build done"
-
-      - name: "Build NLoptWr (lib)"
-        if: ${{ contains(matrix.os, 'windows') }}
-        run: |
-          echo "Build starting"
-          cd       ${{github.workspace}}/build
-          $env:CMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
           cmake --build . --config Release --target install
           echo "Build done"
 
