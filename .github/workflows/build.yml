@@ -36,7 +36,6 @@ jobs:
         run: |
           pwd
           dir "vcpkg.cmake*" /s
-          Get-ChildItem -Path D:\a\nloptwr -Recurse -ErrorAction SilentlyContinue
           vcpkg env
         
       - name: "Build NLopt"
@@ -81,6 +80,8 @@ jobs:
         if: ${{ contains(matrix.os, 'windows') }}
         run: |
           echo "Configure NLoptWr for windows"
+          Get-ChildItem -Path D:\a\ -Recurse -ErrorAction SilentlyContinue
+          Get-ChildItem -Path C:\   -Recurse -ErrorAction SilentlyContinue
           $env:CMAKE_TOOLCHAIN_FILE="$ENV{VCPKG_ROOT}//scripts//buildsystems//vcpkg.cmake"
           mkdir ${{github.workspace}}\build
           echo "# 1.) build directory created"
