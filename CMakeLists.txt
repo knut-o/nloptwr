@@ -7,8 +7,8 @@ project(NLOPTWR LANGUAGES CXX)
 
 option(NLOPTWR_BUILD_VERBOSE "Verbose build." ON)
 
+option(NLOPTWR_BUILD_TESTS "Build NLOPTWR tests." ON)
 option(NLOPTWR_BUILD_EXAMPLES "Build NLOPTWR examples." OFF)
-option(NLOPTWR_BUILD_TESTS "Build NLOPTWR tests." OFF)
 
 # =========================================================================
 # =========================================================================
