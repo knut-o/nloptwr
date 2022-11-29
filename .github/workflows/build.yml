@@ -19,6 +19,8 @@ jobs:
         include:
           - os: ubuntu-latest
             triplet: 'x64-linux'
+          - os: macos-latest
+            triplet: 'x64-linux'
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
