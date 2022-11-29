@@ -33,7 +33,7 @@ jobs:
           
       - name: build nlopt
         run: |
-          # echo "Build NLopt tmp_path: ${{ tmp_path }}, prefix_path: ${{ prefix_path }}"
+          echo "Build NLopt tmp_path ${{ tmp_path }}, prefix_path ${{ prefix_path }}"
           mkdir ${{ tmp_path }}
           mkdir ${{ prefix_path }}
           cd    ${{ prefix_path }}
