@@ -67,6 +67,16 @@ jobs:
           cd       ${{github.workspace}}/build
           cmake  -DNLOPTWR_BUILD_EXAMPLES=OFF -DNLOPTWR_BUILD_TESTS=OFF -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}} 
           echo "config done"
+
+      - name: "prepare NLoptWr"
+        if: ${{ contains(matrix.os, 'ubuntu') }}
+        run: |
+          echo "Configure NLoptWr for ubuntu"
+          
+      - name: "prepare NLoptWr"
+        if: ${{ contains(matrix.os, 'windows') }}
+        run: |
+          echo "Configure NLoptWr for windows"
           
 #jobs:
 #  build:
