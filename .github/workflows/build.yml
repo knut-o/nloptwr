@@ -65,7 +65,7 @@ jobs:
           mkdir -p ${{github.workspace}}/install
           mkdir -p ${{github.workspace}}/build
           cd       ${{github.workspace}}/build
-          cmake  -DNLOPTWR_BUILD_EXAMPLES=OFF -DNLOPTWR_BUILD_TESTS=ON -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}} 
+          cmake  -DNLOPTWR_BUILD_EXAMPLES=OFF -DNLOPTWR_BUILD_TESTS=OFF -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}} 
           echo "config done"
           
 #jobs:
