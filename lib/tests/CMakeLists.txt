@@ -18,7 +18,7 @@ find_package(NLopt CONFIG REQUIRED)
 # find_package(nloptwr REQUIRED)
 
 include_directories(
-#    ${VCPKG_INCL}
+    ${VCPKG_INCL}
     ${CMAKE_SOURCE_DIR}/lib/include
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${NLOPTCXX_INCLUDE_DIR}
