@@ -49,6 +49,14 @@ jobs:
         shell: cmd
         run: |
           echo "Build NLopt for Windows"
+          mkdir tmp
+          cd tmp
+          mkdir install
+          git clone git@github.com:stevengj/nlopt.git
+          cd nlopt
+          mkdir build
+          cd    build
+          echo "pwd=`pwd`"          
           echo "# 1a.) Configuring VCPKG ..."
           mkdir -p ${{github.workspace}}\VcPkg
           cd       ${{github.workspace}}\VcPkg
@@ -66,15 +74,6 @@ jobs:
           set CMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
           set CMAKE_TOOLCHAIN_FILE=${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
           echo "CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}"
-          #
-          mkdir tmp
-          cd tmp
-          mkdir install
-          # git clone git@github.com:stevengj/nlopt.git
-          # cd nlopt
-          # mkdir build
-          # cd    build
-          # echo "pwd=`pwd`"          
 
 #jobs:
 #  build:
