@@ -37,10 +37,10 @@ jobs:
           mkdir tmp
           cd tmp
           mkdir install
-          git clone git@github.com:stevengj/nlopt.git
-          cd nlopt
-          mkdir build
-          cd    build
+          # git clone git@github.com:stevengj/nlopt.git
+          # cd nlopt
+          # mkdir build
+          # cd    build
           echo "pwd=`pwd`"          
 
 #jobs:
