@@ -59,6 +59,7 @@ jobs:
           export OpenMP_CXX=${CXX}
           export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
           export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
+          find /usr/local -type f -iname vcpkg.cmake
           export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
           export VCPKG_DEFAULT_TRIPLET=x64-osx
           export VCPKG_TRIPLET=x64-osx
