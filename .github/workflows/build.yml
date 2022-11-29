@@ -20,7 +20,7 @@ jobs:
           - os: ubuntu-latest
             triplet: 'x64-linux'
           - os: macos-latest
-            triplet: 'x64-linux'
+            triplet: 'x64-osx'
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
