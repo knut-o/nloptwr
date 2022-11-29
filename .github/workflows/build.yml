@@ -31,11 +31,11 @@ jobs:
         run: |
           echo "Hello world!"
           
-      - name: build nlopt
+      - name: "build nlopt (*nix)"
         if: ${{ !contains(matrix.os, 'windows') }}
         run: |
           echo "Build NLopt for Non-Windows"
-          mkdir tmp
+          mkdir -p tmp
           cd tmp
           mkdir install
           # git clone git@github.com:stevengj/nlopt.git
@@ -44,8 +44,8 @@ jobs:
           # cd    build
           # echo "pwd=`pwd`"          
 
-      - name: build nlopt
-        if: ${{ !contains(matrix.os, 'windows') }}
+      - name: "build nlopt (win)"
+        if: ${{ contains(matrix.os, 'windows') }}
         run: |
           echo "Build NLopt for Windows"
           mkdir tmp
