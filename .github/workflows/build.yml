@@ -62,7 +62,7 @@ jobs:
           export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
           export VCPKG_DEFAULT_TRIPLET=x64-osx
           export VCPKG_TRIPLET=x64-osx
-          MKDIR -P ${{github.workspace}}/install
+          mkdir -p ${{github.workspace}}/install
           mkdir -p ${{github.workspace}}/build
           cd       ${{github.workspace}}/build
           cmake  -DNLOPTWR_BUILD_EXAMPLES=OFF -DNLOPTWR_BUILD_TESTS=ON -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}} 
