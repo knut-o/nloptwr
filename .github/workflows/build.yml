@@ -30,6 +30,15 @@ jobs:
       - name: echo hello
         run: |
           echo "Hello world!"
+          
+      - name: echo hello
+        run: |
+          echo "Build NLopt"
+          mkdir ../tmp/build
+          mkdir ../tmp/install
+          cd ../tmp
+          echo "pwd=`pwd`"          
+#          git clone git@github.com:stevengj/nlopt.git
 
 #jobs:
 #  build:
