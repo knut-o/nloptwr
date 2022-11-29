@@ -73,14 +73,6 @@ jobs:
         if: ${{ contains(matrix.os, 'windows') }}
         run: |
           echo "Configure NLoptWr for windows"
-          mkdir ${{github.workspace}}\build
-          cd ${{github.workspace}}\build
-          echo "# 1d.) build directory created"
-          echo "CMAKE_TOOLCHAIN_FILE/1: ${{CMAKE_TOOLCHAIN_FILE}}"
-          set CMAKE_TOOLCHAIN_FILE=${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
-          echo "CMAKE_TOOLCHAIN_FILE/2: ${{CMAKE_TOOLCHAIN_FILE}}"
-          echo "# 2.) Configuring CMake for NLOptWr ..."
-          cmake -DNLOPTWR_BUILD_EXAMPLES=OFF -DNLOPTWR_BUILD_TESTS=OFF -Wno-dev -DCMAKE_PREFIX_PATH=%cd:\=/%/install -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install -DCMAKE_BUILD_TYPE=Release ..
           echo "config done"
 
       - name: "TODO"
