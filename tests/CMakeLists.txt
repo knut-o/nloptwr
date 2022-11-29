@@ -16,7 +16,7 @@ endif()
 
 find_package(NLopt CONFIG REQUIRED)
 
-find_package(nloptwr REQUIRED)
+# find_package(nloptwr REQUIRED)
 
 include_directories(
 #    ${VCPKG_INCL}
