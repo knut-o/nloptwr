@@ -34,11 +34,34 @@ jobs:
         run: |
           echo "Hello world!"
           
-      - name: "build nlopt"
+      - name: "build NLopt"
         run: |
-          echo "Build NLopt for Non-Windows"
+          echo "Build NLopt"
           echo "# 1a.) Configuring VCPKG ..."
           vcpkg install
+
+      - name: "prepare NLoptWr"
+        run: |
+          echo "prepare NLoptWr"
+          if: ${{ contains(matrix.os, 'macos') }}
+          run: |
+            echo "Build NLopt for macos"
+            echo "Check environment variables:"
+            export CC=/usr/local/bin/clang-omp
+            export CXX=/usr/local/bin/clang-omp++
+            export LDFLAGS="-L/usr/local/opt/llvm/lib"
+            export CPPFLAGS="-I/usr/local/opt/llvm/include"
+            export CXXFLAGS="-I/usr/local/opt/llvm/include"
+            export OpenMP_C=${CC}
+            export OpenMP_CXX=${CXX}
+            export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
+            export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
+            export VCPKG_DEFAULT_TRIPLET=x64-osx
+            export VCPKG_TRIPLET=x64-osx
+            mkdir -p ${{github.workspace}}/build
+            cd       ${{github.workspace}}/build
+            cmake  -DNLOPTWR_BUILD_EXAMPLES=OFF -DNLOPTWR_BUILD_TESTS=ON -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}  -H${{github.workspace}} 
+            echo "config done"
 
 #jobs:
 #  build:
