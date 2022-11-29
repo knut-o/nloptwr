@@ -35,7 +35,7 @@ jobs:
 
       - name: "Build NLopt"
         run: |
-          echo "Build NLopt ${{CMAKE_TOOLCHAIN_FILE}}"
+          echo "Build NLopt"
           echo "# 1a.) Configuring VCPKG ..."
           vcpkg install
 
