@@ -35,10 +35,10 @@ jobs:
         if: ${{ !contains(matrix.os, 'windows') }}
         run: |
           echo "Build NLopt for Non-Windows"
-          mkdir -p tmp
-          cd tmp
-          mkdir install
-          # git clone git@github.com:stevengj/nlopt.git
+          mkdir -p $HOME/tmp
+          mkdir -p $HOME/install
+          cd $HOME/tmp
+          git clone git@github.com:stevengj/nlopt.git
           # cd nlopt
           # mkdir build
           # cd    build
