@@ -34,6 +34,8 @@ jobs:
         if: ${{ contains(matrix.os, 'windows') }}
         shell: cmd
         run: |
+          pwd
+          where /r ${{github.workspace}} vcpkg.cmake
           where /r D:\ vcpkg.cmake
           where /r C:\ vcpkg.cmake
         
