@@ -38,7 +38,7 @@ jobs:
           mkdir -p $HOME/tmp
           mkdir -p $HOME/install
           cd $HOME/tmp
-          git clone git@github.com:stevengj/nlopt.git
+          # git clone git@github.com:stevengj/nlopt.git
           # cd nlopt
           # mkdir build
           # cd    build
@@ -46,8 +46,27 @@ jobs:
 
       - name: "build nlopt (win)"
         if: ${{ contains(matrix.os, 'windows') }}
+        shell: cmd
         run: |
           echo "Build NLopt for Windows"
+          echo "# 1a.) Configuring VCPKG ..."
+          mkdir -p ${{github.workspace}}\VcPkg
+          cd       ${{github.workspace}}\VcPkg
+          git clone https://github.com/microsoft/vcpkg
+          echo "# 1b.) VCPKG: clone done"
+          cd ${{github.workspace}}\VcPkg\vcpkg
+          bootstrap-vcpkg.sh -disableMetrics
+          set VCPKG_DEFAULT_TRIPLET=x64-windows
+          set VCPKG_TRIPLET=x64-windows
+          vcpkg install
+          echo "# 1c.) VCPKG installed"
+          mkdir ${{github.workspace}}\build
+          cd ${{github.workspace}}\build
+          echo "# 1d.) build directory created"
+          set CMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
+          set CMAKE_TOOLCHAIN_FILE=${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
+          echo "CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}"
+          #
           mkdir tmp
           cd tmp
           mkdir install
