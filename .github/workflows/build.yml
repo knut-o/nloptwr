@@ -75,6 +75,8 @@ jobs:
           mkdir ${{github.workspace}}\build
           echo "# 1.) build directory created"
           cd ${{github.workspace}}\build
+          Get-ChildItem -Path D:\  vcpkg.cmake
+          Get-ChildItem -Path C:\  vcpkg.cmake
           echo "# 2.) Configuring CMake for NLOptWr ..."
           $env:CMAKE_TOOLCHAIN_FILE="D:/src/vcpkg/scripts/buildsystems/vcpkg.cmake"
           cmake -DNLOPTWR_BUILD_EXAMPLES=OFF -DNLOPTWR_BUILD_TESTS=OFF -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}} 
