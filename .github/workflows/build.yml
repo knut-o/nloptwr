@@ -41,7 +41,7 @@ jobs:
           # cd nlopt
           # mkdir build
           # cd    build
-          echo "pwd=`pwd`"          
+          # echo "pwd=`pwd`"          
 
 #jobs:
 #  build:
