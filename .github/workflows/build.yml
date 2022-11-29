@@ -7,47 +7,25 @@ on:
     branches: [dev2]
 #  schedule:
 #    - cron:  '0 0 * * 0' # weekly
-
 jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-#        os: [ubuntu-latest, ubuntu-20.04, windows-latest, macos-latest, macos-10.15]
+#        os: [ubuntu-latest, macos-latest]
         os: [ubuntu-latest]
         shared_libs: ['OFF']
         include:
           - os: ubuntu-latest
             triplet: 'x64-linux'
-            cmake_flags: '-DCMAKE_CXX_COMPILER=clang++'
-          - os: ubuntu-latest
-            triplet: 'x64-linux'
-            cmake_flags: '-DCMAKE_CXX_COMPILER=clang++'
-          - os: ubuntu-20.04
-            triplet: 'x64-linux'
-            cmake_flags: '-DCMAKE_CXX_COMPILER=g++'
-          - os: windows-latest
-            triplet: 'x64-windows'
-            cmake_flags: '""'
-          - os: macos-latest
-            triplet: 'x64-osx'
-            cmake_flags: ''
-          - os: macos-10.15
-            triplet: 'x64-osx'
-            cmake_flags: ''
-        exclude:
-          # tests won't build with shared libs due to private symbols
-          - shared_libs: 'ON'
-            tests: 'ON'
-          - shared_libs: 'OFF'
-            tests: 'OFF'
-          # Disabled until https://github.com/sgieseking/anyrpc/pull/43 is in place
-          - os: windows-latest
-            shared_libs: 'ON'
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
+
+      - name: echo hello
+        run: |
+          echo "Hello world!"
 
 #jobs:
 #  build:
