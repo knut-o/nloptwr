@@ -41,6 +41,7 @@ jobs:
         run: |
           echo "Configure NLoptWr for ubuntu"
           export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
+          ls -l $CMAKE_TOOLCHAIN_FILE
           export VCPKG_DEFAULT_TRIPLET=x64-linux
           export VCPKG_TRIPLET=x64-linux
           mkdir -p ${{github.workspace}}/install
@@ -68,6 +69,7 @@ jobs:
           export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
           export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
           export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
+          ls -l $CMAKE_TOOLCHAIN_FILE
           export VCPKG_DEFAULT_TRIPLET=x64-osx
           export VCPKG_TRIPLET=x64-osx
           mkdir -p ${{github.workspace}}/install
