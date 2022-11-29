@@ -30,6 +30,13 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
 
+      - name: "prepare NLoptWr (windows)"
+        if: ${{ contains(matrix.os, 'windows') }}
+        shell: cmd
+        run: |
+          where /r D:\ vcpkg.cmake
+          where /r C:\ vcpkg.cmake
+        
       - name: "Build NLopt"
         run: |
           echo "Build NLopt"
@@ -72,8 +79,6 @@ jobs:
         if: ${{ contains(matrix.os, 'windows') }}
         run: |
           echo "Configure NLoptWr for windows"
-          where /r d:\ vcpkg.cmake
-          where /r c:\ vcpkg.cmake
           $env:CMAKE_TOOLCHAIN_FILE="$ENV{VCPKG_ROOT}//scripts//buildsystems//vcpkg.cmake"
           mkdir ${{github.workspace}}\build
           echo "# 1.) build directory created"
