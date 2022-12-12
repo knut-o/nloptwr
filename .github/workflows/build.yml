@@ -117,7 +117,7 @@ jobs:
           ls -l $CMAKE_TOOLCHAIN_FILE
           export VCPKG_DEFAULT_TRIPLET=x64-linux
           export VCPKG_TRIPLET=x64-linux
-          vcpkg install nlopt
+          vcpkg install --triplet x64-linux
           mkdir -p ${{github.workspace}}/install
           mkdir -p ${{github.workspace}}/build
           rm -rf   ${{github.workspace}}/build/*
