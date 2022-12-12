@@ -139,6 +139,8 @@ jobs:
         if: ${{ contains(matrix.os, 'windows') }}
         run: |
           echo "Configure NLoptWr for windows"
+          unset CMAKE_TOOLCHAIN_FILE
+          unset VCPKG_ROOT
           remove-item "${{github.workspace}}\build" -recurse -force
           mkdir   ${{github.workspace}}\build
           echo "# 1.) build directory created"
@@ -206,6 +208,8 @@ jobs:
         if: ${{ contains(matrix.os, 'windows') }}
         run: |
           echo "Configure NLoptWr for windows"
+          unset CMAKE_TOOLCHAIN_FILE
+          unset VCPKG_ROOT
           # rmdir "${{github.workspace}}\build" /s /q
           # DEL "${{github.workspace}}\build\*" /S
           remove-item "${{github.workspace}}\build" -recurse -force
@@ -225,8 +229,10 @@ jobs:
 
       - name: "External test"
         run: |
-          echo "TODO ... "
+          echo "External test ... "
+          cd ${{github.workspace}}/build
           ctest -B ${{github.workspace}}/build -C release
+          echo "External test done"
           
 ### #! /bin/bash
 ### export    GITHUB_DIR=$HOME/GitHub
