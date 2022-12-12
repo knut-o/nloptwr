@@ -109,6 +109,7 @@ jobs:
           cd ${{github.workspace}}/build
           echo "# 2.) Configuring CMake for NLOptWr ..."
           cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}} 
+          ## cmake --build . --config Release --target install
           echo "config done"
 
       - name: "Prepare NLoptWr (macos)"
@@ -132,6 +133,7 @@ jobs:
           cd       ${{github.workspace}}/build
           echo "# 2.) Configuring CMake for NLOptWr ..."
           cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}} 
+          ## cmake --build . --config Release --target install
           echo "config done"
 
       - name: "Prepare NLoptWr (windows)"
@@ -148,20 +150,21 @@ jobs:
           cd ${{github.workspace}}\build
           echo "# 2.) Configuring CMake for NLOptWr ..."
           cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}} 
-          echo "config done"
+          ## cmake --build . --config Release --target install
+         echo "config done"
 
       - name: "Build NLoptWr (lib)"
         run: |
           echo "Build starting"
-          cd       ${{github.workspace}}/build
-          cmake --build . --config Release --target install
+          ## cd       ${{github.workspace}}/build
+          cmake --build ${{github.workspace}}/build --config Release --target install
           echo "Build done"
 
       - name: "Test NLoptWr"
         run: |
           echo "Test starting"
-          cd       ${{github.workspace}}/build
-          ctest -C Release
+          ## cd       ${{github.workspace}}/build
+          ctest ${{github.workspace}}/build -C Release
           echo "Test done"
 
 # ===============================================================
