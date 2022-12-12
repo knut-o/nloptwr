@@ -208,8 +208,6 @@ jobs:
         if: ${{ contains(matrix.os, 'windows') }}
         run: |
           echo "Configure NLoptWr for windows"
-          # undef CMAKE_TOOLCHAIN_FILE
-          # undef VCPKG_ROOT
           remove-item "${{github.workspace}}\build" -recurse -force
           mkdir ${{github.workspace}}\build
           echo "# 1.) build directory created"
