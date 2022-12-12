@@ -55,7 +55,7 @@ jobs:
           cd     ${{github.workspace}}/build
           echo "# 2.) Configuring CMake for NLopt ..."
           cmake -DBUILD_SHARED_LIBS=OFF -DNLOPT_CXX=ON -DNLOPT_FORTRAN=OFF -DNLOPT_PYTHON=OFF -DNLOPT_GUILE=OFF -DNLOPT_SWIG=OFF -DNLOPT_OCTAVE=OFF -DNLOPT_MATLAB=OFF -DNLOPT_TESTS=OFF -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -H${{github.workspace}}/tmp/nlopt
-          # cmake --build . --target install
+          cmake --build . --target install
           echo "config done"
 
       - name: "Prepare NLopt (mac)"
@@ -79,7 +79,7 @@ jobs:
           cd     ${{github.workspace}}/build
           echo "# 2.) Configuring CMake for NLopt ..."
           cmake -DBUILD_SHARED_LIBS=OFF -DNLOPT_CXX=ON -DNLOPT_FORTRAN=OFF -DNLOPT_PYTHON=OFF -DNLOPT_GUILE=OFF -DNLOPT_SWIG=OFF -DNLOPT_OCTAVE=OFF -DNLOPT_MATLAB=OFF -DNLOPT_TESTS=OFF -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -H${{github.workspace}}/tmp/nlopt
-          # cmake --build . --target install
+          cmake --build . --target install
           echo "config done"
 
       - name: "Prepare NLopt (windows)"
@@ -92,16 +92,8 @@ jobs:
           cd     ${{github.workspace}}\build
           echo "# 2.) Configuring CMake for NLopt ..."
           cmake -DBUILD_SHARED_LIBS=OFF -DNLOPT_CXX=ON -DNLOPT_FORTRAN=OFF -DNLOPT_PYTHON=OFF -DNLOPT_GUILE=OFF -DNLOPT_SWIG=OFF -DNLOPT_OCTAVE=OFF -DNLOPT_MATLAB=OFF -DNLOPT_TESTS=OFF -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -H${{github.workspace}}/tmp/nlopt
-          # cmake --build . --target install
-          echo "config done"
-
-# =============================================================================
-
-      - name: "Build NLopt"
-        run: |
-          echo "Build NLopt"
           cmake --build . --target install
-          echo "Build NLopt done"
+          echo "config done"
 
 # =============================================================================
 
