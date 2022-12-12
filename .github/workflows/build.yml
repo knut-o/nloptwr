@@ -101,8 +101,6 @@ jobs:
         if: ${{ contains(matrix.os, 'ubuntu') }}
         run: |
           echo "Configure NLoptWr for ubuntu"
-          export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
-          ls -l $CMAKE_TOOLCHAIN_FILE
           export VCPKG_DEFAULT_TRIPLET=x64-linux
           export VCPKG_TRIPLET=x64-linux
           mkdir -p ${{github.workspace}}/install
@@ -141,10 +139,10 @@ jobs:
         if: ${{ contains(matrix.os, 'windows') }}
         run: |
           echo "Configure NLoptWr for windows"
-          rmdir "${{github.workspace}}\build" /s /q
-          # DEL "${{github.workspace}}\build" /S
+          # rmdir "${{github.workspace}}\build" /s /q
+          DEL "${{github.workspace}}\build\*" /S
+          # rm -rf  ${{github.workspace}}\build\*
           mkdir   ${{github.workspace}}\build
-          rm -rf  ${{github.workspace}}\build\*
           echo "# 1.) build directory created"
           cd ${{github.workspace}}\build
           echo "# 2.) Configuring CMake for NLOptWr ..."
@@ -186,9 +184,6 @@ jobs:
         if: ${{ contains(matrix.os, 'macos') }}
         run: |
           echo "Configure NLoptWr for macos"
-          # brew install llvm libomp
-          # sudo ln -s /usr/local/opt/llvm/bin/clang    /usr/local/bin/clang-omp
-          # sudo ln -s /usr/local/opt/llvm/bin/clang++  /usr/local/bin/clang-omp++
           export CC=/usr/local/bin/clang-omp
           export CXX=/usr/local/bin/clang-omp++
           export CPPFLAGS="-I/usr/local/opt/llvm/include"
