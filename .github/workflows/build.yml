@@ -120,7 +120,6 @@ jobs:
           export CXX=/usr/local/bin/clang-omp++
           export CPPFLAGS="-I/usr/local/opt/llvm/include"
           export CXXFLAGS="-I/usr/local/opt/llvm/include"
-          # export LDFLAGS="-L/usr/local/opt/llvm/lib"
           export LDFLAGS="-L/usr/local/opt/llvm/lib/c++ -Wl,-rpath,/usr/local/opt/llvm/lib/c++"
           export OpenMP_C=${CC}
           export OpenMP_CXX=${CXX}
@@ -140,11 +139,7 @@ jobs:
         if: ${{ contains(matrix.os, 'windows') }}
         run: |
           echo "Configure NLoptWr for windows"
-          # rmdir "${{github.workspace}}\build" /s /q
-          # DEL "${{github.workspace}}\build\*" /S
           remove-item "${{github.workspace}}\build" -recurse -force
-          ### Remove-Item -Path "${{github.workspace}}\build\*" -recurse
-          # rm -rf  ${{github.workspace}}\build\*
           mkdir   ${{github.workspace}}\build
           echo "# 1.) build directory created"
           cd ${{github.workspace}}\build
@@ -156,14 +151,12 @@ jobs:
       - name: "Build NLoptWr (lib)"
         run: |
           echo "Build starting"
-          ## cd       ${{github.workspace}}/build
-          ## cmake --build ${{github.workspace}}/build --config Release --target install
+          cmake --build ${{github.workspace}}/build --config Release --target install
           echo "Build done"
 
       - name: "Test NLoptWr"
         run: |
           echo "Test starting"
-          ## cd       ${{github.workspace}}/build
           ctest ${{github.workspace}}/build -C Release
           echo "Test done"
 
@@ -229,7 +222,6 @@ jobs:
       - name: "External test"
         run: |
           echo "TODO ... "
-          ## cd ${{github.workspace}}/build
           ctest -B ${{github.workspace}}/build -C release
           
 ### #! /bin/bash
