@@ -100,7 +100,7 @@ jobs:
       - name: "Build NLopt"
         run: |
           echo "Build NLopt"
-          # cmake --build . --target install
+          cmake --build . --target install
           echo "Build NLopt done"
 
 # =============================================================================
