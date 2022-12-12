@@ -151,7 +151,7 @@ jobs:
       - name: "Build NLoptWr (lib)"
         run: |
           echo "Build starting"
-          cmake --build ${{github.workspace}}/build --config Release --target install
+          # cmake --build ${{github.workspace}}/build --config Release --target install
           echo "Build done"
 
       - name: "Test NLoptWr"
@@ -163,67 +163,66 @@ jobs:
 # ===============================================================
 # ===============================================================
 
-      - name: "Prepare external test (ubuntu)"
-        if: ${{ contains(matrix.os, 'ubuntu') }}
-        run: |
-          echo "Configure NLoptWr for ubuntu"
-          mkdir -p ${{github.workspace}}/install
-          mkdir -p ${{github.workspace}}/build
-          rm -rf   ${{github.workspace}}/build/*
-          echo "# 1.) build directory created"
-          cd ${{github.workspace}}/build
-          echo "# 2.) Configuring CMake for NLOptWr ..."
-          cmake -Wno-dev -DCMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
-          cmake --build ${{github.workspace}}/build
-          echo "config done"
+#      - name: "Prepare external test (ubuntu)"
+#        if: ${{ contains(matrix.os, 'ubuntu') }}
+#        run: |
+#          echo "Configure NLoptWr for ubuntu"
+#          mkdir -p ${{github.workspace}}/install
+#          mkdir -p ${{github.workspace}}/build
+#          rm -rf   ${{github.workspace}}/build/*
+#          echo "# 1.) build directory created"
+#          cd ${{github.workspace}}/build
+#          echo "# 2.) Configuring CMake for NLOptWr ..."
+#          cmake -Wno-dev -DCMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
+#          cmake --build ${{github.workspace}}/build
+#          echo "config done"
 
-      - name: "Prepare external test (macos)"
-        if: ${{ contains(matrix.os, 'macos') }}
-        run: |
-          echo "Configure NLoptWr for macos"
-          export CC=/usr/local/bin/clang-omp
-          export CXX=/usr/local/bin/clang-omp++
-          export CPPFLAGS="-I/usr/local/opt/llvm/include"
-          export CXXFLAGS="-I/usr/local/opt/llvm/include"
-          export LDFLAGS="-L/usr/local/opt/llvm/lib"
-          export OpenMP_C=${CC}
-          export OpenMP_CXX=${CXX}
-          export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
-          export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
-          mkdir -p ${{github.workspace}}/install
-          mkdir -p ${{github.workspace}}/build
-          rm -rf   ${{github.workspace}}/build/*
-          echo "# 1.) build directory created"
-          cd       ${{github.workspace}}/build
-          echo "# 2.) Configuring CMake for NLOptWr ..."
-          cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
-          cmake --build ${{github.workspace}}/build
-          echo "config done"
+#      - name: "Prepare external test (macos)"
+#        if: ${{ contains(matrix.os, 'macos') }}
+#        run: |
+#          echo "Configure NLoptWr for macos"
+#          export CC=/usr/local/bin/clang-omp
+#          export CXX=/usr/local/bin/clang-omp++
+#          export CPPFLAGS="-I/usr/local/opt/llvm/include"
+#          export CXXFLAGS="-I/usr/local/opt/llvm/include"
+#          export LDFLAGS="-L/usr/local/opt/llvm/lib"
+#          export OpenMP_C=${CC}
+#          export OpenMP_CXX=${CXX}
+#          export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
+#          export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
+#          mkdir -p ${{github.workspace}}/install
+#          mkdir -p ${{github.workspace}}/build
+#          rm -rf   ${{github.workspace}}/build/*
+#          echo "# 1.) build directory created"
+#          cd       ${{github.workspace}}/build
+#          echo "# 2.) Configuring CMake for NLOptWr ..."
+#          cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
+#          cmake --build ${{github.workspace}}/build
+#          echo "config done"
 
-      - name: "Prepare external test (windows)"
-        if: ${{ contains(matrix.os, 'windows') }}
-        run: |
-          echo "Configure NLoptWr for windows"
-          # rmdir "${{github.workspace}}\build" /s /q
-          # DEL "${{github.workspace}}\build\*" /S
-          remove-item "${{github.workspace}}\build" -recurse -force
-          mkdir ${{github.workspace}}\build
-          echo "# 1.) build directory created"
-          cd ${{github.workspace}}\build
-          echo "# 2.) Configuring CMake for NLOptWr ..."
-          cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
-          cmake --build ${{github.workspace}}/build
-          echo "config done"
+#      - name: "Prepare external test (windows)"
+#        if: ${{ contains(matrix.os, 'windows') }}
+#        run: |
+#          echo "Configure NLoptWr for windows"
+#          # rmdir "${{github.workspace}}\build" /s /q
+#          # DEL "${{github.workspace}}\build\*" /S
+#          remove-item "${{github.workspace}}\build" -recurse -force
+#          mkdir ${{github.workspace}}\build
+#          echo "# 1.) build directory created"
+#          cd ${{github.workspace}}\build
+#          echo "# 2.) Configuring CMake for NLOptWr ..."
+#          cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
+#          cmake --build ${{github.workspace}}/build
+#          echo "config done"
 
 # ===============================================================
 # ===============================================================
 
-
-      - name: "External test"
-        run: |
-          echo "TODO ... "
-          ctest -B ${{github.workspace}}/build -C release
-          
+#      - name: "External test"
+#        run: |
+#          echo "TODO ... "
+#          ctest -B ${{github.workspace}}/build -C release
+#          
 ### #! /bin/bash
 ### export    GITHUB_DIR=$HOME/GitHub
 ### export    NLOPT_DIR=$GITHUB_DIR/nlopt
