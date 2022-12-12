@@ -72,7 +72,7 @@ jobs:
           export CXXFLAGS="-I/usr/local/opt/llvm/include"
           # export LDFLAGS="-L/usr/local/opt/llvm/lib"
           export LDFLAGS="-L/usr/local/opt/llvm/lib/c++ -Wl,-rpath,/usr/local/opt/llvm/lib/c++"
-          rmdir ${{github.workspace}}/build /s /q
+          rm -rf   ${{github.workspace}}/build 
           mkdir -p ${{github.workspace}}/install
           mkdir -p ${{github.workspace}}/build
           echo "# 1.) build directory created"
@@ -86,6 +86,7 @@ jobs:
         if: ${{ contains(matrix.os, 'windows') }}
         run: |
           echo "Configure NLoptWr for windows"
+          rmdir ${{github.workspace}}\build /s /q
           mkdir -p ${{github.workspace}}\install
           mkdir -p ${{github.workspace}}\build
           echo "# 1.) build directory created"
