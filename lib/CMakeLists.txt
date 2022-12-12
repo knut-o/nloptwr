@@ -4,7 +4,16 @@
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-#
+if (VCPKG_FLAG)
+    # use vcpkg
+    MESSAGE("VCPKG_INSTALLED_DIR:  ${VCPKG_INSTALLED_DIR}")
+    set(VCPKG_INCL "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/include")
+    MESSAGE("VCPKG_INSTALLED_DIR/VCPKG_TARGET_TRIPLET/include:  ${VCPKG_INCL}")
+endif()
+
+# =========================================================================
+# =========================================================================
+    
 # Dependencies
 #
 # define dependencies
@@ -17,13 +26,24 @@ if (OPENMP_FOUND)
     SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} ")
 endif()
 
-find_path(NLOPT_INCLUDES NAMES nlopt.hpp)
+# =========================================================================
+
 find_package(NLopt CONFIG REQUIRED)
-if (VCPKG_FLAG)
-    # MESSAGE("VCPKG_INSTALLED_DIR:  ${VCPKG_INSTALLED_DIR}")
-    set(VCPKG_INCL "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/include")
-    MESSAGE("VCPKG_INSTALLED_DIR/VCPKG_TARGET_TRIPLET/include:  ${VCPKG_INCL}")
-endif()
+
+if (NLOPT_FOUND)
+	MESSAGE("NLOPT_INCUDE_DIRS:    ${NLOPT_INCLUDE_DIRS}")
+	MESSAGE("NLOPT_LIBRARIES:      ${NLOPT_LIBRARIES}") 
+else(NLOPT_FOUND)
+    message("NLOPT not found. ")
+endif(NLOPT_FOUND)
+
+# =========================================================================
+# =========================================================================
+
+include_directories(
+	${NLOPT_INCLUDE_DIRS}
+)
+
 
 # Sources
 set(HEADERS_PUB_ROOT
@@ -58,10 +78,7 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX source FILES ${SOURCES})
 
 include_directories(
     ${NLOPTWR_INCLUDE_DIR}/lib/include
-    ${NLOPTCXX_INCLUDE_DIR}
-    ${NLOPT_INCLUDE_DIR}
-    # HACK:
-    ${NLOPT_INCLUDES}
+    ${NLOPT_INCLUDE_DIRS}
 )
 
 #
@@ -80,8 +97,7 @@ target_include_directories(nloptwr
 
 target_link_libraries(nloptwr
     PRIVATE
-#        NLopt::nlopt
-        nlopt
+        NLopt::nlopt
         OpenMP::OpenMP_CXX
 )
 
@@ -96,6 +112,7 @@ generate_export_header(nloptwr
 #
 # nloptwrConfig.cmake File
 #
+##### DESTINATION ${CMAKE_INSTALL_DATADIR}
 set(NLOPTWR_CMAKE_CONFIG_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/nloptwr")
 
 configure_package_config_file(

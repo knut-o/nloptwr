@@ -20,12 +20,12 @@ cmake ..
 cmake --build .
 
 # call the program
-./tests/nloptwr_test6 119 0 1 L
-./tests/nloptwr_test6 119 1 1 L
-./tests/nloptwr_test6 119 2 1 L
+./lib/tests/nloptwr_test6 119 0 1 L
+./lib/tests/nloptwr_test6 119 1 1 L
+./lib/tests/nloptwr_test6 119 2 1 L
 
 # create a pdf file
-../tests/nloptwr_test6.plt
+../lib/tests/nloptwr_test6.plt
 
 # display result
 xdg-open nloptwr_test6.pdf

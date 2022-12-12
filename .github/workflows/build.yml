@@ -103,4 +103,56 @@ jobs:
         run: |
           echo "TODO ... "
           
-
+### #! /bin/bash
+### export    GITHUB_DIR=$HOME/GitHub
+### export    NLOPT_DIR=$GITHUB_DIR/nlopt
+### export    BUILD_DIR1=$HOME/GitHub/nlopt/build
+### export    BUILD_DIR=$HOME/GitHub/nloptwr/build
+### export    INST_DIR=$HOME/install
+### unset CMAKE_TOOLCHAIN_FILE
+### unset VCPKG_ROOT
+### 
+### rm -rf $NLOPT_DIR
+### cd $GITHUB_DIR
+### git clone git@github.com:stevengj/nlopt.git
+### mkdir -p  $BUILD_DIR1
+### mkdir -p  $BUILD_DIR
+### mkdir -p  $INST_DIR
+### rm    -rf $BUILD_DIR1/*
+### rm    -rf $BUILD_DIR/*
+### rm    -rf $INST_DIR/*
+### #
+### # NLopt 
+### cd $BUILD_DIR1
+### echo "NLopt: pwd=`pwd`"
+### cmake -DBUILD_SHARED_LIBS=OFF -DNLOPT_CXX=ON -DNLOPT_FORTRAN=OFF -DNLOPT_PYTHON=OFF -DNLOPT_GUILE=OFF -DNLOPT_SWIG=OFF -DNLOPT_OCTAVE=OFF -DNLOPT_MATLAB=OFF -DNLOPT_TESTS=OFF -Wno-dev -DCMAKE_PREFIX_PATH=$INST_DIR -DCMAKE_INSTALL_PREFIX=$INST_DIR .. && cmake --build . -j 4 --target install
+### rm -rf $NLOPT_DIR
+### #
+### # NLoptWr
+### cd $BUILD_DIR 
+### echo "NLoptWr: pwd=`pwd`"
+### cmake -Wno-dev -DCMAKE_PREFIX_PATH=$INST_DIR -DCMAKE_INSTALL_PREFIX=$INST_DIR .. && cmake --build . -j 4 --target install && cmake --build . --target clangformat && cmake --build . --target cppcheck && cpack && ctest 
+### ls -l
+### echo "Fertig"
+### 
+### #! /bin/bash
+### 
+### export    SRC_DIR="$HOME/GitHub/nloptwr/examples/example01"
+### export    BUILD_DIR=$HOME/_build/example01
+### export    INST_DIR=$HOME/install
+### unset CMAKE_TOOLCHAIN_FILE
+### unset VCPKG_ROOT
+### mkdir -p  $BUILD_DIR
+### mkdir -p  $INST_DIR
+### rm    -rf $BUILD_DIR/*
+### ls -l $SRC_DIR
+### ### rm -f $INST_DIR/include/nloptwr* $INST_DIR/lib/libnloptwr*.a $INST_DIR/lib/cmake/nloptwr*
+### ### rm    -rf $INST_DIR/* 
+### cd        $BUILD_DIR 
+### echo "pwd=$(pwd)"
+### echo "BUILD_DIR=$BUILD_DIR"
+### echo "SRC_DIR=$SRC_DIR"
+### echo "cmake -Wno-dev -DCMAKE_PREFIX_PATH=$INST_DIR -DCMAKE_INSTALL_PREFIX=$INST_DIR -H$SRC_DIR -B$BUILD_DIR"
+### cmake -Wno-dev -DCMAKE_PREFIX_PATH=$INST_DIR -DCMAKE_INSTALL_PREFIX=$INST_DIR -H$SRC_DIR -B$BUILD_DIR  && cmake --build $BUILD_DIR -j 4  && ctest 
+### ls -l $BUILD_DIR
+### 

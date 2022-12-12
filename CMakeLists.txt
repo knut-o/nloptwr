@@ -1,14 +1,13 @@
 cmake_minimum_required(VERSION 3.0)
 
-
 project(NLOPTWR LANGUAGES CXX)
 
 # =========================================================================
 
 option(NLOPTWR_BUILD_VERBOSE "Verbose build." ON)
 
-option(NLOPTWR_BUILD_TESTS "Build NLOPTWR tests." OFF)
-option(NLOPTWR_BUILD_EXAMPLES "Build NLOPTWR examples." OFF)
+option(NLOPTWR_BUILD_TESTS "Build NLOPTWR tests." ON)
+option(NLOPTWR_INSTALL_TESTS "Install NLOTWR tests." ON)
 
 # =========================================================================
 # =========================================================================
@@ -43,8 +42,6 @@ endif()
 # =========================================================================
 message("VCPKG_FLAG=${VCPKG_FLAG}")
 message("CMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE} ")
-
-project(NLOPTWR)
 
 # =========================================================================
 
@@ -132,9 +129,10 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
 add_subdirectory(lib)
 
-if(NLOPTWR_BUILD_EXAMPLES)
-    add_subdirectory(examples)
-endif()
+#if(NLOPTWR_BUILD_TESTS)
+#    enable_testing()
+#    add_subdirectory(lib/tests)
+#endif()
 
 # =========================================================================
 
@@ -207,10 +205,12 @@ SET (NLOPTWR_VERSION_MINOR "1")
 
 # ----------------------------
 
+set(CPACK_PACKAGE_NAME "libnloptwr")
+
 SET (CPACK_SOURCE_IGNORE_FILES build/*,./.kdev4,.git/* )
 SET(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 
-# NEU
+# NEW
 SET (CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 
 IF (UNIX)

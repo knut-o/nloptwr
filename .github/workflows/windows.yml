@@ -25,8 +25,7 @@ jobs:
           mkdir ${{github.workspace}}\build
           cd ${{github.workspace}}\build
           echo "# 1d.) build directory created"
-          set CMAKE_TOOLCHAIN_FILE=${github.workspace}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
-          set CMAKE_TOOLCHAIN_FILE=${{github.workspace}}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
+          set CMAKE_TOOLCHAIN_FILE=${{ github.workspace }}\VcPkg\vcpkg\scripts\buildsystems\vcpkg.cmake
           echo "CMAKE_TOOLCHAIN_FILE: ${CMAKE_TOOLCHAIN_FILE}"
           echo "# 2.) Configuring CMake for NLOptWr ..."
           ## cmake -DCMAKE_INSTALL_PREFIX=%cd:\=/%/install ..

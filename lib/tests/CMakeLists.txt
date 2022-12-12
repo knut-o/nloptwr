@@ -5,22 +5,23 @@
 # include(CMakePackageConfigHelpers)
 
 # define dependencies
-if (OPENMP_FOUND)
-    find_package(OpenMP REQUIRED)
-endif()
-if (OPENMP_FOUND)
-     message("OpenMP found.")
-    SET (HAVE_OPENMP 1)
-    SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} ")
-endif()
+### if (OPENMP_FOUND)
+###     find_package(OpenMP REQUIRED)
+### endif()
+### if (OPENMP_FOUND)
+###      message("OpenMP found.")
+###     SET (HAVE_OPENMP 1)
+###     SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} ")
+### endif()
 
-find_package(NLopt CONFIG REQUIRED)
+# find_package(NLopt CONFIG REQUIRED)
 # find_package(nloptwr REQUIRED)
 
 include_directories(
     ${VCPKG_INCL}
     ${CMAKE_SOURCE_DIR}/lib/include
     ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include
     ${NLOPTCXX_INCLUDE_DIR}
     ${NLOPT_INCLUDE_DIR}
 #    ${PROJECT_SOURCE_DIR}/nloptwrtest/include
@@ -30,8 +31,8 @@ include_directories(
 )
 
 link_directories(
-    ${PROJECT_BINARY_DIR}/lib/test/nloptwrtest
-    ${PROJECT_BINARY_DIR}/lib/nloptwr
+    ${PROJECT_BINARY_DIR}/lib/test
+    ${PROJECT_BINARY_DIR}/lib
 )
 
 set(HEADERS_TEST
@@ -141,6 +142,11 @@ target_link_libraries(nloptwrtest
 #        OpenMP::OpenMP_CXX
 )
 
+
+# =========================================================================
+
+if(NLOPTWR_INSTALL_TESTS)
+
 #
 # Export headers
 #
@@ -164,18 +170,12 @@ install(DIRECTORY include/nloptwrtest DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/nloptwrtest/nloptwrtest_export.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nloptwrtest)
 
-
-
-
 install(
     EXPORT nloptwrtestTargets
     FILE nloptwrtestTargets.cmake
     DESTINATION ${NLOPTWRTEST_CMAKE_CONFIG_DIR}
     NAMESPACE nloptwrtest::
 )
-
-
-
 
 # Install
 install(
@@ -197,7 +197,9 @@ export(
     NAMESPACE nloptwrtest::
 
 )
+endif()
 
+# =========================================================================
 
 ENABLE_TESTING()
 #
