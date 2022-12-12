@@ -176,7 +176,7 @@ jobs:
           cd ${{github.workspace}}/build
           echo "# 2.) Configuring CMake for NLOptWr ..."
           cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
-          cmake --build ${{github.workspace}}/build --target install
+          cmake --build ${{github.workspace}}/build
           ctest -B ${{github.workspace}}/build -C release
           echo "config done"
 
@@ -200,7 +200,7 @@ jobs:
           cd       ${{github.workspace}}/build
           echo "# 2.) Configuring CMake for NLOptWr ..."
           cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
-          cmake --build ${{github.workspace}}/build --target install
+          cmake --build ${{github.workspace}}/build
           ctest -B ${{github.workspace}}/build -C release
           echo "config done"
 
@@ -216,7 +216,7 @@ jobs:
           cd ${{github.workspace}}\build
           echo "# 2.) Configuring CMake for NLOptWr ..."
           cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}\install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}\install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}\examples\example01
-          cmake --build .  --target install
+          cmake --build .  
           ctest -B . -C release
           # cmake --build ${{github.workspace}}\build
           # ctest -B ${{github.workspace}}\build -C release
