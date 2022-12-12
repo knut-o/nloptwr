@@ -103,7 +103,7 @@ jobs:
         run: |
           echo "Test starting"
           cd       ${{github.workspace}}/build
-          ctest
+          ctest -C Release
           echo "Test done"
 
       - name: "TODO"
