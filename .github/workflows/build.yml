@@ -108,64 +108,63 @@ jobs:
 
 # ===============================================================
 # ===============================================================
-
-      - name: "Prepare NLoptWr (ubuntu)"
-        if: ${{ contains(matrix.os, 'ubuntu') }}
-        run: |
-          echo "Configure NLoptWr for ubuntu"
-          export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
-          ls -l $CMAKE_TOOLCHAIN_FILE
-          export VCPKG_DEFAULT_TRIPLET=x64-linux
-          export VCPKG_TRIPLET=x64-linux
-          mkdir -p ${{github.workspace}}/install
-          mkdir -p ${{github.workspace}}/build/example01
-          echo "# 1.) build directory created"
-          cd ${{github.workspace}}/build/example01
-          echo "# 2.) Configuring CMake for NLOptWr ..."
-          cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
-          echo "config done"
-
-      - name: "Prepare NLoptWr (macos)"
-        if: ${{ contains(matrix.os, 'macos') }}
-        run: |
-          echo "Configure NLoptWr for macos"
-          # brew install llvm libomp
-          # sudo ln -s /usr/local/opt/llvm/bin/clang    /usr/local/bin/clang-omp
-          # sudo ln -s /usr/local/opt/llvm/bin/clang++  /usr/local/bin/clang-omp++
-          export CC=/usr/local/bin/clang-omp
-          export CXX=/usr/local/bin/clang-omp++
-          export CPPFLAGS="-I/usr/local/opt/llvm/include"
-          export CXXFLAGS="-I/usr/local/opt/llvm/include"
-          export LDFLAGS="-L/usr/local/opt/llvm/lib"
-          export OpenMP_C=${CC}
-          export OpenMP_CXX=${CXX}
-          export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
-          export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
-          export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
-          ls -l $CMAKE_TOOLCHAIN_FILE
-          export VCPKG_DEFAULT_TRIPLET=x64-osx
-          export VCPKG_TRIPLET=x64-osx
-          mkdir -p ${{github.workspace}}/install
-          mkdir -p ${{github.workspace}}/build/example01
-          echo "# 1.) build directory created"
-          cd       ${{github.workspace}}/build/example01
-          echo "# 2.) Configuring CMake for NLOptWr ..."
-          cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
-          echo "config done"
-
-      - name: "Prepare NLoptWr (windows)"
-        if: ${{ contains(matrix.os, 'windows') }}
-        run: |
-          echo "Configure NLoptWr for windows"
-          mkdir ${{github.workspace}}\build\example01
-          echo "# 1.) build directory created"
-          cd ${{github.workspace}}\build\example01
-          echo "# 2.) Configuring CMake for NLOptWr ..."
-          $env:CMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
-          cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
-          echo "config done"
-
-
+#
+#      - name: "Prepare external test (ubuntu)"
+#        if: ${{ contains(matrix.os, 'ubuntu') }}
+#        run: |
+#          echo "Configure NLoptWr for ubuntu"
+#          export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
+#          ls -l $CMAKE_TOOLCHAIN_FILE
+#          export VCPKG_DEFAULT_TRIPLET=x64-linux
+#          export VCPKG_TRIPLET=x64-linux
+#          mkdir -p ${{github.workspace}}/install
+#          mkdir -p ${{github.workspace}}/build/example01
+#          echo "# 1.) build directory created"
+#          cd ${{github.workspace}}/build/example01
+#          echo "# 2.) Configuring CMake for NLOptWr ..."
+#          cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
+#          echo "config done"
+#
+#      - name: "Prepare external test (macos)"
+#        if: ${{ contains(matrix.os, 'macos') }}
+#        run: |
+#          echo "Configure NLoptWr for macos"
+#          # brew install llvm libomp
+#          # sudo ln -s /usr/local/opt/llvm/bin/clang    /usr/local/bin/clang-omp
+#          # sudo ln -s /usr/local/opt/llvm/bin/clang++  /usr/local/bin/clang-omp++
+#          export CC=/usr/local/bin/clang-omp
+#          export CXX=/usr/local/bin/clang-omp++
+#          export CPPFLAGS="-I/usr/local/opt/llvm/include"
+#          export CXXFLAGS="-I/usr/local/opt/llvm/include"
+#          export LDFLAGS="-L/usr/local/opt/llvm/lib"
+#          export OpenMP_C=${CC}
+#          export OpenMP_CXX=${CXX}
+#          export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
+#          export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
+#          export CMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake
+#          ls -l $CMAKE_TOOLCHAIN_FILE
+#          export VCPKG_DEFAULT_TRIPLET=x64-osx
+#          export VCPKG_TRIPLET=x64-osx
+#          mkdir -p ${{github.workspace}}/install
+#          mkdir -p ${{github.workspace}}/build/example01
+#          echo "# 1.) build directory created"
+#          cd       ${{github.workspace}}/build/example01
+#          echo "# 2.) Configuring CMake for NLOptWr ..."
+#          cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
+#          echo "config done"
+#
+#      - name: "Prepare external test (windows)"
+#        if: ${{ contains(matrix.os, 'windows') }}
+#        run: |
+#          echo "Configure NLoptWr for windows"
+#          mkdir ${{github.workspace}}\build\example01
+#          echo "# 1.) build directory created"
+#          cd ${{github.workspace}}\build\example01
+#          echo "# 2.) Configuring CMake for NLOptWr ..."
+#          $env:CMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+#          cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
+#          echo "config done"
+#
 
 # ===============================================================
 # ===============================================================
