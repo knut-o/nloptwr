@@ -10,10 +10,9 @@ project(example01 LANGUAGES CXX)
 # =========================================================================
 
 # Set a default build type if none was specified
+
+# SET(CMAKE_BUILD_TYPE Release)
 set(default_build_type "Release")
-if(EXISTS "${CMAKE_SOURCE_DIR}/.git")
-  set(default_build_type "Debug")
-endif()
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "Setting build type to '${default_build_type}' as none was specified.")
@@ -32,10 +31,6 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # =========================================================================
-# =========================================================================
-
-SET(CMAKE_BUILD_TYPE Release)
-
 # =========================================================================
 set(VCPKG_FLAG BOOL OFF)
 if (DEFINED ENV{CMAKE_TOOLCHAIN_FILE} )
