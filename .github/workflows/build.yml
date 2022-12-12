@@ -105,8 +105,9 @@ jobs:
           export VCPKG_TRIPLET=x64-linux
           mkdir -p ${{github.workspace}}/install
           mkdir -p ${{github.workspace}}/build
-          rm -rf   ${{github.workspace}}/build/*
+          remove-item "${{github.workspace}}\build\*" -recurse -force
           echo "# 1.) build directory created"
+          mkdir -p ${{github.workspace}}/build
           cd ${{github.workspace}}/build
           echo "# 2.) Configuring CMake for NLOptWr ..."
           cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}} 
