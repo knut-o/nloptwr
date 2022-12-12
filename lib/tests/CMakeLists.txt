@@ -1,21 +1,6 @@
 #
 # Includes
 #
-# include(GNUInstallDirs)
-# include(CMakePackageConfigHelpers)
-
-# define dependencies
-### if (OPENMP_FOUND)
-###     find_package(OpenMP REQUIRED)
-### endif()
-### if (OPENMP_FOUND)
-###      message("OpenMP found.")
-###     SET (HAVE_OPENMP 1)
-###     SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} ")
-### endif()
-
-# find_package(NLopt CONFIG REQUIRED)
-# find_package(nloptwr REQUIRED)
 
 include_directories(
     ${VCPKG_INCL}
@@ -81,7 +66,7 @@ macro(add_example name)
             nloptwr
             NLopt::nlopt
             OpenMP::OpenMP_CXX
-            stdc++
+            # stdc++
             )
 endmacro()
 
