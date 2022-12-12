@@ -36,7 +36,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
 
-      - name: "Prepare NLopt"
+      - name: "Git clone NLopt"
         run: |
           echo "Git clone NLopt"
           mkdir ${{github.workspace}}/tmp
@@ -48,7 +48,7 @@ jobs:
       - name: "Prepare NLopt (ubuntu)"
         if: ${{ contains(matrix.os, 'ubuntu') }}
         run: |
-          echo "Configure NLoptWr for ubuntu"
+          echo "Configure NLopt for ubuntu"
           mkdir -p ${{github.workspace}}/install
           mkdir -p ${{github.workspace}}/build
           echo "# 1.) build directory created"
@@ -100,12 +100,10 @@ jobs:
       - name: "Prepare NLoptWr (ubuntu)"
         if: ${{ contains(matrix.os, 'ubuntu') }}
         run: |
-          echo "Configure NLoptWr for ubuntu"
-          export VCPKG_DEFAULT_TRIPLET=x64-linux
-          export VCPKG_TRIPLET=x64-linux
-          mkdir -p ${{github.workspace}}/install
-          mkdir -p ${{github.workspace}}/build
-          remove-item "${{github.workspace}}\build\*" -recurse -force
+          echo "Configure NLoptWr (ubuntu)"
+          mkdir -p  ${{github.workspace}}/install
+          mkdir -p  ${{github.workspace}}/build
+          rm    -rf ${{github.workspace}}/build/* 
           echo "# 1.) build directory created"
           mkdir -p ${{github.workspace}}/build
           cd ${{github.workspace}}/build
@@ -180,6 +178,7 @@ jobs:
           cd ${{github.workspace}}/build
           echo "# 2.) Configuring CMake for NLOptWr ..."
           cmake -Wno-dev -DCMAKE_TOOLCHAIN_FILE=/usr/local/share/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
+          cmake --build ${{github.workspace}}/build
           echo "config done"
 
       - name: "Prepare external test (macos)"
@@ -202,6 +201,7 @@ jobs:
           cd       ${{github.workspace}}/build
           echo "# 2.) Configuring CMake for NLOptWr ..."
           cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
+          cmake --build ${{github.workspace}}/build
           echo "config done"
 
       - name: "Prepare external test (windows)"
@@ -216,15 +216,18 @@ jobs:
           cd ${{github.workspace}}\build
           echo "# 2.) Configuring CMake for NLOptWr ..."
           cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
+          cmake --build ${{github.workspace}}/build
           echo "config done"
 
 # ===============================================================
 # ===============================================================
 
 
-      - name: "TODO"
+      - name: "External test"
         run: |
           echo "TODO ... "
+          ## cd ${{github.workspace}}/build
+          ctest -B ${{github.workspace}}/build -C release
           
 ### #! /bin/bash
 ### export    GITHUB_DIR=$HOME/GitHub
