@@ -99,6 +99,13 @@ jobs:
           cmake --build . --config Release --target install
           echo "Build done"
 
+      - name: "Test NLoptWr"
+        run: |
+          echo "Test starting"
+          cd       ${{github.workspace}}/build
+          ctest
+          echo "Test done"
+
       - name: "TODO"
         run: |
           echo "TODO ... "
