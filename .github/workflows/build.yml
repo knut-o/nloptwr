@@ -142,7 +142,7 @@ jobs:
           echo "Configure NLoptWr for windows"
           # rmdir "${{github.workspace}}\build" /s /q
           # DEL "${{github.workspace}}\build\*" /S
-          remove-item "${{github.workspace}}\build\*" -recurse -force
+          remove-item "${{github.workspace}}\build" -recurse -force
           ### Remove-Item -Path "${{github.workspace}}\build\*" -recurse
           # rm -rf  ${{github.workspace}}\build\*
           mkdir   ${{github.workspace}}\build
@@ -173,7 +173,6 @@ jobs:
         if: ${{ contains(matrix.os, 'ubuntu') }}
         run: |
           echo "Configure NLoptWr for ubuntu"
-          vcpkg install --triplet x64-linux
           mkdir -p ${{github.workspace}}/install
           mkdir -p ${{github.workspace}}/build
           rm -rf   ${{github.workspace}}/build/*
@@ -210,7 +209,8 @@ jobs:
         run: |
           echo "Configure NLoptWr for windows"
           # rmdir "${{github.workspace}}\build" /s /q
-          DEL "${{github.workspace}}\build\*" /S
+          # DEL "${{github.workspace}}\build\*" /S
+          remove-item "${{github.workspace}}\build" -recurse -force
           mkdir ${{github.workspace}}\build
           echo "# 1.) build directory created"
           cd ${{github.workspace}}\build
