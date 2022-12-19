@@ -10,8 +10,6 @@ project(example01 LANGUAGES CXX)
 # =========================================================================
 
 # Set a default build type if none was specified
-
-# SET(CMAKE_BUILD_TYPE Release)
 set(default_build_type "Release")
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)

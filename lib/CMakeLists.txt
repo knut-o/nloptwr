@@ -112,7 +112,7 @@ generate_export_header(nloptwr
 #
 # nloptwrConfig.cmake File
 #
-##### DESTINATION ${CMAKE_INSTALL_DATADIR}
+## DESTINATION ${CMAKE_INSTALL_DATADIR}
 set(NLOPTWR_CMAKE_CONFIG_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/nloptwr")
 
 configure_package_config_file(

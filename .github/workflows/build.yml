@@ -155,8 +155,6 @@ jobs:
           echo "# 2.) Configuring CMake for NLOptWr ..."
           cmake -Wno-dev -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="${{github.workspace}}/install" -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install" -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}} 
           cmake --build . --config Release --target install
-          ## ctest -C Release
-          ## echo "config done"
 
       - name: "Build NLoptWr (lib)"
         run: |
