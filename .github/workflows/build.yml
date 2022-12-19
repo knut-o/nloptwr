@@ -2,9 +2,9 @@
 name: Build and Test
 on:
   push:
-    branches: [main, dev2]
+    branches: [main, dev2, dev3, dev4, dev5, dev6, dev7]
   pull_request:
-    branches: [main, dev2]
+    branches: [main, dev2, dev3, dev4, dev5, dev6, dev7]
   schedule:
     - cron:  '0 3 * * 0' # weekly
 
