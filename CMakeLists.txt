@@ -36,6 +36,7 @@ elseif (DEFINED ENV{VCPKG_ROOT})
     MESSAGE("VCPKG_ROOT=${VCPKG_ROOT_VAR}")
     MESSAGE("CMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}")
 else()
+    set(VCPKG_FLAG BOOL OFF)
     MESSAGE("VCPKG not found..")
 endif()
 
@@ -128,11 +129,6 @@ set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
 add_subdirectory(lib)
-
-#if(NLOPTWR_BUILD_TESTS)
-#    enable_testing()
-#    add_subdirectory(lib/tests)
-#endif()
 
 # =========================================================================
 

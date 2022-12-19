@@ -53,13 +53,13 @@ set(TEST_SOURCES
 # source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX source FILES ${TEST_SOURCES})
 add_library(nloptwrtest ${TEST_SOURCES})
 
-### target_compile_features(${name} PRIVATE cxx_std_${CMAKE_CXX_STANDARD} )
 
 #
 # Target
 #
 macro(add_example name)
    add_executable(${name} ${CMAKE_CURRENT_SOURCE_DIR}/src/${name}.cpp)
+   target_compile_features(${name} PRIVATE cxx_std_${CMAKE_CXX_STANDARD} )
    target_link_libraries(${name}
         PRIVATE
             nloptwrtest

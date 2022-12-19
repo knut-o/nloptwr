@@ -48,13 +48,13 @@ elseif (DEFINED ENV{VCPKG_ROOT})
     MESSAGE("VCPKG_ROOT=${VCPKG_ROOT_VAR}")
     MESSAGE("CMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}")
 else()
+    set(VCPKG_FLAG BOOL OFF)
     MESSAGE("VCPKG not found..")
 endif()
 
 # =========================================================================
 
 message("VCPKG_FLAG=${VCPKG_FLAG}")
-message("CMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE} ")
 
 # =========================================================================
 # =========================================================================
