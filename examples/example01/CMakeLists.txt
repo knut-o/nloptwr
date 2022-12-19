@@ -93,7 +93,6 @@ target_link_libraries(${NLOPWR_EXAMPLE01}
         nloptwr::nloptwr
         NLopt::nlopt
         OpenMP::OpenMP_CXX
-        stdc++
 )
 
 # =========================================================================
