@@ -1,3 +1,4 @@
+
 cmake_minimum_required(VERSION 3.0)
 
 project(NLOPTWR LANGUAGES CXX)
@@ -17,7 +18,6 @@ SET(CMAKE_BUILD_TYPE Release)
 if (POLICY CMP0063)
     cmake_policy(SET CMP0063 NEW)
 endif()
-# cmake --help-policy CMP0063
 
 # =========================================================================
 set(VCPKG_FLAG BOOL OFF)
@@ -70,8 +70,6 @@ SET(CMAKE_CXX_STANDARD 11)
 # SET(CMAKE_BUILD_TYPE Debug)
 if (NOT DEFINED CMAKE_BUILD_TYPE)
 SET(CMAKE_BUILD_TYPE Release)
-# SET(CMAKE_BUILD_TYPE RelWithDebInfo)
-# SET(CMAKE_BUILD_TYPE Debug)
 endif()
 
 # =========================================================================

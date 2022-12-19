@@ -1,7 +1,7 @@
+
 #
 # Includes
 #
-
 include_directories(
     ${VCPKG_INCL}
     ${CMAKE_SOURCE_DIR}/lib/include
@@ -9,10 +9,6 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/../include
     ${NLOPTCXX_INCLUDE_DIR}
     ${NLOPT_INCLUDE_DIR}
-#    ${PROJECT_SOURCE_DIR}/nloptwrtest/include
-#        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/nloptwr/include>
-#        $<INSTALL_INTERFACE:${CMAKE_INSTALL_DIR}/nloptwr/>
-
 )
 
 link_directories(
