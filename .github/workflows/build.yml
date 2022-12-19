@@ -1,0 +1,248 @@
+---
+name: Build and Test
+on:
+  push:
+    branches: [main, dev2, dev3, dev4, dev5, dev6, dev7]
+  pull_request:
+    branches: [main, dev2, dev3, dev4, dev5, dev6, dev7]
+  schedule:
+    - cron:  '0 3 * * 0' # weekly
+
+# ===============================================================
+# ===============================================================
+
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+#        os: [ubuntu-latest,macos-latest,windows-latest]
+        os: [ubuntu-latest]
+        shared_libs: ['OFF']
+        include:
+          - os: ubuntu-latest
+            triplet: 'x64-linux'
+            CMAKE_BUILD_TYPE: Release
+          - os: macos-latest
+            triplet: 'x64-osx'
+            CMAKE_BUILD_TYPE: Release
+          - os: windows-latest
+            triplet: 'x64-windows'
+            CMAKE_BUILD_TYPE: Release
+    steps:
+
+# ===============================================================
+# ===============================================================
+
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      - name: "Git clone NLopt"
+        run: |
+          echo "Git clone NLopt"
+          mkdir ${{github.workspace}}/tmp
+          cd    ${{github.workspace}}/tmp
+          git clone https://github.com/stevengj/nlopt.git
+          # ${{github.workspace}}/tmp/nlopt
+          echo "Git clone NLopt done"
+ 
+      - name: "Prepare NLopt (ubuntu)"
+        if: ${{ contains(matrix.os, 'ubuntu') }}
+        run: |
+          echo "Configure NLopt for ubuntu"
+          mkdir -p ${{github.workspace}}/install
+          mkdir -p ${{github.workspace}}/build
+          echo "# 1.) build directory created"
+          cd     ${{github.workspace}}/build
+          echo "# 2.) Configuring CMake for NLopt ..."
+          cmake -DBUILD_SHARED_LIBS=OFF -DNLOPT_CXX=ON -DNLOPT_FORTRAN=OFF -DNLOPT_PYTHON=OFF -DNLOPT_GUILE=OFF -DNLOPT_SWIG=OFF -DNLOPT_OCTAVE=OFF -DNLOPT_MATLAB=OFF -DNLOPT_TESTS=OFF -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -H${{github.workspace}}/tmp/nlopt
+          cmake --build . --target install
+          echo "config done"
+
+      - name: "Prepare NLopt (mac)"
+        if: ${{ contains(matrix.os, 'macos') }}
+        run: |
+          echo "Configure NLoptWr for macos"
+          brew install llvm libomp
+          sudo ln -s /usr/local/opt/llvm/bin/clang    /usr/local/bin/clang-omp
+          sudo ln -s /usr/local/opt/llvm/bin/clang++  /usr/local/bin/clang-omp++
+          echo 'export PATH="/usr/local/opt/llvm/bin:$PATH"' >> /Users/runner/.bash_profile
+          export CC=/usr/local/bin/clang-omp
+          export CXX=/usr/local/bin/clang-omp++
+          export CPPFLAGS="-I/usr/local/opt/llvm/include"
+          export CXXFLAGS="-I/usr/local/opt/llvm/include"
+          # export LDFLAGS="-L/usr/local/opt/llvm/lib"
+          export LDFLAGS="-L/usr/local/opt/llvm/lib/c++ -Wl,-rpath,/usr/local/opt/llvm/lib/c++"
+          rm -rf   ${{github.workspace}}/build 
+          mkdir -p ${{github.workspace}}/install
+          mkdir -p ${{github.workspace}}/build
+          echo "# 1.) build directory created"
+          cd     ${{github.workspace}}/build
+          echo "# 2.) Configuring CMake for NLopt ..."
+          cmake -DBUILD_SHARED_LIBS=OFF -DNLOPT_CXX=ON -DNLOPT_FORTRAN=OFF -DNLOPT_PYTHON=OFF -DNLOPT_GUILE=OFF -DNLOPT_SWIG=OFF -DNLOPT_OCTAVE=OFF -DNLOPT_MATLAB=OFF -DNLOPT_TESTS=OFF -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -H${{github.workspace}}/tmp/nlopt
+          cmake --build . --target install
+          echo "config done"
+
+      - name: "Prepare NLopt (windows)"
+        if: ${{ contains(matrix.os, 'windows') }}
+        run: |
+          echo "Configure NLoptWr for windows"
+          mkdir -p ${{github.workspace}}/install
+          mkdir -p ${{github.workspace}}/build
+          echo "# 1.) build directory created"
+          cd     ${{github.workspace}}/build
+          echo "# 2.) Configuring CMake for NLopt ..."
+          cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DNLOPT_CXX=ON -DNLOPT_FORTRAN=OFF -DNLOPT_PYTHON=OFF -DNLOPT_GUILE=OFF -DNLOPT_SWIG=OFF -DNLOPT_OCTAVE=OFF -DNLOPT_MATLAB=OFF -DNLOPT_TESTS=OFF -Wno-dev -DCMAKE_PREFIX_PATH="${{github.workspace}}/install" -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install" -H"${{github.workspace}}/tmp/nlopt" -B.
+          cmake --build . --config Release --target install
+          echo "config done"
+
+# ===============================================================
+# ===============================================================
+
+      - name: "Prepare NLoptWr (ubuntu)"
+        if: ${{ contains(matrix.os, 'ubuntu') }}
+        run: |
+          echo "Configure NLoptWr (ubuntu)"
+          mkdir -p  ${{github.workspace}}/install
+          mkdir -p  ${{github.workspace}}/build
+          rm    -rf ${{github.workspace}}/build/* 
+          echo "# 1.) build directory created"
+          mkdir -p ${{github.workspace}}/build
+          cd ${{github.workspace}}/build
+          echo "# 2.) Configuring CMake for NLOptWr ..."
+          cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}} 
+          cmake --build . --config Release --target install
+          # ctest ${{github.workspace}}/build -C Release
+          echo "config done"
+
+      - name: "Prepare NLoptWr (macos)"
+        if: ${{ contains(matrix.os, 'macos') }}
+        run: |
+          echo "Configure NLoptWr for macos"
+          export CC=/usr/local/bin/clang-omp
+          export CXX=/usr/local/bin/clang-omp++
+          export CPPFLAGS="-I/usr/local/opt/llvm/include"
+          export CXXFLAGS="-I/usr/local/opt/llvm/include"
+          export LDFLAGS="-L/usr/local/opt/llvm/lib/c++ -Wl,-rpath,/usr/local/opt/llvm/lib/c++"
+          export OpenMP_C=${CC}
+          export OpenMP_CXX=${CXX}
+          export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
+          export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
+          mkdir -p ${{github.workspace}}/install
+          mkdir -p ${{github.workspace}}/build
+          rm -rf   ${{github.workspace}}/build/*
+          echo "# 1.) build directory created"
+          cd       ${{github.workspace}}/build
+          echo "# 2.) Configuring CMake for NLOptWr ..."
+          cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}} 
+          cmake --build . --config Release --target install
+          # ctest ${{github.workspace}}/build -C Release
+          echo "config done"
+
+      - name: "Prepare NLoptWr (windows)"
+        if: ${{ contains(matrix.os, 'windows') }}
+        run: |
+          echo "Configure NLoptWr for windows"
+          # unset CMAKE_TOOLCHAIN_FILE
+          # unset VCPKG_ROOT
+          rm -r -fo "${{github.workspace}}/build"
+          mkdir     "${{github.workspace}}/build"
+          echo "# 1.) build directory created"
+          cd "${{github.workspace}}/build"
+          cd "${{github.workspace}}/build"
+          echo "# 2.) Configuring CMake for NLOptWr ..."
+          cmake -Wno-dev -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="${{github.workspace}}/install" -DCMAKE_INSTALL_PREFIX="${{github.workspace}}/install" -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}} 
+          cmake --build . --config Release --target install
+
+      - name: "Build NLoptWr (lib)"
+        run: |
+          echo "Build starting"
+          cd ${{github.workspace}}/build
+          cmake --build ${{github.workspace}}/build --config Release --target install
+          echo "Build done"
+
+# ===============================================================
+# ===============================================================
+
+      - name: "Test NLoptWr"
+        run: |
+          echo "Test starting"
+          cd ${{github.workspace}}/build
+          ctest ${{github.workspace}}/build -C Release
+          echo "Test done"
+
+# ===============================================================
+# ===============================================================
+
+      - name: "Prepare external test (ubuntu)"
+        if: ${{ contains(matrix.os, 'ubuntu') }}
+        run: |
+          echo "Configure NLoptWr for ubuntu"
+          mkdir -p ${{github.workspace}}/install
+          mkdir -p ${{github.workspace}}/build
+          rm -rf   ${{github.workspace}}/build/*
+          echo "# 1.) build directory created"
+          cd ${{github.workspace}}/build
+          echo "# 2.) Configuring CMake for NLOptWr ..."
+          cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
+          cmake --build ${{github.workspace}}/build
+          # ctest -B ${{github.workspace}}/build -C release
+          echo "config done"
+
+      - name: "Prepare external test (macos)"
+        if: ${{ contains(matrix.os, 'macos') }}
+        run: |
+          echo "Configure NLoptWr for macos"
+          export CC=/usr/local/bin/clang-omp
+          export CXX=/usr/local/bin/clang-omp++
+          export CPPFLAGS="-I/usr/local/opt/llvm/include"
+          export CXXFLAGS="-I/usr/local/opt/llvm/include"
+          export LDFLAGS="-L/usr/local/opt/llvm/lib"
+          export OpenMP_C=${CC}
+          export OpenMP_CXX=${CXX}
+          export OpenMP_C_FLAGS="-fopenmp=libomp -Wno-unused-command-line-argument"
+          export OpenMP_C_LIB_NAMES="libomp libgomp libiomp5"
+          mkdir -p ${{github.workspace}}/install
+          mkdir -p ${{github.workspace}}/build
+          rm -rf   ${{github.workspace}}/build/*
+          echo "# 1.) build directory created"
+          cd       ${{github.workspace}}/build
+          echo "# 2.) Configuring CMake for NLOptWr ..."
+          cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}/install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}/examples/example01
+          cmake --build ${{github.workspace}}/build
+          # ctest -B ${{github.workspace}}/build -C release
+          echo "config done"
+
+      - name: "Prepare external test (windows)"
+        if: ${{ contains(matrix.os, 'windows') }}
+        run: |
+          echo "Configure NLoptWr for windows"
+          rm -r -fo "${{github.workspace}}/build"
+          mkdir     "${{github.workspace}}/build"
+          echo "# 1.) build directory created"
+          cd "${{github.workspace}}/build"
+          echo "# 2.) Configuring CMake for NLOptWr ..."
+          cmake -Wno-dev -DCMAKE_PREFIX_PATH=${{github.workspace}}\install -DCMAKE_INSTALL_PREFIX=${{github.workspace}}\install -DCMAKE_BUILD_TYPE=Release -H${{github.workspace}}\examples\example01
+          cmake --build . --config Release  
+          ctest -C release
+          # cmake --build ${{github.workspace}}/build
+          # ctest -B ${{github.workspace}}\build -C release
+          echo "config done"
+
+# ===============================================================
+# ===============================================================
+
+      - name: "External test"
+        run: |
+          echo "External test ... "
+          cd ${{github.workspace}}/build
+          ctest -B ${{github.workspace}}/build -C release
+          echo "External test done"
+          
+
+# ===============================================================
+# ===============================================================
+
+

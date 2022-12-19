@@ -1,0 +1,9 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(OpenMP)
+find_dependency(NLopt)
+
+include("${CMAKE_CURRENT_LIST_DIR}/nloptwrTargets.cmake")
+
+check_required_components(nloptwr)

@@ -125,7 +125,7 @@ cd NLOptWr
 mkdir build
 cd    build
 
-rm -rf ../build/* && cmake .. && cmake --build ../build --target clangformat && cmake --build . -j 4
+rm -rf ../build/* && cmake -Wno-dev -DCMAKE_BUILD_TYPE=Release  .. &&  cmake --build . --config Release && ctest -C Release
 ```
 
 After a successful compilation the tests can be launched:
