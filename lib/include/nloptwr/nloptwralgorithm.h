@@ -21,16 +21,16 @@ namespace nloptwr {
 enum class SSTRAT : int { GM = -2, LM = -1, N = 0, L = 1, G = 2, R = 3 };
 
 /**
- * get meta search strategy of strategy
- * @param meta search strategy
- * @return search strategy
+ * get the meta search strategy of search strategy
+ * @param strat search strategy
+ * @return meta search strategy
  */
 SSTRAT getMetaSearchStrategy(SSTRAT strat);
 
 /**
- * get non meta search strategy of strategy
- * @param meta search strategy
- * @return non search strategy
+ * get the non-meta search strategy of search strategy
+ * @param strat search strategy
+ * @return non-meta search strategy
  */
 SSTRAT getNonMetaSearchStrategy(SSTRAT strat);
 
@@ -96,16 +96,15 @@ public:
    *  @param n name of algorithm
    *  @param rgl ability of handlich stochstic problems
    *  @param hasGrad gradient flag
+   *  @param eC ability to handle equal constraints
    *  @param neC ability to handle nonequal constraints
-   *  @param necO ability to handle only nonequal constraints
    *  @param nSubopt flag if a subopt is needed
    *  @param minP minimal number of parameters
    *  @param maxP maximal number of parameters
    */
   NLOptWrAlgorithm(nlopt::algorithm a, const std::string &n, SSTRAT rgl,
-                   bool hasGrad, bool neC,
-                   // bool necO,
-                   bool nSubopt, unsigned int minP, unsigned int maxP);
+                   bool hasGrad, bool eC, bool neC, bool nSubopt,
+                   unsigned int minP, unsigned int maxP);
 
   /// default constructor
   NLOptWrAlgorithm() = delete;
@@ -140,6 +139,11 @@ public:
    */
   bool getUseGradient() const;
 
+  /**
+   * get the ability to handle equality constraints
+   * @return ability to handle equality constraints (boolean)
+   */
+  bool canHandleEqualConstraints() const;
   /**
    * get the ability to handle nonequal constraints
    * @return ability to handle nonequal constraints (boolean)
@@ -181,6 +185,12 @@ public:
    * @param val value (default=true)
    */
   void setHasGradient(bool val = true);
+
+  /**
+   * set eqaulity constraints
+   * @param val value (default=true)
+   */
+  void setEqConstraints(bool val);
 
   /**
    * set ne constraints
@@ -238,11 +248,11 @@ private:
   /// is gradient method
   bool hasGradient;
 
+  /// ability to handle equal constraints
+  bool eqConstraints;
+
   /// ability to handle nonequal constraints
   bool neConstraints;
-
-  /// only ne constraints
-  // bool neOnlyConstraints;
 
   /// subopt required
   bool needsSubOpt;

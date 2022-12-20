@@ -102,7 +102,7 @@ bool isEqual(const vector<nlopt::algorithm> &a,
  * dependent of the search strategi and dimension
  * a source code text (to stdout)
  * @param nlOptParamFactory parameter parameter factory
- * @param xDim number of free parameters
+ * @param xDimVec number of free parameters
  *
  */
 int selAlgTestGenerate(const nloptwr::NLOptWrParamFactory &nlOptParamFactory,

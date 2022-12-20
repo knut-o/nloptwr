@@ -84,7 +84,6 @@ public:
   void setSearchMin(bool sMin = true);
 
   /** optimization call
-   * @param fOpt return value of function object
    * @param nloptWrSStrat ssearch strategy
    * @param maxTime set max time in seconds (default: 3600)
    * @param maxEval set max evaluations (default: 1000000)
