@@ -14,6 +14,7 @@ public:
    * linear ground
    * @param p_1 1st point
    * @param p_2 2nd point
+   * @param d_x tolerance of x
    */
   GroundCos(const XH &p_1 = XH(0.0, -1.0E12), const XH &p_2 = XH(1.0, -1.0E12),
             double d_x = 1.0E5);

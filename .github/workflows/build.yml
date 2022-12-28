@@ -166,6 +166,17 @@ jobs:
 # ===============================================================
 # ===============================================================
 
+      - name: "Make packages (LINUX)"
+        if: ${{ contains(matrix.os, 'ubuntu') }}
+        run: |
+          echo "Make packages (LINUX)"
+          cd ${{github.workspace}}/build
+          cpack
+          echo "Build done"
+
+# ===============================================================
+# ===============================================================
+
       - name: "Test NLoptWr"
         run: |
           echo "Test starting"

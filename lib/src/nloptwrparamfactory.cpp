@@ -627,102 +627,225 @@ bool NLOptWrParamFactory::isMLSL(std::size_t idx) const {
 // ==================================================================================================
 // static
 const std::vector<class NLOptWrAlgorithm> NLOptWrParamFactory::nlOptAlgorithms{
-
-    // enum(algorithm), name(algorithm), STRAT, GRAD, NEC, nSUB, Min, Max
-    {nlopt::LN_AUGLAG_EQ, "LN_AUGLAG_EQ", SSTRAT::N, false, true, true, 1, 0},
-    {nlopt::LD_AUGLAG_EQ, "LD_AUGLAG_EQ", SSTRAT::N, true, true, true, 1, 0},
-    {nlopt::AUGLAG_EQ, "AUGLAG_EQ", SSTRAT::N, true, true, true, 1, 0},
-
-    // ----------------------------------------------------------------------------------------------------------
-
-    {nlopt::LD_AUGLAG, "LD_AUGLAG", SSTRAT::LM, true, true, true, 1, 0},
-    {nlopt::LN_AUGLAG, "LN_AUGLAG", SSTRAT::LM, false, true, true, 1, 0},
-    {nlopt::AUGLAG, "AUGLAG", SSTRAT::GM, true, true, true, 1, 0},
-
-    // ----------------------------------------------------------------------------------------------------------
-
-    {nlopt::GD_MLSL, "GD_MLSL", SSTRAT::GM, true, false, true, 1, 0},
-    {nlopt::GN_MLSL, "GN_MLSL", SSTRAT::GM, false, false, true, 1, 0},
-    {nlopt::GD_MLSL_LDS, "GD_MLSL_LDS", SSTRAT::GM, true, false, true, 1, 0},
-    {nlopt::GN_MLSL_LDS, "GN_MLSL_LDS", SSTRAT::GM, false, false, true, 1, 0},
-    {nlopt::G_MLSL, "G_MLSL", SSTRAT::GM, true, false, true, 1, 0},
-    {nlopt::G_MLSL_LDS, "G_MLSL_LDS", SSTRAT::GM, true, false, true, 1, 0},
-
-    // ----------------------------------------------------------------------------------------------------------
-
-    {nlopt::LD_LBFGS, "LD_LBFGS", SSTRAT::L, true, false, false, 1, 0},
-    {nlopt::LD_LBFGS_NOCEDAL, "LD_LBFGS_NOCEDAL", SSTRAT::L, true, false, false,
+    // enum(algorithm), name(algorithm), STRAT, GRAD,EC, NEC, nSUB, Min, Max
+    {nlopt::LN_AUGLAG_EQ, "LN_AUGLAG_EQ", SSTRAT::N, false, true, false, true,
      1, 0},
-    {nlopt::LD_TNEWTON, "LD_TNEWTON", SSTRAT::L, true, false, false, 1, 0},
+    {nlopt::LD_AUGLAG_EQ, "LD_AUGLAG_EQ", SSTRAT::N, true, true, false, true, 1,
+     0},
+    {nlopt::AUGLAG_EQ, "AUGLAG_EQ", SSTRAT::N, true, true, false, true, 1, 0},
+
+    // ----------------------------------------------------------------------------------------------------------
+
+    {nlopt::LD_AUGLAG, "LD_AUGLAG", SSTRAT::LM, true, false, true, true, 1, 0},
+    {nlopt::LN_AUGLAG, "LN_AUGLAG", SSTRAT::LM, false, false, true, true, 1, 0},
+    {nlopt::AUGLAG, "AUGLAG", SSTRAT::GM, true, false, true, true, 1, 0},
+
+    // ----------------------------------------------------------------------------------------------------------
+
+    {nlopt::GD_MLSL, "GD_MLSL", SSTRAT::GM, true, false, false, true, 1, 0},
+    {nlopt::GN_MLSL, "GN_MLSL", SSTRAT::GM, false, false, false, true, 1, 0},
+    {nlopt::GD_MLSL_LDS, "GD_MLSL_LDS", SSTRAT::GM, true, false, false, true, 1,
+     0},
+    {nlopt::GN_MLSL_LDS, "GN_MLSL_LDS", SSTRAT::GM, false, false, false, true,
+     1, 0},
+    {nlopt::G_MLSL, "G_MLSL", SSTRAT::GM, true, false, false, true, 1, 0},
+    {nlopt::G_MLSL_LDS, "G_MLSL_LDS", SSTRAT::GM, true, false, false, true, 1,
+     0},
+
+    // ----------------------------------------------------------------------------------------------------------
+
+    {nlopt::LD_LBFGS, "LD_LBFGS", SSTRAT::L, true, false, false, false, 1, 0},
+    {nlopt::LD_LBFGS_NOCEDAL, "LD_LBFGS_NOCEDAL", SSTRAT::L, true, false, false,
+     false, 1, 0},
+    {nlopt::LD_TNEWTON, "LD_TNEWTON", SSTRAT::L, true, false, false, false, 1,
+     0},
     {nlopt::LD_TNEWTON_PRECOND, "LD_TNEWTON_PRECOND", SSTRAT::L, true, false,
-     false, 1, 0},
+     false, false, 1, 0},
+
     {nlopt::LD_TNEWTON_PRECOND_RESTART, "LD_TNEWTON_PRECOND_RESTART", SSTRAT::L,
-     true, false, false, 1, 0},
+     true, false, false, false, 1, 0},
+
     {nlopt::LD_TNEWTON_RESTART, "LD_TNEWTON_RESTART", SSTRAT::L, true, false,
-     false, 1, 0},
-    {nlopt::LD_VAR1, "LD_VAR1", SSTRAT::L, true, false, false, 1, 0},
-    {nlopt::LD_VAR2, "LD_VAR2", SSTRAT::L, true, false, false, 1, 0},
+     false, false, 1, 0},
+
+    {nlopt::LD_VAR1, "LD_VAR1", SSTRAT::L, true, false, false, false, 1, 0},
+    {nlopt::LD_VAR2, "LD_VAR2", SSTRAT::L, true, false, false, false, 1, 0},
 
     // ----------------------------------------------------------------------------------------------------------
     // The algorithms LD_MMA LD_CCSAQ are not able to handle equality
     // constraints
-    {nlopt::LD_MMA, "LD_MMA", SSTRAT::L, true, false, false, 1, 0},
-    {nlopt::LD_CCSAQ, "LD_CCSAQ", SSTRAT::L, true, false, false, 1, 15},
+    {nlopt::LD_MMA, "LD_MMA", SSTRAT::L, true, false, false, false, 1, 0},
+    {nlopt::LD_CCSAQ, "LD_CCSAQ", SSTRAT::L, true, false, false, false, 1, 15},
 
     // ----------------------------------------------------------------------------------------------------------
 
-    {nlopt::LD_SLSQP, "LD_SLSQP", SSTRAT::L, true, true, false, 1, 300},
+    {nlopt::LD_SLSQP, "LD_SLSQP", SSTRAT::L, true, true, true, false, 1, 300},
 
     // ----------------------------------------------------------------------------------------------------------
 
-    {nlopt::LN_COBYLA, "LN_COBYLA", SSTRAT::L, false, true, false, 1, 15},
+    {nlopt::LN_COBYLA, "LN_COBYLA", SSTRAT::L, false, true, true, false, 1, 15},
 
     // ----------------------------------------------------------------------------------------------------------
 
-    {nlopt::LN_SBPLX, "LN_SBPLX", SSTRAT::L, false, false, false, 1, 15},
-    {nlopt::LN_BOBYQA, "LN_BOBYQA", SSTRAT::L, false, false, false, 1, 12},
-    {nlopt::LN_NELDERMEAD, "LN_NELDERMEAD", SSTRAT::L, false, false, false, 1,
+    {nlopt::LN_SBPLX, "LN_SBPLX", SSTRAT::L, false, false, false, false, 1, 15},
+    {nlopt::LN_BOBYQA, "LN_BOBYQA", SSTRAT::L, false, false, false, false, 1,
      12},
-    {nlopt::LN_NEWUOA, "LN_NEWUOA", SSTRAT::L, false, false, false, 1, 12},
+    {nlopt::LN_NELDERMEAD, "LN_NELDERMEAD", SSTRAT::L, false, false, false,
+     false, 1, 12},
+
+    {nlopt::LN_NEWUOA, "LN_NEWUOA", SSTRAT::L, false, false, false, false, 1,
+     12},
     {nlopt::LN_NEWUOA_BOUND, "LN_NEWUOA_BOUND", SSTRAT::L, false, false, false,
-     1, 12},
-    {nlopt::LN_PRAXIS, "LN_PRAXIS", SSTRAT::L, false, false, false, 1, 12},
+     false, 1, 12},
+    {nlopt::LN_PRAXIS, "LN_PRAXIS", SSTRAT::L, false, false, false, false, 1,
+     12},
 
     // ----------------------------------------------------------------------------------------------------------
 
-    {nlopt::GN_DIRECT, "GN_DIRECT", SSTRAT::G, false, false, false, 1, 15},
-    {nlopt::GN_DIRECT_L, "GN_DIRECT_L", SSTRAT::G, false, false, false, 1, 15},
-    {nlopt::GN_DIRECT_L_NOSCAL, "GN_DIRECT_L_NOSCAL", SSTRAT::G, false, false,
-     false, 1, 15},
-    {nlopt::GN_DIRECT_L_RAND, "GN_DIRECT_L_RAND", SSTRAT::G, false, false,
-     false, 1, 15},
-    {nlopt::GN_DIRECT_L_RAND_NOSCAL, "GN_DIRECT_L_RAND_NOSCAL", SSTRAT::G,
-     false, false, false, 1, 0},
-    {nlopt::GN_DIRECT_NOSCAL, "GN_DIRECT_NOSCAL", SSTRAT::G, false, false,
-     false, 1, 15},
-    {nlopt::GN_ORIG_DIRECT, "GN_ORIG_DIRECT", SSTRAT::G, false, false, false, 1,
+    {nlopt::GN_DIRECT, "GN_DIRECT", SSTRAT::G, false, false, false, false, 1,
      15},
+    {nlopt::GN_DIRECT_L, "GN_DIRECT_L", SSTRAT::G, false, false, false, false,
+     1, 15},
+    {nlopt::GN_DIRECT_L_NOSCAL, "GN_DIRECT_L_NOSCAL", SSTRAT::G, false, false,
+     false, false, 1, 15},
+
+    {nlopt::GN_DIRECT_L_RAND, "GN_DIRECT_L_RAND", SSTRAT::G, false, false,
+     false, false, 1, 15},
+
+    {nlopt::GN_DIRECT_L_RAND_NOSCAL, "GN_DIRECT_L_RAND_NOSCAL", SSTRAT::G,
+     false, false, false, false, 1, 0},
+
+    {nlopt::GN_DIRECT_NOSCAL, "GN_DIRECT_NOSCAL", SSTRAT::G, false, false,
+     false, false, 1, 15},
+
+    {nlopt::GN_ORIG_DIRECT, "GN_ORIG_DIRECT", SSTRAT::G, false, false, false,
+     false, 1, 15},
+
     {nlopt::GN_ORIG_DIRECT_L, "GN_ORIG_DIRECT_L", SSTRAT::G, false, false,
-     false, 1, 0},
-    {nlopt::GN_AGS, "GN_AGS", SSTRAT::G, false, false, false, 1, 5},
+     false, false, 1, 0},
+
+    {nlopt::GN_AGS, "GN_AGS", SSTRAT::G, false, false, false, false, 1, 5},
 
     // ----------------------------------------------------------------------------------------------------------
 
-    {nlopt::GD_STOGO, "GD_STOGO", SSTRAT::G, true, false, false, 1, 15},
-    {nlopt::GD_STOGO_RAND, "GD_STOGO_RAND", SSTRAT::G, true, false, false, 1,
-     20},
+    {nlopt::GD_STOGO, "GD_STOGO", SSTRAT::G, true, false, false, false, 1, 15},
+    {nlopt::GD_STOGO_RAND, "GD_STOGO_RAND", SSTRAT::G, true, false, false,
+     false, 1, 20},
 
     // ----------------------------------------------------------------------------------------------------------
 
-    {nlopt::GN_CRS2_LM, "GN_CRS2_LM", SSTRAT::R, false, false, false, 1, 0},
-    {nlopt::GN_ESCH, "GN_ESCH", SSTRAT::R, false, false, false, 1, 5},
+    {nlopt::GN_CRS2_LM, "GN_CRS2_LM", SSTRAT::R, false, false, false, false, 1,
+     0},
+    {nlopt::GN_ESCH, "GN_ESCH", SSTRAT::R, false, false, false, false, 1, 5},
 
     // ----------------------------------------------------------------------------------------------------------
 
-    {nlopt::GN_ISRES, "GN_ISRES", SSTRAT::R, false, true, false, 1, 0},
+    {nlopt::GN_ISRES, "GN_ISRES", SSTRAT::R, false, true, true, false, 1, 0}
 
     // ----------------------------------------------------------------------------------------------------------
+    /*
 
+        // enum(algorithm), name(algorithm), STRAT, GRAD, NEC, nSUB, Min, Max
+        {nlopt::LN_AUGLAG_EQ, "LN_AUGLAG_EQ", SSTRAT::N, false, true, true, 1,
+       0}, {nlopt::LD_AUGLAG_EQ, "LD_AUGLAG_EQ", SSTRAT::N, true, true, true, 1,
+       0}, {nlopt::AUGLAG_EQ, "AUGLAG_EQ", SSTRAT::N, true, true, true, 1, 0},
+
+        //
+       ----------------------------------------------------------------------------------------------------------
+
+        {nlopt::LD_AUGLAG, "LD_AUGLAG", SSTRAT::LM, true, true, true, 1, 0},
+        {nlopt::LN_AUGLAG, "LN_AUGLAG", SSTRAT::LM, false, true, true, 1, 0},
+        {nlopt::AUGLAG, "AUGLAG", SSTRAT::GM, true, true, true, 1, 0},
+
+        //
+       ----------------------------------------------------------------------------------------------------------
+
+        {nlopt::GD_MLSL, "GD_MLSL", SSTRAT::GM, true, false, true, 1, 0},
+        {nlopt::GN_MLSL, "GN_MLSL", SSTRAT::GM, false, false, true, 1, 0},
+        {nlopt::GD_MLSL_LDS, "GD_MLSL_LDS", SSTRAT::GM, true, false, true, 1,
+       0}, {nlopt::GN_MLSL_LDS, "GN_MLSL_LDS", SSTRAT::GM, false, false, true,
+       1, 0}, {nlopt::G_MLSL, "G_MLSL", SSTRAT::GM, true, false, true, 1, 0},
+        {nlopt::G_MLSL_LDS, "G_MLSL_LDS", SSTRAT::GM, true, false, true, 1, 0},
+
+        //
+       ----------------------------------------------------------------------------------------------------------
+
+        {nlopt::LD_LBFGS, "LD_LBFGS", SSTRAT::L, true, false, false, 1, 0},
+        {nlopt::LD_LBFGS_NOCEDAL, "LD_LBFGS_NOCEDAL", SSTRAT::L, true, false,
+       false, 1, 0}, {nlopt::LD_TNEWTON, "LD_TNEWTON", SSTRAT::L, true, false,
+       false, 1, 0}, {nlopt::LD_TNEWTON_PRECOND, "LD_TNEWTON_PRECOND",
+       SSTRAT::L, true, false, false, 1, 0}, {nlopt::LD_TNEWTON_PRECOND_RESTART,
+       "LD_TNEWTON_PRECOND_RESTART", SSTRAT::L, true, false, false, 1, 0},
+        {nlopt::LD_TNEWTON_RESTART, "LD_TNEWTON_RESTART", SSTRAT::L, true,
+       false, false, 1, 0}, {nlopt::LD_VAR1, "LD_VAR1", SSTRAT::L, true, false,
+       false, 1, 0}, {nlopt::LD_VAR2, "LD_VAR2", SSTRAT::L, true, false, false,
+       1, 0},
+
+        //
+       ----------------------------------------------------------------------------------------------------------
+        // The algorithms LD_MMA LD_CCSAQ are not able to handle equality
+        // constraints
+        {nlopt::LD_MMA, "LD_MMA", SSTRAT::L, true, false, false, 1, 0},
+        {nlopt::LD_CCSAQ, "LD_CCSAQ", SSTRAT::L, true, false, false, 1, 15},
+
+        //
+       ----------------------------------------------------------------------------------------------------------
+
+        {nlopt::LD_SLSQP, "LD_SLSQP", SSTRAT::L, true, true, false, 1, 300},
+
+        //
+       ----------------------------------------------------------------------------------------------------------
+
+        {nlopt::LN_COBYLA, "LN_COBYLA", SSTRAT::L, false, true, false, 1, 15},
+
+        //
+       ----------------------------------------------------------------------------------------------------------
+
+        {nlopt::LN_SBPLX, "LN_SBPLX", SSTRAT::L, false, false, false, 1, 15},
+        {nlopt::LN_BOBYQA, "LN_BOBYQA", SSTRAT::L, false, false, false, 1, 12},
+        {nlopt::LN_NELDERMEAD, "LN_NELDERMEAD", SSTRAT::L, false, false, false,
+       1, 12}, {nlopt::LN_NEWUOA, "LN_NEWUOA", SSTRAT::L, false, false, false,
+       1, 12}, {nlopt::LN_NEWUOA_BOUND, "LN_NEWUOA_BOUND", SSTRAT::L, false,
+       false, false, 1, 12}, {nlopt::LN_PRAXIS, "LN_PRAXIS", SSTRAT::L, false,
+       false, false, 1, 12},
+
+        //
+       ----------------------------------------------------------------------------------------------------------
+
+        {nlopt::GN_DIRECT, "GN_DIRECT", SSTRAT::G, false, false, false, 1, 15},
+        {nlopt::GN_DIRECT_L, "GN_DIRECT_L", SSTRAT::G, false, false, false, 1,
+       15}, {nlopt::GN_DIRECT_L_NOSCAL, "GN_DIRECT_L_NOSCAL", SSTRAT::G, false,
+       false, false, 1, 15}, {nlopt::GN_DIRECT_L_RAND, "GN_DIRECT_L_RAND",
+       SSTRAT::G, false, false, false, 1, 15}, {nlopt::GN_DIRECT_L_RAND_NOSCAL,
+       "GN_DIRECT_L_RAND_NOSCAL", SSTRAT::G, false, false, false, 1, 0},
+        {nlopt::GN_DIRECT_NOSCAL, "GN_DIRECT_NOSCAL", SSTRAT::G, false, false,
+         false, 1, 15},
+        {nlopt::GN_ORIG_DIRECT, "GN_ORIG_DIRECT", SSTRAT::G, false, false,
+       false, 1, 15}, {nlopt::GN_ORIG_DIRECT_L, "GN_ORIG_DIRECT_L", SSTRAT::G,
+       false, false, false, 1, 0}, {nlopt::GN_AGS, "GN_AGS", SSTRAT::G, false,
+       false, false, 1, 5},
+
+        //
+       ----------------------------------------------------------------------------------------------------------
+
+        {nlopt::GD_STOGO, "GD_STOGO", SSTRAT::G, true, false, false, 1, 15},
+        {nlopt::GD_STOGO_RAND, "GD_STOGO_RAND", SSTRAT::G, true, false, false,
+       1, 20},
+
+        //
+       ----------------------------------------------------------------------------------------------------------
+
+        {nlopt::GN_CRS2_LM, "GN_CRS2_LM", SSTRAT::R, false, false, false, 1, 0},
+        {nlopt::GN_ESCH, "GN_ESCH", SSTRAT::R, false, false, false, 1, 5},
+
+        //
+       ----------------------------------------------------------------------------------------------------------
+
+        {nlopt::GN_ISRES, "GN_ISRES", SSTRAT::R, false, true, false, 1, 0},
+
+        //
+       ----------------------------------------------------------------------------------------------------------
+    */
 };
 
 } // namespace nloptwr

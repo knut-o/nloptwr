@@ -61,11 +61,11 @@ public:
   /**
    * constructor
    * @param dim dimension
-   * @param xn  x-value on the right corner
-   * @param hn  height on the right corner
-   * @param lm  mass per length of chain (without separate weights)
-   * @param li  length of a chain link
-   * @param weights separate weights at pos (dim=n-1, pos=0 => i=1, ...)
+   * @param xhN  x-value on the right corner
+   * @param lM  mass per length of chain (without separate weights)
+   * @param lI  length of a chain link
+   * @param myWeights separate weights at pos (dim=n-1, pos=0 => i=1, ...)
+   * @param my_Ground pointer of grund constraints
    */
   ChainWithWeights(
       int dim,

@@ -109,10 +109,6 @@ endif()
 
 # =========================================================================
 
-# check if Doxygen is installed
-find_package(Doxygen)
-
-# =========================================================================
 if(NLOPTWR_BUILD_EXAMPLES)
     SET(NLOPTWR_BUILD_VERBOSE ON)
 endif()
@@ -164,34 +160,40 @@ add_custom_target(
 )
 
 # =========================================================================
+# =========================================================================
 
-if (CMAKE_BUILD_TYPE MATCHES "^[Rr]elease")
-    # build the docs
-    if (DOXYGEN_FOUND)
-        message("A technical documentation will be generated with doxygen")
+if(LINUX) 
+# check if Doxygen is installed
+find_package(Doxygen)
 
-        message("CMAKE_CURRENT_BINARY_DIR: ${CMAKE_CURRENT_BINARY_DIR}")
-        message("DOXYGEN_EXECUTABLE:       ${DOXYGEN_EXECUTABLE}")
-        message("CMAKE_CURRENT_LIST_DIR:   ${CMAKE_CURRENT_LIST_DIR}")
+    if (CMAKE_BUILD_TYPE MATCHES "^[Rr]elease")
+        # build the docs
+        if (DOXYGEN_FOUND)
+            message("A technical documentation will be generated with doxygen")
 
-        # SET(DOXYGEN_IN  ${CMAKE_CURRENT_LIST_DIR}/Doxyfile.in)
-        SET(DOXYGEN_OUT ${CMAKE_CURRENT_LIST_DIR}/Doxyfile)
+            message("CMAKE_CURRENT_BINARY_DIR: ${CMAKE_CURRENT_BINARY_DIR}")
+            message("DOXYGEN_EXECUTABLE:       ${DOXYGEN_EXECUTABLE}")
+            message("CMAKE_CURRENT_LIST_DIR:   ${CMAKE_CURRENT_LIST_DIR}")
 
-        # request to configure the file
-        # configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
-        message("Doxygen build started")
+            # SET(DOXYGEN_IN  ${CMAKE_CURRENT_LIST_DIR}/Doxyfile.in)
+            SET(DOXYGEN_OUT ${CMAKE_CURRENT_LIST_DIR}/Doxyfile)
 
-        # note the option ALL which allows to build the docs together with the application
-        add_custom_target( doc_doxygen ALL
-            COMMAND ${DOXYGEN_EXECUTABLE}
-            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
-            COMMENT "Generating API documentation with Doxygen"
-            VERBATIM )
-    else (DOXYGEN_FOUND)
-    message("Doxygen need to be installed to generate the doxygen documentation")
-    endif (DOXYGEN_FOUND)
+            # request to configure the file
+            # configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+            message("Doxygen build started")
+
+            # note the option ALL which allows to build the docs together with the application
+            add_custom_target( doc_doxygen ALL
+                COMMAND ${DOXYGEN_EXECUTABLE}
+                WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+                COMMENT "Generating API documentation with Doxygen"
+                VERBATIM )
+        else (DOXYGEN_FOUND)
+        message("Doxygen need to be installed to generate the doxygen documentation")
+        endif (DOXYGEN_FOUND)
+    endif()
+    
 endif()
-
 # =========================================================================
 
 SET (NLOPTWR_VERSION_MAJOR "0")

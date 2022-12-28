@@ -103,23 +103,12 @@ SSTRAT getStrategyFromString(const std::string &src, SSTRAT sstratDefault) {
 }
 
 NLOptWrAlgorithm::NLOptWrAlgorithm(nlopt::algorithm a, const std::string &n,
-                                   SSTRAT rgl, bool hasGrad, bool neC,
-                                   // bool necO,
+                                   SSTRAT rgl, bool hasGrad, bool eC, bool neC,
                                    bool nSubopt, unsigned int minP,
                                    unsigned int maxP)
-    : alg(a), name(n), pRGL(rgl), hasGradient(hasGrad), neConstraints(neC),
-      // neOnlyConstraints(necO),
-      needsSubOpt(nSubopt), minParam(minP), maxParam(maxP) {}
-
-// NLOptWrAlgorithm::NLOptWrAlgorithm() { }
-
-/*
-NLOptWrAlgorithm::NLOptWrAlgorithm(const NLOptWrAlgorithm &src)
-    : alg(src.alg), name(src.name), pRGL(src.pRGL),
-      hasGradient(src.hasGradient), neConstraints(src.neConstraints),
-      needsSubOpt(src.needsSubOpt), minParam(src.minParam),
-      maxParam(src.maxParam) {}
-*/
+    : alg(a), name(n), pRGL(rgl), hasGradient(hasGrad), eqConstraints(eC),
+      neConstraints(neC), needsSubOpt(nSubopt), minParam(minP), maxParam(maxP) {
+}
 
 NLOptWrAlgorithm::~NLOptWrAlgorithm() {}
 
@@ -130,6 +119,10 @@ const std::string &NLOptWrAlgorithm::getName() const { return name; }
 SSTRAT NLOptWrAlgorithm::getSearchStrategy() const { return pRGL; }
 
 bool NLOptWrAlgorithm::getUseGradient() const { return hasGradient; }
+
+bool NLOptWrAlgorithm::canHandleEqualConstraints() const {
+  return eqConstraints;
+}
 
 bool NLOptWrAlgorithm::canHandleNonEqualConstraints() const {
   return neConstraints;
@@ -146,6 +139,8 @@ unsigned int NLOptWrAlgorithm::getMaxParameters() const { return maxParam; }
 void NLOptWrAlgorithm::setMaxParameters(unsigned int var) { maxParam = var; }
 
 void NLOptWrAlgorithm::setHasGradient(bool val) { hasGradient = val; }
+
+void NLOptWrAlgorithm::setEqConstraints(bool val) { eqConstraints = val; }
 
 void NLOptWrAlgorithm::setNeConstraints(bool val) { neConstraints = val; }
 

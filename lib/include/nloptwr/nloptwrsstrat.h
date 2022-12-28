@@ -20,7 +20,6 @@ public:
    * nondefault constructor
    * @param searchStrat search strategy
    * @param useGrad use gradient flag
-   * @param useAugLagBeforeMlsl use Augmented Lagrangian before MLSL flag
    */
   NLOptWrSStrat(SSTRAT searchStrat, bool useGrad = true);
 

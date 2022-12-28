@@ -69,6 +69,8 @@ public:
 /**
  * test the optimization
  * @param useGrad true means explicit calculation of gradients
+ * @param sStrat search strategy
+ * @param maxTimeSec max time linit
  * @return success
  */
 // int opttest1(bool useGrad)
