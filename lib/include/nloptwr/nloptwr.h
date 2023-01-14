@@ -2,9 +2,10 @@
 #ifndef NLOPT_WR_H
 #define NLOPT_WR_H
 
-#include "nloptwralgorithm.h"
-#include "nloptwrsearchalgoparam.h"
-#include "optfktnbase.h"
+#include "nloptwr/nloptwralgorithm.h"
+#include "nloptwr/nloptwrfcargs.h"
+#include "nloptwr/nloptwrsearchalgoparam.h"
+#include "nloptwr/optfktnbase.h"
 
 namespace utilx {
 class LRegX;
@@ -16,31 +17,6 @@ class LRegX;
 #include <vector>
 
 namespace nloptwr {
-
-/**
- * Function arguments
- * @param f return value of function
- * @param x function arguments
- * @param c constraints
- */
-struct FArg {
-public:
-  /// function value
-  /// constructor
-  FArg();
-
-  ///  destructor
-  ~FArg();
-
-  /// function value
-  double f;
-
-  /// function arguments
-  std::vector<double> x;
-
-  /// constraints
-  std::vector<double> c;
-};
 
 class NLOptWrParamFactory;
 
@@ -200,16 +176,34 @@ public:
   // ------------------------------------------------------------------------------------------------
 
   /**
-   * set tolerance of (no equal) nonlinear constraints
-   * @param val tolerance for all nonlinear constraints (default: 1e-10)
+   * set tolerance of (equality and inequality) constraints
+   * @param val tolerance for all (euqlity and inequality) constraints (default: 0.8e-6)
    */
-  void setTolMConstraints(double val = 0.8E-8);
+  void setTolMConstraints(double val = 0.8E-6);
 
   /**
-   * set tolerance of (no equal) nonlinear constraints
-   * @param vals tolerances for nonlinear constraints
+   * set tolerance of equality  constraints
+   * @param val tolerance for all equality constraints (default: 1e-10)
    */
-  void setTolMConstraints(const std::vector<double> &vals);
+  void setTolEqMConstraints(double val = 0.8E-6);
+
+  /**
+   * set tolerance of inequality  constraints
+   * @param val tolerance for all inequality constraints (default: 1e-10)
+   */
+  void setTolNeMConstraints(double val = 0.8E-6);
+
+  /**
+   * set tolerance of equality constraints
+   * @param vals tolerances for equality constraints
+   */
+  void setTolEqMConstraints(const std::vector<double> &vals);
+
+  /**
+   * set tolerance of inequality constraints
+   * @param vals tolerances for inequality constraints
+   */
+  void setTolNeMConstraints(const std::vector<double> &vals);
 
   // ------------------------------------------------------------------------------------------------
 
@@ -322,8 +316,11 @@ private:
   /// number of dimensions (x)
   long int nDim;
 
-  /// number of constraints
-  long int mDim;
+  /// number of equality constraints
+  long int mEqDim;
+
+  /// number of inequality constraints
+  long int mNeDim;
 
   /// pointer to the optimization object
   std::shared_ptr<nlopt::opt> opt;
@@ -347,8 +344,11 @@ private:
 
   // ========================================
 
-  /// tolerance
-  std::vector<double> tolMConstraints;
+  /// tolerance equality constraints
+  std::vector<double> tolEqMConstraints;
+
+  /// tolerance of inequality constraints
+  std::vector<double> tolNeMConstraints;
 
   // ========================================
 
@@ -397,67 +397,15 @@ private:
   // =======================================
 
 protected:
-  /// cached function arguments, values, constraints
-  FArg fArgs;
-
-  /// function arguments (Threads)
-  std::vector<FArg> fArgs1;
-
-  /// function arguments (Threads)
-  std::vector<FArg> fArgs2;
-
-  /// gradient of function (nDim)
-  std::vector<double> fGrad;
-
-  /// vector gradient of single constraints (mDim*nDim)
-  std::vector<std::vector<double>> cGrad;
-
   /// gradient flag
   bool useGradient;
 
   // =======================================
 private:
-  /**
-   * this function compares the value of x1 with fArgs.x
-   * @param n  the size of x1
-   * @param x1 new array x1
-   * @return true if x1 and fArgs.x are identical, otherwise false
-   */
-  bool checkXVec(unsigned int n, const double *x1) const;
-
-  /**
-   * set fArgs.x vector with x1 if needed
-   * method checkXVec is called
-   * @param n  the size of x1
-   * @param x1 new array x1
-   * @return true if fArgs.x is set, otherwise false
-   */
-  bool setXVec(unsigned int n, const double *x1);
-
   /** internally used check method (dimension check of vectors)
    * @return success of check (true is OK)
    */
   bool checkVectors() const;
-
-  /**
-   * internally used function
-   * @param n dimension of x
-   * @param x argument vector (c-array)
-   * @param fGradVal array vector of function value (array)
-   * @return function value
-   */
-  double f(unsigned n, const double *x, double *fGradVal);
-
-  /**
-   * internally used constraints function
-   * @param m number of constraints
-   * @param c vector of single constraint function result values
-   * @param n number of optimization parameters
-   * @param x optimization parameters
-   * @param cGrad gradient of constraints (array of size m*n)
-   */
-  void multi_constraint(unsigned int m, double *c, unsigned int n,
-                        const double *x, double *cGrad);
 
 protected:
   /**
@@ -491,6 +439,10 @@ private:
 
   /// population size (for stochastic algorithms)
   unsigned int population;
+
+protected:
+  // calculation object
+  NLOptWrFCArgs nLOptWrFCArgs;
 };
 
 } // namespace nloptwr

@@ -50,13 +50,14 @@ set(HEADERS_PUB_ROOT
     "${CMAKE_CURRENT_SOURCE_DIR}/include/nloptwr/nloptwralgorithm.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/nloptwr/nloptwra.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/nloptwr/nloptwr.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/nloptwr/nloptwrfcargs.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/nloptwr/nloptwrsearchalgoparam.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/nloptwr/nloptwrsearchalgoparamd.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/nloptwr/optfktnbase.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/nloptwr/nloptwrsstrat.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/nloptwr/nloptwrparamfactory.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/nloptwr/optfktnclass.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/nloptwr/omphelper.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/include/nloptwr/nloptwrsearchalgoparam.h"
     )
 
 
@@ -65,6 +66,7 @@ set(HEADERS_PUB ${HEADERS_PUB_ROOT})
 set(SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/nloptwralgorithm.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/nloptwr.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/nloptwrfcargs.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/nloptwrparamfactory.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/nloptwrsearchalgoparam.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/nloptwrsearchalgoparamd.cpp"

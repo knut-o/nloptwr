@@ -1,6 +1,7 @@
 
 #include "nloptwr/nloptwra.h"
 
+#include "nloptwrtest/griewank.h"
 #include "nloptwrtest/odisplay.h"
 #include "nloptwrtest/oproblem.h"
 #include "nloptwrtest/oproblemtest.h"
@@ -16,7 +17,7 @@ namespace opttest {
 int opttest4() {
   int rc = 0;
 
-  int dim = 10;
+  int dim = 5;
 
   // number of threads ("0" means autodetect)
   int nThr = 0;
@@ -55,7 +56,7 @@ int opttest4() {
   cout << "Start of optimization..." << endl;
 
   // select strategy: "L", "LM", "GM", "G" an "R"
-  nloptwr::NLOptWrSStrat sStrategy(nloptwr::SSTRAT::GM, useGrad);
+  nloptwr::NLOptWrSStrat sStrategy(nloptwr::SSTRAT::G, useGrad);
 
   nlopt::result opt_stat = nlopt::result::FAILURE;
 

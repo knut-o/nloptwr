@@ -21,9 +21,9 @@ OProblem::OProblem(int dim) : oif::OptFknClass(), nDim(dim) {
 }
 
 // virtual
-void OProblem::initialize() //  double lb, double ub, double xInit )
+void OProblem::initialize()
 {
-  init(nDim, 2, 0.1, 5.0, 1.9);
+  init(nDim, 0, 2, 0.0, 5.0, 1.7);
 
   // initialize special bounds
   setLb(0, -0.5);
@@ -43,11 +43,11 @@ OProblem::~OProblem() {}
 oif::OptFknBase *OProblem::clone() const { return (new OProblem(*this)); }
 
 // virtual
-double OProblem::optFktn(const std::vector<double> &x, std::vector<double> &c) {
-  for (size_t i = 0; (i < c.size()) && (i < getSizeOfNeConstraints()); i++) {
+void OProblem::optFktn(const std::vector<double> &x, std::vector<double> &fc) {
+  for (size_t i = 0; i < getSizeOfNeConstraints(); i++) {
     double a = constraint_data[i][0];
     double b = constraint_data[i][1];
-    c[i] = (pow(a * x[0] + b, 3) - x[1]);
+    fc[i + 1] = (pow(a * x[0] + b, 3) - x[1]);
   };
   double val = sqrt(x[1]);
 
@@ -72,7 +72,9 @@ double OProblem::optFktn(const std::vector<double> &x, std::vector<double> &c) {
     }
   }
 
-  return val;
+  // cout << "#### OProblem::optFktn val= " << setw(7) << val << endl;
+  
+  fc[0] = val;
 }
 
 } // namespace opttest

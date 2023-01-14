@@ -30,8 +30,13 @@ ChainWithWeights::ChainWithWeights(int dim, const XH &xhN, double lM, double lI,
     : oif::OptFknClass(), nDim(dim), noOfChainLinks(dim + 1), xh0(0.0, 0.0),
       xhn(xhN), lm(lM), li(lI), weights(dim + 2, 0.0), xh(dim + 2, 0.0) {
 
-  offSetByEqualConstraints = 2;
-  mDim = offSetByEqualConstraints;
+  // 1 equality constraint
+  mDimEq=1;
+  
+  // 1 inequality constraint
+  mDimNe = 1;
+  
+  
   dxMaxGround = 100000.0;
 
   // if a ground is defined
@@ -39,7 +44,7 @@ ChainWithWeights::ChainWithWeights(int dim, const XH &xhN, double lM, double lI,
     myGround = shared_ptr<GroundIf>((*my_Ground).clone());
 
     // each chain link section is an additional constraint
-    mDim += 2;
+    mDimNe += 1;
 
     dxMaxGround = abs((*myGround).getDx());
   }
@@ -47,16 +52,18 @@ ChainWithWeights::ChainWithWeights(int dim, const XH &xhN, double lM, double lI,
   for (size_t i = 0; (i <= noOfChainLinks) && (i < myWeights.size()); i++) {
     weights[i] = myWeights.at(i);
   }
+
   initialize();
+
   validate();
 }
 
 // virtual
 void ChainWithWeights::initialize() //  double lb, double ub, double xInit )
 {
-  double angleInit = PI * 0.1;
+  double angleInit = PI*(-0.15);
 
-  init(nDim, mDim, -0.5 * PI, 0.5 * PI, angleInit);
+  init(nDim, mDimEq, mDimNe, -0.4999 * PI, 0.4999*PI, angleInit);
 
   // left side
   xh[0] = xh0;
@@ -78,8 +85,8 @@ oif::OptFknBase *ChainWithWeights::clone() const {
 }
 
 // virtual
-double ChainWithWeights::optFktn(const std::vector<double> &x,
-                                 std::vector<double> &c) {
+void ChainWithWeights::optFktn(const std::vector<double> &x,
+                               std::vector<double> &fc) {
   // ======================================================
   // initialization
   // ======================================================
@@ -91,8 +98,7 @@ double ChainWithWeights::optFktn(const std::vector<double> &x,
   xh[noOfChainLinks] = xhn;
 
   // reset constraints
-  for (size_t i = 0; i < mDim; i++)
-    c[i] = 0.0;
+    for (size_t i = 1; i <= mDimNe+1; i++) fc[i] = 0.0;
 
   // ======================================================
   // calculate the coordinate between left and right sides
@@ -105,25 +111,25 @@ double ChainWithWeights::optFktn(const std::vector<double> &x,
   }
 
   // ======================================================
-  // equality constraint has two inequality constraints
-  // the length of the last chain link => li
+  // calculate the difference of the two last coordinates 
+  // to calculate length of the last chain link
+  // to compare it with the chain length li
   // ======================================================
 
   double diffX = (xh[nDim].x - xhn.x);
   double diffH = (xh[nDim].h - xhn.h);
 
-  // equality constraint as two inequality constraints
-  // squared difference of length of chain link
+  // difference of squares of length
   double diffL = (diffX * diffX + diffH * diffH) - (li * li);
 
-  c[0] = diffL;
-  c[1] = 0.0 - diffL;
+  // assign equality constraint
+  fc[1] = diffL;
 
   // ======================================================
   // inequality constraints if a ground exists
   // ======================================================
   if (myGround != nullptr)
-    catculateNEConstraints(c);
+    catculateNEConstraints(fc);
 
   // ======================================================
   // calculate the target function
@@ -146,10 +152,10 @@ double ChainWithWeights::optFktn(const std::vector<double> &x,
 
   w_g = (w_g_chain + w_g_weights);
 
-  return w_g;
+  fc[0] = w_g;
 }
 
-void ChainWithWeights::catculateNEConstraints(std::vector<double> &c) {
+void ChainWithWeights::catculateNEConstraints(std::vector<double> &fc) {
 
   XH pA;
   XH pB;
@@ -221,17 +227,23 @@ void ChainWithWeights::catculateNEConstraints(std::vector<double> &c) {
     pA = pB;
   }
 
-  // store constaints
-  c[2] = ciSumGtZero;
-  if (mDim > 3)
-    c[3] = ciMaxTotal;
+  // assign 1st inequality constraint
+  fc[2] = ciSumGtZero;
+  if (mDimNe > 1) {
+    // assign 2nd inequality constraint
+    fc[3] = ciMaxTotal;
+  }
 }
 
 void ChainWithWeights::printResult(const std::vector<double> &x,
                                    std::ostream &os) {
 
-  vector<double> c(mDim, 0.0);
-  double optVal = optFktn(x, c);
+  vector<double> cEq(1, 0.0);
+  vector<double> cNe(mDimNe, 0.0);
+
+  vector<double> fcTmp(6);
+
+  optFktn(x, fcTmp);
 
   double hMin = 10000000.0;
   if (!myGround) {
@@ -242,11 +254,10 @@ void ChainWithWeights::printResult(const std::vector<double> &x,
 
   os << " " << endl;
   os << "# nDim = " << nDim << endl;
-  os << "# mDim = " << mDim << endl;
-  for (size_t i = 0; i < mDim; i++) {
-    os << "# c[" << setw(3) << i << "] = " << c[i] << endl;
+  for (size_t i = 0; i < (mDimNe + 2); i++) {
+    os << "# fc[" << setw(3) << i << "] = " << fcTmp[i] << endl;
   }
-  os << "# optVal = " << optVal << endl;
+
   for (size_t i = 0; i < nDim; i++) {
     os << "# x[" << setw(3) << i << "] = " << x[i] << endl;
   }

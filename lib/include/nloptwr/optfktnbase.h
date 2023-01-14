@@ -12,9 +12,11 @@ namespace oif {
 
 /**
  * optimization function object
+ * @param x vector of arguments
+ * @param cf vector of target function f, equality constraints (fc[i] = 0.0), and inequality constraints (fc[i>0] <= 0.0)
  */
-typedef std::function<double(const std::vector<double> &,
-                             std::vector<double> &)>
+typedef std::function<double(const std::vector<double> &x,
+                             std::vector<double> &fc)>
     optFunction;
 
 /**
@@ -32,26 +34,10 @@ public:
   /**
    * (abstract) target function
    * @param x vector of arguments
-   * @param c vector of nonequal constraints (c_i <= 0.0)
-   * @return value of target function
+   * @param cf vector of target function f, equality constraints (c_i = 0.0), and inequality constraints (c_i <= 0.0)
    */
-  virtual double optFktn(const std::vector<double> &x,
-                         std::vector<double> &c) = 0;
-
-  /**
-   * (abstract) target function
-   * @param x vector of arguments
-   * @return value of target function
-   */
-  virtual double optF(const std::vector<double> &x) = 0;
-
-  /**
-   * (abstract) target function
-   * @param x vector of arguments
-   * @param c vector of nonequal constraints (c_i <= 0.0)
-   * @return value of target function
-   */
-  virtual void optC(const std::vector<double> &x, std::vector<double> &c) = 0;
+  virtual void optFktn(const std::vector<double> &x,
+                       std::vector<double> &fc) = 0;
 
   /**
    * (abstract) get number of arguments x
@@ -60,8 +46,14 @@ public:
   virtual size_t getSizeOfX() const = 0;
 
   /**
-   * get number of nonequal constraints
-   * @return number of nonequal constraints
+   * get number of equality constraints
+   * @return number of equality constraints
+   */
+  virtual size_t getSizeOfEqConstraints() const = 0;
+
+  /**
+   * get number of inequality constraints
+   * @return number of inequality constraints
    */
   virtual size_t getSizeOfNeConstraints() const = 0;
 
@@ -82,11 +74,6 @@ public:
    * @return vector of initial arguments
    */
   virtual std::vector<double> getXInitial() const = 0;
-
-  /**
-   * get (empty) vector of constraints
-   */
-  std::vector<double> getZeroNeConstraintVec();
 
   /**
    * get function object

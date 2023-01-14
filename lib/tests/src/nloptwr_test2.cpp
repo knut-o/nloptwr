@@ -104,7 +104,7 @@ int opttest2(int dim, bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
 // =====================================================
 
 int main(int argc, char *argv[]) {
-  int dim = 4;
+  int dim = 6;
   int maxTimeSec = 300;
   nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::LM;
   bool useGrad = true;

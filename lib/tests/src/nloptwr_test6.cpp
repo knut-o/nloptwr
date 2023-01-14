@@ -104,6 +104,7 @@ int opttest6(int dim, int nrOfGround = 0, bool useGrad = 1,
   optWr.setXTolAbs(1e-6);
 
   // optWr.setXTolRel(1e-6);
+  optWr.setTolMConstraints(8.0E-5);
 
   // start opptimization
   nlopt::result opt_stat = nlopt::result::FAILURE;

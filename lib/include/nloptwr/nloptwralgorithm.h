@@ -97,7 +97,7 @@ public:
    *  @param rgl ability of handlich stochstic problems
    *  @param hasGrad gradient flag
    *  @param eC ability to handle equal constraints
-   *  @param neC ability to handle nonequal constraints
+   *  @param neC ability to handle inequality constraints
    *  @param nSubopt flag if a subopt is needed
    *  @param minP minimal number of parameters
    *  @param maxP maximal number of parameters
@@ -108,9 +108,6 @@ public:
 
   /// default constructor
   NLOptWrAlgorithm() = delete;
-
-  /// copy constructor
-  // NLOptWrAlgorithm(const NLOptWrAlgorithm &src);
 
   /// destructor
   ~NLOptWrAlgorithm();
@@ -145,8 +142,8 @@ public:
    */
   bool canHandleEqualConstraints() const;
   /**
-   * get the ability to handle nonequal constraints
-   * @return ability to handle nonequal constraints (boolean)
+   * get the ability to handle inequality constraints
+   * @return ability to handle inequality constraints (boolean)
    */
   bool canHandleNonEqualConstraints() const;
 
@@ -251,7 +248,7 @@ private:
   /// ability to handle equal constraints
   bool eqConstraints;
 
-  /// ability to handle nonequal constraints
+  /// ability to handle inequality constraints
   bool neConstraints;
 
   /// subopt required

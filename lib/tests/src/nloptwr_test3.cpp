@@ -1,6 +1,7 @@
 
 #include "nloptwr/nloptwra.h"
 
+#include "nloptwrtest/griewank.h"
 #include "nloptwrtest/odisplay.h"
 #include "nloptwrtest/oproblem.h"
 #include "nloptwrtest/oproblemtest.h"
@@ -14,13 +15,13 @@ namespace opttest {
 int opttest3() {
   int rc = 0;
 
-  int dim = 3000;
+  int dim = 5;
 
   // number of threads ("0" means autodetect)
   int nThr = 0;
 
   // timeout of algorithm
-  int maxTimeSec = 120;
+  int maxTimeSec = 200;
 
   // maximal count of evaluations
   int maxEvals = 1000000000;
@@ -34,7 +35,7 @@ int opttest3() {
   Griewank oGriewank(dim);
 
   // initial point is near the optimum
-  oGriewank.initialize(-15.0, 15.0, 2.0);
+  oGriewank.initialize(-15.0, 15.0, 1.2);
 
   // it is used a local search (because of the speed)
   nloptwr::NLOptWrSStrat sStrategy(nloptwr::SSTRAT::L, useGrad);

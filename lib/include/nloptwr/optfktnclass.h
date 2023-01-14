@@ -28,26 +28,11 @@ public:
   /**
    * (abstract) target function
    * @param x vector of arguments
-   * @param c vector of nonequal constraints (c_i <= 0.0)
-   * @return value of target function
+   * @param cf vector of target function f, equality constraints (c_i = 0.0),
+   * and inequality constraints (c_i <= 0.0)
    */
-  virtual double optFktn(const std::vector<double> &x,
-                         std::vector<double> &c) = 0;
-
-  /**
-   * (abstract) target function
-   * @param x vector of arguments
-   * @return value of target function
-   */
-  virtual double optF(const std::vector<double> &x);
-
-  /**
-   * (abstract) target function
-   * @param x vector of arguments
-   * @param c vector of nonequal constraints (c_i <= 0.0)
-   * @return value of target function
-   */
-  virtual void optC(const std::vector<double> &x, std::vector<double> &c);
+  virtual void optFktn(const std::vector<double> &x,
+                       std::vector<double> &fc) = 0;
 
   /**
    * get number of arguments x
@@ -56,8 +41,14 @@ public:
   virtual size_t getSizeOfX() const;
 
   /**
-   * get number of nonequal constraints
-   * @return number of nonequal constraints
+   * get number of equality constraints
+   * @return number of equalityints
+   */
+  virtual size_t getSizeOfEqConstraints() const;
+
+  /**
+   * get number of inequality constraints
+   * @return number of inequality constraints
    */
   virtual size_t getSizeOfNeConstraints() const;
 
@@ -106,12 +97,14 @@ public:
    * initialization method
    * This method has to be called before use of the object.
    * @param dim dimension of arguments vector (x)
-   * @param nrOfNeConstraints number of nonequal constraints
+   * @param nrOfEqConstraints number of equality constraints
+   * @param nrOfNeConstraints number of inequality constraints
    * @param lb lower bounds for all values
    * @param ub upper bounds for all values
    * @param xInit initial value for all arguments (x)
    */
-  virtual void init(size_t dim, size_t nrOfNeConstraints, double lb, double ub,
+  virtual void init(size_t dim, size_t nrOfEqConstraints,
+                    size_t nrOfNeConstraints, double lb, double ub,
                     double xInit);
 
   /**
@@ -140,7 +133,16 @@ private:
   size_t nDim;
 
   /// number of parameters
-  size_t mDim;
+  // size_t mDim;
+
+  /// number of equality constraints
+  size_t mDimEq;
+
+  /// number od inequality constrains
+  size_t mDimNe;
+
+  /// total number of elements of vectoe fc
+  size_t fcSize;
 
 protected:
   /// lower boundsOPT_FKTN_BASE2_H
@@ -151,9 +153,6 @@ protected:
 
   /// upper bounds
   std::shared_ptr<std::vector<double>> xInitial;
-
-  /// constraints
-  std::vector<double> cConstr;
 };
 
 } // namespace oif

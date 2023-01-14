@@ -79,12 +79,11 @@ public:
 
   /**
    * implementation of function definition
-   * @param x (vector of) function arguments
-   * @param c vector of nonequal constraints (c_i <= 0.0)
-   * @return value of target function
+   * @param x vector of arguments
+   * @param cf vector of target function f, equality constraints (c_i = 0.0), and inequality constraints (c_i <= 0.0)
    */
-  virtual double optFktn(const std::vector<double> &x,
-                         std::vector<double> &c) override;
+  virtual void optFktn(const std::vector<double> &x,
+                       std::vector<double> &fc) override;
 
   /**
    * initialize method
@@ -138,16 +137,19 @@ private:
   // PI
   static const double PI;
 
-  /// number of nonequal constraints
-  int mDim;
+  /// number of equality constraints
+  int mDimEq;
+
+  /// number of inequality constraints
+  int mDimNe;
 
   /// definition of ground
   std::shared_ptr<GroundIf> myGround;
 
-  /// the number of nonequal constraints to express eqality constraints
-  int offSetByEqualConstraints;
+  /// the number of inequality constraints to express eqality constraints
+  int offSetByEqualityConstraints;
 
-  /// calculate non-equality constraints (internally used by method "optFktn")
+  /// calculate inequality constraints (internally used by method "optFktn")
   void catculateNEConstraints(std::vector<double> &c1);
 
   /// the maximal step size of x

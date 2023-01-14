@@ -29,5 +29,5 @@ cmake --build .
 
 # display result
 xdg-open nloptwr_test6.pdf
-cd ../tests/
+cd ../../lib/tests/
 
