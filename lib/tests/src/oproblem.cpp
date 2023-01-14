@@ -21,8 +21,7 @@ OProblem::OProblem(int dim) : oif::OptFknClass(), nDim(dim) {
 }
 
 // virtual
-void OProblem::initialize()
-{
+void OProblem::initialize() {
   init(nDim, 0, 2, 0.0, 5.0, 1.7);
 
   // initialize special bounds
@@ -73,7 +72,7 @@ void OProblem::optFktn(const std::vector<double> &x, std::vector<double> &fc) {
   }
 
   // cout << "#### OProblem::optFktn val= " << setw(7) << val << endl;
-  
+
   fc[0] = val;
 }
 

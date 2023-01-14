@@ -23,7 +23,7 @@ public:
    */
   Demo01() {
     // initialization of limits and bounds
-    init(50, 0, -1001.0, 1001.0, -520.0);
+    init(50, 0, 0, -1001.0, 1001.0, -520.0);
   }
 
   /// destructor
@@ -35,7 +35,7 @@ public:
    * @param c vector of nonequal constraints (c_i <= 0.0)
    * @return value of target function
    */
-  double optFktn(const std::vector<double> &x, std::vector<double> &c) {
+  void optFktn(const std::vector<double> &x, std::vector<double> &fc) {
     double sum = 0.0;
     double tmp = 0.0;
 
@@ -47,11 +47,11 @@ public:
 
     // calculation of constraints
     size_t ine = getSizeOfNeConstraints();
-    for (size_t i = 0; i < ine; i++) {
-      c[i] = 0.0;
+    for (size_t i = 1; i <= ine; i++) {
+      fc[i + 1] = 0.0;
     }
 
-    return sum;
+    fc[0] = sum;
   }
 
   /**

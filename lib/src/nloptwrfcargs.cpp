@@ -6,10 +6,10 @@
 
 #include <iomanip>
 #include <iostream>
+#include <limits>
 #include <memory>
 #include <string>
 #include <vector>
-#include <limits>
 
 using namespace std;
 
@@ -23,17 +23,14 @@ namespace nloptwr {
 
 FArg::FArg(size_t xDim1, size_t fCSize1)
     : fcSize(fCSize1), xTmp1(xDim1), fcTmp1(fCSize1), xTmp2(xDim1),
-      fcTmp2(fCSize1) {
-    }
+      fcTmp2(fCSize1) {}
 
 FArg::~FArg() {}
 
 // ===================================================================
 // ===================================================================
 
-NLOptWrFCArgs::NLOptWrFCArgs() {
-        toRecalculateGradients=false;
-}
+NLOptWrFCArgs::NLOptWrFCArgs() { toRecalculateGradients = false; }
 
 NLOptWrFCArgs::~NLOptWrFCArgs() {}
 
@@ -71,8 +68,8 @@ void NLOptWrFCArgs::init(vector<shared_ptr<oif::OptFknBase>> &optFknB,
 
   if (x.size() != xDim)
     x.resize(xDim, numeric_limits<double>::min());
-  
-  toRecalculateGradients=false;
+
+  toRecalculateGradients = false;
 }
 
 // ===================================================================
@@ -94,7 +91,8 @@ bool NLOptWrFCArgs::checkXVec(unsigned int n, const double *x1) const {
 }
 
 void NLOptWrFCArgs::setXVec(unsigned int n, const double *x1) {
-  for (unsigned int i = 0; i < n; i++) x[i] = x1[i];
+  for (unsigned int i = 0; i < n; i++)
+    x[i] = x1[i];
   // x.assign(x1, x1 + n);
 
   for (size_t j = 0; j < numThreads; j++) {
@@ -115,51 +113,48 @@ void NLOptWrFCArgs::reCalculateIfNecessary(unsigned int n, const double *x1,
   if (toRecalc) {
     setXVec(n, x1);
 
-        toRecalculateGradients=true;
+    toRecalculateGradients = true;
 
-        // 1.) function evaluation with constraints (single threaded)
-        optFknBases[0]->optFktn(x, fc);
-  
-    }
+    // 1.) function evaluation with constraints (single threaded)
+    optFknBases[0]->optFktn(x, fc);
+  }
 
   // lazy evaluation:
   if (toRecalculateGradients && hasGrad) {
-  // 2. calculation of gradients (multi threaded)
+    // 2. calculation of gradients (multi threaded)
 
 #pragma omp parallel default(shared) num_threads(numThreads)
-        {
+    {
 #pragma omp for schedule(static)
-                for (long int i = 0; i < xDim; i++) {
-                    size_t jj = utl::OmpHelper::getThreadNum();
-                    FArg &fArgSRef = fArgs[jj];
+      for (long int i = 0; i < xDim; i++) {
+        size_t jj = utl::OmpHelper::getThreadNum();
+        FArg &fArgSRef = fArgs[jj];
 
-                    double dx = difX[i];
+        double dx = difX[i];
 
-                    // store value
-                    double xOld = fArgSRef.xTmp1[i];
+        // store value
+        double xOld = fArgSRef.xTmp1[i];
 
-                    fArgSRef.xTmp2[i] = (xOld + dx);
-                    fArgSRef.xTmp1[i] = (xOld - dx);
+        fArgSRef.xTmp2[i] = (xOld + dx);
+        fArgSRef.xTmp1[i] = (xOld - dx);
 
-                    // function calls
-                    optFknBases[jj]->optFktn(fArgSRef.xTmp2, fArgSRef.fcTmp2);
-                    optFknBases[jj]->optFktn(fArgSRef.xTmp1, fArgSRef.fcTmp1);
+        // function calls
+        optFknBases[jj]->optFktn(fArgSRef.xTmp2, fArgSRef.fcTmp2);
+        optFknBases[jj]->optFktn(fArgSRef.xTmp1, fArgSRef.fcTmp1);
 
-                    for (size_t j = 0; j < fcArgSize; j++) {
-                    fcGradients[i][j] =
-                        (fArgSRef.fcTmp2[j] - fArgSRef.fcTmp1[j]) * difXR[i];
-                    }
+        for (size_t j = 0; j < fcArgSize; j++) {
+          fcGradients[i][j] =
+              (fArgSRef.fcTmp2[j] - fArgSRef.fcTmp1[j]) * difXR[i];
+        }
 
-                    // restore values
-                    fArgSRef.xTmp2[i] = xOld;
-                    fArgSRef.xTmp1[i] = xOld;
-                }
-            }
-            toRecalculateGradients=false;
+        // restore values
+        fArgSRef.xTmp2[i] = xOld;
+        fArgSRef.xTmp1[i] = xOld;
+      }
     }
-                                               
+    toRecalculateGradients = false;
+  }
 }
-
 
 // ===================================================================
 // ===================================================================
@@ -191,7 +186,7 @@ void NLOptWrFCArgs::multiEqCconstraint(unsigned int m, double *c,
 
   for (size_t i = fArgPositions[POS_CEQ], j = 0; i < fArgPositions[POS_CNE];
        i++, j++) {
-        c[j] = fc[i];
+    c[j] = fc[i];
   }
 
   if (useGradient) {
@@ -202,7 +197,6 @@ void NLOptWrFCArgs::multiEqCconstraint(unsigned int m, double *c,
       }
     }
   }
-  
 }
 
 // ===================================================================

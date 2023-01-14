@@ -13,7 +13,8 @@ namespace oif {
 /**
  * optimization function object
  * @param x vector of arguments
- * @param cf vector of target function f, equality constraints (fc[i] = 0.0), and inequality constraints (fc[i>0] <= 0.0)
+ * @param cf vector of target function f, equality constraints (fc[i] = 0.0),
+ * and inequality constraints (fc[i>0] <= 0.0)
  */
 typedef std::function<double(const std::vector<double> &x,
                              std::vector<double> &fc)>
@@ -34,7 +35,8 @@ public:
   /**
    * (abstract) target function
    * @param x vector of arguments
-   * @param cf vector of target function f, equality constraints (c_i = 0.0), and inequality constraints (c_i <= 0.0)
+   * @param cf vector of target function f, equality constraints (c_i = 0.0),
+   * and inequality constraints (c_i <= 0.0)
    */
   virtual void optFktn(const std::vector<double> &x,
                        std::vector<double> &fc) = 0;

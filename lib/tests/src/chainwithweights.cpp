@@ -30,13 +30,9 @@ ChainWithWeights::ChainWithWeights(int dim, const XH &xhN, double lM, double lI,
     : oif::OptFknClass(), nDim(dim), noOfChainLinks(dim + 1), xh0(0.0, 0.0),
       xhn(xhN), lm(lM), li(lI), weights(dim + 2, 0.0), xh(dim + 2, 0.0) {
 
-  // 1 equality constraint
-  mDimEq=1;
-  
-  // 1 inequality constraint
+  // number inequality constraint
   mDimNe = 1;
-  
-  
+
   dxMaxGround = 100000.0;
 
   // if a ground is defined
@@ -61,9 +57,9 @@ ChainWithWeights::ChainWithWeights(int dim, const XH &xhN, double lM, double lI,
 // virtual
 void ChainWithWeights::initialize() //  double lb, double ub, double xInit )
 {
-  double angleInit = PI*(-0.15);
+  double angleInit = PI * (-0.15);
 
-  init(nDim, mDimEq, mDimNe, -0.4999 * PI, 0.4999*PI, angleInit);
+  init(nDim, 1, mDimNe, -0.4999 * PI, 0.4999 * PI, angleInit);
 
   // left side
   xh[0] = xh0;
@@ -98,7 +94,8 @@ void ChainWithWeights::optFktn(const std::vector<double> &x,
   xh[noOfChainLinks] = xhn;
 
   // reset constraints
-    for (size_t i = 1; i <= mDimNe+1; i++) fc[i] = 0.0;
+  for (size_t i = 1; i <= mDimNe + 1; i++)
+    fc[i] = 0.0;
 
   // ======================================================
   // calculate the coordinate between left and right sides
@@ -111,7 +108,7 @@ void ChainWithWeights::optFktn(const std::vector<double> &x,
   }
 
   // ======================================================
-  // calculate the difference of the two last coordinates 
+  // calculate the difference of the two last coordinates
   // to calculate length of the last chain link
   // to compare it with the chain length li
   // ======================================================

@@ -80,7 +80,8 @@ public:
   /**
    * implementation of function definition
    * @param x vector of arguments
-   * @param cf vector of target function f, equality constraints (c_i = 0.0), and inequality constraints (c_i <= 0.0)
+   * @param cf vector of target function f, equality constraints (c_i = 0.0),
+   * and inequality constraints (c_i <= 0.0)
    */
   virtual void optFktn(const std::vector<double> &x,
                        std::vector<double> &fc) override;
@@ -136,9 +137,6 @@ private:
 
   // PI
   static const double PI;
-
-  /// number of equality constraints
-  int mDimEq;
 
   /// number of inequality constraints
   int mDimNe;

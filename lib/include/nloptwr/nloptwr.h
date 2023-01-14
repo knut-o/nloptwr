@@ -177,7 +177,8 @@ public:
 
   /**
    * set tolerance of (equality and inequality) constraints
-   * @param val tolerance for all (euqlity and inequality) constraints (default: 0.8e-6)
+   * @param val tolerance for all (euqlity and inequality) constraints (default:
+   * 0.8e-6)
    */
   void setTolMConstraints(double val = 0.8E-6);
 

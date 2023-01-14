@@ -105,7 +105,9 @@ public:
   bool hasNeConstraints() const;
 
   /// has constraints
-  bool hasConstraints() const { return ((noOfEqConstraints > 0) || (noOfEqConstraints > 0)); }
+  bool hasConstraints() const {
+    return ((noOfEqConstraints > 0) || (noOfEqConstraints > 0));
+  }
 
 private:
   /**
@@ -174,7 +176,7 @@ private:
 
   /// temporary storage (threads)
   std::vector<FArg> fArgs;
-  
+
   /// recalculate gradients flag
   bool toRecalculateGradients;
 

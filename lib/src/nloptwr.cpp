@@ -290,8 +290,8 @@ double NLOptWrapper::getLastOptimumValue() const { return fOpt; }
 // optimization method
 nlopt::result NLOptWrapper::optimize(const NLOptWrSStrat &nloptWrSStrat,
                                      int maxTimeSec, int maxEvals) {
-  fOpt =
-      ((searchMin) ? numeric_limits<double>::max() : numeric_limits<double>::min());
+  fOpt = ((searchMin) ? numeric_limits<double>::max()
+                      : numeric_limits<double>::min());
 
   if (optFknBases.empty()) {
     const string errMsg2(
@@ -400,7 +400,6 @@ nlopt::result NLOptWrapper::optimize(const NLOptWrSStrat &nloptWrSStrat,
     opt->set_min_objective(
         [](unsigned int n, const double *x, double *grad,
            void *my_func_data) -> double {
-
           return reinterpret_cast<NLOptWrapper *>(my_func_data)
               ->nLOptWrFCArgs.f(n, x, grad);
         },
