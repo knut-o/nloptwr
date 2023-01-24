@@ -11,12 +11,10 @@
 #include <iomanip>
 #include <iostream>
 #include <vector>
-using namespace std;
 
-// extern int auglag_verbose;
-// extern int ccsa_verbose;
-// extern int mma_verbose;
-// extern int testfuncs_verbose;
+#include <cctype>
+#include <cstdlib>
+using namespace std;
 
 namespace opttest {
 
@@ -109,7 +107,13 @@ int main(int argc, char *argv[]) {
   nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::LM;
   bool useGrad = true;
 
-  if (argc <= 2) {
+  bool showUsage = false;
+  if (argc >= 2) {
+    if (!std::isdigit(argv[1][0]))
+      showUsage = true;
+  }
+
+  if (showUsage) {
     cout << endl
          << "cout usage:" << endl
          << " " << argv[0] << " [dim] [useGrad] [sStrat] [maxTimeSec] " << endl
@@ -123,6 +127,8 @@ int main(int argc, char *argv[]) {
          << " # maxTimeSec: max. time [s] (default=" << maxTimeSec << ") "
          << endl
          << endl;
+
+    exit(1);
   }
 
   for (int i = 1; i < argc; ++i) {

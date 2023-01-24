@@ -166,7 +166,13 @@ int main(int argc, char *argv[]) {
   nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L;
   bool useGrad = true;
 
-  if (argc <= 2) {
+  bool showUsage = false;
+  if (argc >= 2) {
+    if (!std::isdigit(argv[1][0]))
+      showUsage = true;
+  }
+
+  if (showUsage) {
     cout << endl
          << "cout usage:" << endl
          << " " << argv[0] << " [useGrad] [sStrat] [maxTimeSec] " << endl
@@ -179,17 +185,20 @@ int main(int argc, char *argv[]) {
          << " # maxTimeSec: max. time [s] (default=" << maxTimeSec << ") "
          << endl
          << endl;
+
+    exit(1);
   }
 
   for (int i = 1; i < argc; ++i) {
     if (i == 1)
-      useGrad = (string(argv[i]) == "1");
+      useGrad = (string(argv[i]) != "0");
     if (i == 2)
       sStrat = nloptwr::getStrategyFromString(argv[i], nloptwr::SSTRAT::L);
     if (i == 3)
       maxTimeSec = atoi(argv[i]);
   }
 
+  cout << "# useGrad=" << useGrad << endl;
   rc = opttest::opttest1(useGrad, sStrat, maxTimeSec);
 
   cout << endl;

@@ -104,7 +104,13 @@ int main(int argc, char *argv[]) {
   int maxTimeSec = 300;
   nloptwr::SSTRAT sstrat = nloptwr::SSTRAT::G;
 
-  if (argc <= 2) {
+  bool showUsage = false;
+  if (argc >= 2) {
+    if (!std::isdigit(argv[1][0]))
+      showUsage = true;
+  }
+
+  if (showUsage) {
     cout << endl
          << "cout usage:" << endl
          << " " << argv[0] << " [dim] [maxTimeSec] [G|GM|R] " << endl
@@ -114,6 +120,8 @@ int main(int argc, char *argv[]) {
          << " # G=Global, GM=Global Meta; R=Random (default='"
          << getStrategyAsString(sstrat) << "')" << endl
          << endl;
+
+    exit(1);
   }
 
   for (int i = 1; i < argc; ++i) {

@@ -132,26 +132,25 @@ private:
   // vector of coordinates (x,h)
   std::vector<XH> xh;
 
-  // epsilon
-  static const double epsilon;
-
-  // PI
-  static const double PI;
-
-  /// number of inequality constraints
-  int mDimNe;
-
   /// definition of ground
   std::shared_ptr<GroundIf> myGround;
 
-  /// the number of inequality constraints to express eqality constraints
-  int offSetByEqualityConstraints;
+  /// the maximal step size of x
+  double dxMaxGround;
+
+  /// number of equality constraints
+  int noOfEqConstraints;
+
+  /// number of inequality constraints
+  int noOfNeConstraints;
 
   /// calculate inequality constraints (internally used by method "optFktn")
   void catculateNEConstraints(std::vector<double> &c1);
 
-  /// the maximal step size of x
-  double dxMaxGround;
+  static const double epsilon;
+
+  // PI
+  static const double PI;
 };
 
 } // namespace opttest

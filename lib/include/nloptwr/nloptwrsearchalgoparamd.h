@@ -19,14 +19,29 @@ class NLOptWrSearchAlgoParamD : public NLOptWrSearchAlgoParam {
 public:
   /**
    * constructor
+   * @param strat search strategy
+   * @param hasEqconstr equality constraints flag
+   * @param hasNeconstr nonequality constraints flag
+   * @param grad has gradient flag
+   * @param d dimension (number of parameters)
    */
-  NLOptWrSearchAlgoParamD(nloptwr::SSTRAT strat, bool constr, bool grad,
-                          size_t d);
+  NLOptWrSearchAlgoParamD(nloptwr::SSTRAT strat, bool hasEqconstr,
+                          bool hasNeConstr, bool grad, size_t d);
 
   /**
    * constructor
+   * @param alg source object
+   * @param dim number of arguments
    */
   NLOptWrSearchAlgoParamD(const NLOptWrSearchAlgoParam &alg, size_t d);
+
+  /**
+   * constructor
+   * @param strat search strategy
+   * @param source object
+   */
+  NLOptWrSearchAlgoParamD(nloptwr::SSTRAT strat,
+                          const NLOptWrSearchAlgoParamD &alg);
 
   /// default constructor
   NLOptWrSearchAlgoParamD() = delete;

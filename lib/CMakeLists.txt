@@ -47,6 +47,7 @@ include_directories(
 
 # Sources
 set(HEADERS_PUB_ROOT
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/nloptwr/paramrequirement.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/nloptwr/nloptwralgorithm.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/nloptwr/nloptwra.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/nloptwr/nloptwr.h"
@@ -64,6 +65,7 @@ set(HEADERS_PUB_ROOT
 set(HEADERS_PUB ${HEADERS_PUB_ROOT})
 
 set(SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/paramrequirement.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/nloptwralgorithm.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/nloptwr.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/nloptwrfcargs.cpp"

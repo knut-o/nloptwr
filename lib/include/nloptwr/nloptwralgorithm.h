@@ -18,7 +18,7 @@ namespace nloptwr {
  * LM = Local meta search strategy
  */
 // enum SEARCH_STRATEGY {
-enum class SSTRAT : int { GM = -2, LM = -1, N = 0, L = 1, G = 2, R = 3 };
+enum class SSTRAT : signed int { GM = -2, LM = -1, N = 0, L = 1, G = 2, R = 3 };
 
 /**
  * get the meta search strategy of search strategy
@@ -92,7 +92,7 @@ class NLOptWrAlgorithm {
 public:
   /**
    * constructor
-   *  @param a enum of algotitm
+   *  @param a enum of algorithm
    *  @param n name of algorithm
    *  @param rgl ability of handlich stochstic problems
    *  @param hasGrad gradient flag

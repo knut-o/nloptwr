@@ -22,13 +22,27 @@ class NLOptWrSearchAlgoParam2;
 class NLOptWrParamFactory {
 
 public:
+  /// internally used enum to search algorithms
+  enum A_ENUM {
+    A_AUGLAG_EQ,
+    A_AUGLAG_EQ_SUB,
+    A_AUGLAG_NE,
+    A_AUGLAG_NE_SUB,
+    A_MLSL,
+    A_MLSL_SUB,
+    A_L,
+    A_G,
+    A_R
+  };
+
+public:
   /// constructor
   NLOptWrParamFactory();
 
   /// destructor
   ~NLOptWrParamFactory();
 
-  // ------------------------------------------------------------------------------------------------
+  // ============================================================================
 
   /**
    * get a set of agorithms
@@ -41,14 +55,14 @@ public:
   /**
    * get a set of agorithms
    * @param searchStrategy search strategy enum
-   * @param hasConstraints constraints flag
+   * @param hasEqConstraints equality constraints constraints flag
+   * @param hasNeConstraints nonequality constraints constraints flag
    * @param useGradient use gradient
    * @param xDim dimension of parameter x
    */
-  std::vector<NLOptWrAlgorithm> getAlgorithm(SSTRAT searchStrategy,
-                                             bool hasConstraints,
-                                             bool useGradient,
-                                             std::size_t xDim) const;
+  std::vector<NLOptWrAlgorithm>
+  getAlgorithm(SSTRAT searchStrategy, bool hasEqConstraints,
+               bool hasNeConstraints, bool useGradient, std::size_t xDim) const;
 
   /**
    * get a set of agorithms
@@ -58,7 +72,7 @@ public:
   std::vector<NLOptWrAlgorithm>
   getAlgorithm(const NLOptWrSearchAlgoParam &p4pAlg, std::size_t xDim) const;
 
-  // ------------------------------------------------------------------------------------------------
+  // ============================================================================
 
   /**
    * get name of algorithm
@@ -67,7 +81,7 @@ public:
    */
   const std::string &getNameOfAlgorithm(nlopt::algorithm alg) const;
 
-  // ------------------------------------------------------------------------------------------------
+  // ============================================================================
 
   /**
    * ask for preferred algorithm
@@ -81,7 +95,6 @@ public:
    * @param p4pAlg search parameter
    * @return flag (true if a preferred algorithm is deleted)
    */
-  // bool deletePreferedAlgorithm(nlopt::algorithm algx);
 
   /**
    * delete all preferred algorithms
@@ -111,24 +124,46 @@ public:
    */
   const std::vector<NLOptWrAlgorithm> &getPreferedAlgorithms() const;
 
-  // ------------------------------------------------------------------------------------------------
+  // ============================================================================
 
   /**
-   * get available algorithms
-   * @param p4pAlg search parameter
-   * @param xDim dimension of parameter x
-   * @param ignoreConstraints ignore constraints flag
-   * @param searchLocalOrGlobal search local or global flag
-   * @param isNotMLSL is not MLSL flag
-   * @return available algorithms
+   * search the available algorithms
+   * from the prefered algorithms pool
+   * and then from the ordinary list of algorithms
+   * @param algE enum ti distinguish algorithms
+   * @param p4pAlg search criteria object
+   * @param xDim dimension (number of free parameters)
+   * @return list (vector) of algorithms
    */
   std::vector<NLOptWrAlgorithm>
-  getAvailableAlgorithms(const NLOptWrSearchAlgoParam &p4pAlg, std::size_t xDim,
-                         bool ignoreConstraints = false,
-                         bool searchLocalOrGlobal = false,
-                         bool isNotMLSL = false) const;
+  getAvailableAlgorithms(A_ENUM algE,
+                         const NLOptWrSearchAlgoParamD &p4pAlg) const;
 
-  // ------------------------------------------------------------------------------------------------
+  /**
+   * internally used search algorithm
+   * @param algE enum ti distinguish algorithms
+   * @param p4pAlg search criteria object
+   * @param availableAlgs list to be searched
+   * @param xDim dimension (number of free parameters)
+   * @return list (vector) of algorithms
+   */
+  std::vector<NLOptWrAlgorithm> getAvailableAlgorithms(
+      A_ENUM algE, const NLOptWrSearchAlgoParamD &p4pAlg,
+      const std::vector<class NLOptWrAlgorithm> &availableAlgs) const;
+
+  /**
+   * get the result from the the lists of algorithms
+   * @param algs1 list of first algoritms
+   * @param algs2 list of subalgoritms
+   * @param hasSubalg flag if subalgorithms are required
+   * @return list of valid algorithms or an emty list
+   */
+  static std::vector<NLOptWrAlgorithm>
+  getResultAlgorithms(const std::vector<NLOptWrAlgorithm> &algs1,
+                      const std::vector<NLOptWrAlgorithm> &algs2,
+                      bool hasSubAlg);
+
+  // ============================================================================
 
 protected:
   /// get name of algorithm of index x
@@ -140,86 +175,7 @@ protected:
   /// get enum of algorithm with index
   nlopt::algorithm getEnumOfIdx(size_t) const;
 
-  // ------------------------------------------------------------------------------------------------
-  // ------------------------------------------------------------------------------------------------
-
-  /**
-   * search for stochastic algorithms
-   * @param p4pAlg1 search criteria
-   * @param xDim number of parameters (size of x)
-   * @param res algorithms that match or noting
-   * @return success of search
-   */
-  bool findSearchAlgorithmR(const NLOptWrSearchAlgoParam &p4pAlg1,
-                            std::size_t xDim,
-                            std::vector<NLOptWrAlgorithm> &res) const;
-
-  /**
-   * search for augmented lagrangian algorithms
-   * @param p4pAlg1 search criteria
-   * @param xDim number of parameters (size of x)
-   * @param res algorithms that match or noting
-   * @return success of search
-   */
-  bool findSearchAlgorithmAugLag(const NLOptWrSearchAlgoParam &p4pAlg1,
-                                 std::size_t xDim,
-                                 std::vector<NLOptWrAlgorithm> &res) const;
-
-  /**
-   * search for MLSL algorithms
-   * @param p4pAlg1 search criteria
-   * @param xDim number of parameters (size of x)
-   * @param hasConstraints constraint flag
-   * @param res algorithms that match or noting
-   * @return success of search
-   */
-  bool findSearchAlgorithmMlsl(const NLOptWrSearchAlgoParam &p4pAlg1,
-                               std::size_t xDim, bool hasConstraints,
-                               std::vector<NLOptWrAlgorithm> &res) const;
-
-  /**
-   * search for local and global algorithms
-   * @param p4pAlg1 search criteria
-   * @param xDim number of parameters (size of x)
-   * @param hasConstraints constraint flag
-   * @param res algorithms that match or noting
-   * @return success of search
-   */
-  bool findSearchAlgorithmLG(const NLOptWrSearchAlgoParam &p4pAlg1,
-                             std::size_t xDim, bool hasConstraints,
-                             std::vector<NLOptWrAlgorithm> &res) const;
-
-  // ------------------------------------------------------------------------------------------------
-
-  /* *
-   * find preferred search Algorithm
-   * @param p4pAlg1 1st search criterium
-   * @param xDim dimension of search vector x
-   * @param res result vector
-   * @return success (true means OK)
-   */
-  // bool findSearchAlgorithm(const P4PrefAlgorithm& p4pAlg1, std::size_t xDim,
-  // bool ignoreConstraints, bool searchLocalOrGlobal,
-  // std::vector<NlOptAlgorithm>& res) const;
-
-  // ------------------------------------------------------------------------------------------------
-
-  /**
-   * find default search Algorithm
-   * @param p4pAlg search criterium
-   * @param xDim dimension of search vector x
-   * @param ignoreConstraints ignore constraints flag
-   * @param searchLocalOrGlobal  search global or local flag
-   * @param isNotMLSL is not MLSL flag
-   * @param res result vector
-   * @return success (true means OK)
-   */
-  bool findSearchAlgorithm(const NLOptWrSearchAlgoParam &p4pAlg,
-                           std::size_t xDim, bool ignoreConstraints,
-                           bool searchLocalOrGlobal, bool isNotMLSL,
-                           std::vector<NLOptWrAlgorithm> &res) const;
-
-  // ------------------------------------------------------------------------------------------------
+  // ============================================================================
 
   /**
    * test if algorithm is auglag
@@ -249,17 +205,9 @@ protected:
    */
   bool isMLSL(std::size_t idx) const;
 
-  // ------------------------------------------------------------------------------------------------
-  // ------------------------------------------------------------------------------------------------
+  // ============================================================================
 
 private:
-  ///
-  std::vector<NLOptWrAlgorithm> getAvailableAlgorithms(
-      const NLOptWrSearchAlgoParam &p4pAlg,
-      const std::vector<class NLOptWrAlgorithm> &availableAlgs,
-      std::size_t xDim, bool ignoreConstraints, bool searchLocalOrGlobal,
-      bool isNotMLSL) const;
-
   /// available algorithms
   static const std::vector<class NLOptWrAlgorithm> nlOptAlgorithms;
 

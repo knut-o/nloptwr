@@ -11,9 +11,20 @@ using namespace std;
 namespace nloptwr {
 
 NLOptWrSearchAlgoParam::NLOptWrSearchAlgoParam(SSTRAT searchStrat,
-                                               bool hasConstr, bool useGrad)
-    : searchStrategy(searchStrat), hasContraints(hasConstr),
-      useGradient(useGrad) {
+                                               bool hasEqConstr,
+                                               bool hasNeConstr, bool useGrad)
+    : searchStrategy(searchStrat), hasEqContraints(hasEqConstr),
+      hasNeContraints(hasNeConstr), useGradient(useGrad) {
+  if (SSTRAT::R == searchStrat) {
+    useGradient = false;
+  }
+}
+
+NLOptWrSearchAlgoParam::NLOptWrSearchAlgoParam(
+    SSTRAT searchStrat, const NLOptWrSearchAlgoParam &src)
+    : searchStrategy(searchStrat), hasEqContraints(src.getHasEqContraints()),
+      hasNeContraints(src.getHasNeContraints()),
+      useGradient(src.getUseGradient()) {
   if (SSTRAT::R == searchStrat) {
     useGradient = false;
   }
@@ -24,7 +35,8 @@ NLOptWrSearchAlgoParam::NLOptWrSearchAlgoParam() {}
 NLOptWrSearchAlgoParam::NLOptWrSearchAlgoParam(
     const NLOptWrSearchAlgoParam &src) {
   searchStrategy = src.searchStrategy;
-  hasContraints = src.hasContraints;
+  hasEqContraints = src.hasEqContraints;
+  hasNeContraints = src.hasNeContraints;
   useGradient = src.useGradient;
 };
 
@@ -38,8 +50,12 @@ bool NLOptWrSearchAlgoParam::operator<(
       r = (searchStrategy < rhs.searchStrategy) ? 1 : -1;
     }
   if (r == 0)
-    if (hasContraints != rhs.hasContraints) {
-      r = (hasContraints) ? 1 : -1;
+    if (hasEqContraints != rhs.hasEqContraints) {
+      r = (hasEqContraints) ? 1 : -1;
+    }
+  if (r == 0)
+    if (hasNeContraints != rhs.hasNeContraints) {
+      r = (hasNeContraints) ? 1 : -1;
     }
   if (r == 0)
     if (useGradient != rhs.useGradient) {
@@ -59,19 +75,36 @@ void NLOptWrSearchAlgoParam::setSearchStrategy(SSTRAT val) {
   searchStrategy = val;
 }
 
-bool NLOptWrSearchAlgoParam::getHasContraints() const { return hasContraints; }
+bool NLOptWrSearchAlgoParam::getHasContraints() const {
+  return (hasEqContraints || hasNeContraints);
+}
+
+bool NLOptWrSearchAlgoParam::getHasEqContraints() const {
+  return hasEqContraints;
+}
+
+bool NLOptWrSearchAlgoParam::getHasNeContraints() const {
+  return hasNeContraints;
+}
 
 bool NLOptWrSearchAlgoParam::getUseGradient() const { return useGradient; }
 
-void NLOptWrSearchAlgoParam::setUseContraints(bool val) { hasContraints = val; }
+void NLOptWrSearchAlgoParam::setUseEqContraints(bool val) {
+  hasEqContraints = val;
+}
+
+void NLOptWrSearchAlgoParam::setUseNeContraints(bool val) {
+  hasNeContraints = val;
+}
 
 std::string NLOptWrSearchAlgoParam::toString() const {
   stringstream ss;
 
   ss << "P4PrefAlgorithm( "
      << "searchStrategy=" << setw(2) << getStrategyAsString(searchStrategy)
-     << ", hasContraints=" << hasContraints << ", useGradient=" << useGradient
-     << " ) ";
+     << ", hasEqContraints=" << hasEqContraints
+     << ", hasNeContraints=" << hasNeContraints
+     << ", useGradient=" << useGradient << " ) ";
 
   return ss.str();
 }
@@ -81,7 +114,8 @@ std::string NLOptWrSearchAlgoParam::toStringShort() const {
 
   ss << "P4PrefAlgorithm("
      << "Strat=" << left << setw(2) << getStrategyAsString(searchStrategy)
-     << ", C=" << hasContraints << ", Grad=" << useGradient << ") ";
+     << ", Ceq=" << hasEqContraints << ", Cne=" << hasNeContraints
+     << ", Grad=" << useGradient << ") ";
 
   return ss.str();
 }

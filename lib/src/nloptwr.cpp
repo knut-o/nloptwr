@@ -268,11 +268,14 @@ bool NLOptWrapper::checkVectors() const {
 std::vector<NLOptWrAlgorithm>
 NLOptWrapper::getSelectedAlgorithms(const NLOptWrSStrat &nloptWrSStrat) const {
   SSTRAT searchStrategy(nloptWrSStrat.getSearchStrategy());
-  bool hasConstraints = ((mEqDim > 0) || (mNeDim > 0));
+  bool hasEqConstraints = (mEqDim > 0);
+  bool hasNeConstraints = (mNeDim > 0);
+
   bool useGrad = nloptWrSStrat.getUseGradient();
 
-  return (*nlOptParamFactory)
-      .getAlgorithm(searchStrategy, hasConstraints, useGrad, nDim);
+  NLOptWrSearchAlgoParamD nLOptWrSearchAlgoParamD(
+      searchStrategy, hasEqConstraints, hasNeConstraints, useGrad, nDim);
+  return (*nlOptParamFactory).getAlgorithm(nLOptWrSearchAlgoParamD);
 }
 
 // ------------------------------------------------------------------------------------------------

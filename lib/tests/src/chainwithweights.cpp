@@ -28,19 +28,23 @@ ChainWithWeights::ChainWithWeights(int dim, const XH &xhN, double lM, double lI,
                                    const std::vector<double> &myWeights,
                                    GroundIf *my_Ground)
     : oif::OptFknClass(), nDim(dim), noOfChainLinks(dim + 1), xh0(0.0, 0.0),
-      xhn(xhN), lm(lM), li(lI), weights(dim + 2, 0.0), xh(dim + 2, 0.0) {
-
-  // number inequality constraint
-  mDimNe = 1;
+      xhn(xhN), lm(lM), li(lI), weights(dim + 2, 0.0), xh(dim + 2, 0.0),
+      myGround(nullptr) {
 
   dxMaxGround = 100000.0;
+
+  // number equality constraints
+  noOfEqConstraints = 1;
+
+  // number nonequality constraints
+  noOfNeConstraints = 0;
 
   // if a ground is defined
   if (my_Ground != nullptr) {
     myGround = shared_ptr<GroundIf>((*my_Ground).clone());
 
-    // each chain link section is an additional constraint
-    mDimNe += 1;
+    // the ground causes additional constraints
+    noOfNeConstraints += 1;
 
     dxMaxGround = abs((*myGround).getDx());
   }
@@ -59,7 +63,8 @@ void ChainWithWeights::initialize() //  double lb, double ub, double xInit )
 {
   double angleInit = PI * (-0.15);
 
-  init(nDim, 1, mDimNe, -0.4999 * PI, 0.4999 * PI, angleInit);
+  init(nDim, noOfEqConstraints, noOfNeConstraints, -0.4999 * PI, 0.4999 * PI,
+       angleInit);
 
   // left side
   xh[0] = xh0;
@@ -94,7 +99,7 @@ void ChainWithWeights::optFktn(const std::vector<double> &x,
   xh[noOfChainLinks] = xhn;
 
   // reset constraints
-  for (size_t i = 1; i <= mDimNe + 1; i++)
+  for (size_t i = 1; i <= noOfNeConstraints + 1; i++)
     fc[i] = 0.0;
 
   // ======================================================
@@ -226,7 +231,7 @@ void ChainWithWeights::catculateNEConstraints(std::vector<double> &fc) {
 
   // assign 1st inequality constraint
   fc[2] = ciSumGtZero;
-  if (mDimNe > 1) {
+  if (noOfNeConstraints > 1) {
     // assign 2nd inequality constraint
     fc[3] = ciMaxTotal;
   }
@@ -236,7 +241,7 @@ void ChainWithWeights::printResult(const std::vector<double> &x,
                                    std::ostream &os) {
 
   vector<double> cEq(1, 0.0);
-  vector<double> cNe(mDimNe, 0.0);
+  vector<double> cNe(noOfNeConstraints, 0.0);
 
   vector<double> fcTmp(6);
 
@@ -251,7 +256,7 @@ void ChainWithWeights::printResult(const std::vector<double> &x,
 
   os << " " << endl;
   os << "# nDim = " << nDim << endl;
-  for (size_t i = 0; i < (mDimNe + 2); i++) {
+  for (size_t i = 0; i < (noOfNeConstraints + 2); i++) {
     os << "# fc[" << setw(3) << i << "] = " << fcTmp[i] << endl;
   }
 
