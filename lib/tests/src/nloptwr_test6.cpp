@@ -104,6 +104,7 @@ int opttest6(int dim, int nrOfGround = 0, bool useGrad = 1,
   optWr.setXTolAbs(1e-6);
 
   // optWr.setXTolRel(1e-6);
+  optWr.setTolMConstraints(8.0E-5);
 
   // start opptimization
   nlopt::result opt_stat = nlopt::result::FAILURE;
@@ -175,7 +176,13 @@ int main(int argc, char *argv[]) {
   bool useGrad = true;
   int noGround = 0;
 
-  if (argc <= 2) {
+  bool showUsage = false;
+  if (argc >= 2) {
+    if (!std::isdigit(argv[1][0]))
+      showUsage = true;
+  }
+
+  if (showUsage) {
     cout << endl
          << "cout usage:" << endl
          << " " << argv[0]
@@ -193,6 +200,8 @@ int main(int argc, char *argv[]) {
          << " # maxTimeSec: max. time [s] (default=" << maxTimeSec << ") "
          << endl
          << endl;
+
+    exit(1);
   }
 
   for (int i = 1; i < argc; ++i) {

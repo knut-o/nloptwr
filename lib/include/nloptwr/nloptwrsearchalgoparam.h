@@ -22,8 +22,15 @@ public:
    * @param hasConstr has constraints flag
    * @param useGrad use gradient flag
    */
-  NLOptWrSearchAlgoParam(SSTRAT searchStrat, bool hasConstr,
+  NLOptWrSearchAlgoParam(SSTRAT searchStrat, bool hasEqConstr, bool hasNeConstr,
                          bool useGrad = true);
+
+  /**
+   * special copy constructor to change the strategy
+   * @param searchStrat search strategy
+   * @param src object to be cloned except search strategy
+   */
+  NLOptWrSearchAlgoParam(SSTRAT searchStrat, const NLOptWrSearchAlgoParam &src);
 
   /// default constructor
   NLOptWrSearchAlgoParam();
@@ -43,14 +50,23 @@ public:
   /// get has constraints flag
   bool getHasContraints() const;
 
+  /// get has constraints flag
+  bool getHasEqContraints() const;
+
+  /// get has constraints flag
+  bool getHasNeContraints() const;
+
   /// get use gradient flag
   bool getUseGradient() const;
 
   /// get needs sub optimization flag
   bool getNeedsSubOpt() const;
 
-  /// set useConstraints
-  void setUseContraints(bool val = true);
+  /// set use eqzality constraints
+  void setUseEqContraints(bool val = true);
+
+  /// set use noequality constraints
+  void setUseNeContraints(bool val = true);
 
   /// string representation
   std::string toString() const;
@@ -65,8 +81,11 @@ protected:
   /// search strategy
   SSTRAT searchStrategy;
 
-  /// has constrauints flag
-  bool hasContraints;
+  /// has equality constrauints flag
+  bool hasEqContraints;
+
+  /// has equality constrauints flag
+  bool hasNeContraints;
 
   /// use gradient flag
   bool useGradient;

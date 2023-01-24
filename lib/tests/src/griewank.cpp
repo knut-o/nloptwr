@@ -21,7 +21,7 @@ Griewank::Griewank(int dim) : oif::OptFknClass(), nDim(dim) {}
 void Griewank::initialize(double lb, double ub, double xInit) {
 
   // call function of base class
-  init(nDim, 0, lb, ub, xInit);
+  init(nDim, 0, 0, lb, ub, xInit);
 }
 
 // virtual
@@ -31,7 +31,7 @@ Griewank::~Griewank() {}
 oif::OptFknBase *Griewank::clone() const { return (new Griewank(*this)); }
 
 // virtual
-double Griewank::optFktn(const std::vector<double> &x, std::vector<double> &c) {
+void Griewank::optFktn(const std::vector<double> &x, std::vector<double> &fc) {
   double y = 0.0;
   double sum = 0.0;
   double prod = 1.0;
@@ -45,9 +45,7 @@ double Griewank::optFktn(const std::vector<double> &x, std::vector<double> &c) {
 
   y = sum - prod + 1.;
 
-  // cout << "## y=" << y << endl;
-
-  return y;
+  fc[0] = y;
 }
 
 } // namespace opttest

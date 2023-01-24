@@ -30,7 +30,7 @@ Rastrigin::Rastrigin(int dim) : oif::OptFknClass(), nDim(dim) {}
 void Rastrigin::initialize(double lb, double ub, double xInit) {
 
   // call function of base class
-  init(nDim, 0, lb, ub, xInit);
+  init(nDim, 0, 0, lb, ub, xInit);
 }
 
 // virtual
@@ -40,8 +40,7 @@ Rastrigin::~Rastrigin() {}
 oif::OptFknBase *Rastrigin::clone() const { return (new Rastrigin(*this)); }
 
 // virtual
-double Rastrigin::optFktn(const std::vector<double> &x,
-                          std::vector<double> &c) {
+void Rastrigin::optFktn(const std::vector<double> &x, std::vector<double> &fc) {
   size_t n = x.size();
   double sum = 0.0;
 
@@ -49,7 +48,7 @@ double Rastrigin::optFktn(const std::vector<double> &x,
     sum += (x[i] * x[i] + 10 * (1.0 - cos(Pi2 * x[i])));
   }
 
-  return sum;
+  fc[0] = sum;
 }
 
 } // namespace opttest

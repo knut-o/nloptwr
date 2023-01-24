@@ -30,12 +30,12 @@ public:
 
   /**
    * implementation of function definition
-   * @param x (vector of) function arguments
-   * @param c vector of nonequal constraints (c_i <= 0.0)
-   * @return value of target function
+   * @param x vector of arguments
+   * @param cf vector of target function f, equality constraints (c_i = 0.0),
+   * and inequality constraints (c_i <= 0.0)
    */
-  virtual double optFktn(const std::vector<double> &x,
-                         std::vector<double> &c) override;
+  virtual void optFktn(const std::vector<double> &x,
+                       std::vector<double> &c) override;
 
   /**
    * initialize method
@@ -55,11 +55,11 @@ private:
   /// dimension of x-vector
   int nDim;
 
-  /// number of nonequal constraints
-  const static int mDim = 2;
+  /// number of inequality constraints
+  const static int mNeDim = 2;
 
   /// internally used constants
-  const double constraint_data[mDim][2] = {
+  const double constraint_data[mNeDim][2] = {
       {2.0, 0.0},
       {-1.0, 1.0},
   };

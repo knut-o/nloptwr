@@ -1,7 +1,6 @@
 
 // include all header files at once
 #include "nloptwr/nloptwra.h"
-
 #include "nloptwrtest/vcompare.h"
 
 #include <cmath>
@@ -25,7 +24,7 @@ public:
    */
   PDemo01() {
     // initialization of limits and bounds
-    init(50, 0, -1001.0, 1001.0, -520.0);
+    init(5, 0, 0, -1001.0, 1001.0, -520.0);
   }
 
   /// destructor
@@ -33,11 +32,11 @@ public:
 
   /**
    * implementation of a simple function definition
-   * @param x (vector of) function arguments
-   * @param c vector of nonequal constraints (c_i <= 0.0)
-   * @return value of target function
+   * @param x vector of arguments
+   * @param cf vector of target function f, equality constraints (c_i = 0.0),
+   * and nonequality constraints (c_i <= 0.0)
    */
-  double optFktn(const std::vector<double> &x, std::vector<double> &c) {
+  void optFktn(const std::vector<double> &x, std::vector<double> &fc) {
     double sum = 0.0;
     double tmp = 0.0;
 
@@ -47,13 +46,7 @@ public:
       sum += tmp * tmp;
     }
 
-    // calculation of constraints
-    size_t ine = getSizeOfNeConstraints();
-    for (size_t i = 0; i < ine; i++) {
-      c[i] = 0.0;
-    }
-
-    return sum;
+    fc[0] = sum;
   }
 
   /**
@@ -168,11 +161,18 @@ int opttest1(bool useGrad, nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L,
 // =====================================================
 
 int main(int argc, char *argv[]) {
+  int rc = 0;
   int maxTimeSec = 300;
   nloptwr::SSTRAT sStrat = nloptwr::SSTRAT::L;
   bool useGrad = true;
 
-  if (argc <= 2) {
+  bool showUsage = false;
+  if (argc >= 2) {
+    if (!std::isdigit(argv[1][0]))
+      showUsage = true;
+  }
+
+  if (showUsage) {
     cout << endl
          << "cout usage:" << endl
          << " " << argv[0] << " [useGrad] [sStrat] [maxTimeSec] " << endl
@@ -185,18 +185,21 @@ int main(int argc, char *argv[]) {
          << " # maxTimeSec: max. time [s] (default=" << maxTimeSec << ") "
          << endl
          << endl;
+
+    exit(1);
   }
 
   for (int i = 1; i < argc; ++i) {
     if (i == 1)
-      useGrad = (string(argv[i]) == "1");
+      useGrad = (string(argv[i]) != "0");
     if (i == 2)
       sStrat = nloptwr::getStrategyFromString(argv[i], nloptwr::SSTRAT::L);
     if (i == 3)
       maxTimeSec = atoi(argv[i]);
   }
 
-  int rc = opttest::opttest1(useGrad, sStrat, maxTimeSec);
+  cout << "# useGrad=" << useGrad << endl;
+  rc = opttest::opttest1(useGrad, sStrat, maxTimeSec);
 
   cout << endl;
 

@@ -33,7 +33,7 @@ For less implementation the derived class ***oif::OptFknClass*** can be derived.
 The remaining following functions have to be implemented:
 
 <ol start="1">
-  <li>virtual <b>double optFktn ( const std::vector<double>& x, std::vector<double>& c )</b>
+  <li>virtual <b>void optFktn ( const std::vector<double>& x, std::vector<double>& fc )</b>
      override;
     // target function
 </li>
@@ -46,10 +46,10 @@ The remaining following functions have to be implemented:
 </li>
 </ol>
 
-The function return the function value.
+**The API has changed**. The function is "void" now.
 
 * "x" contains the function arguments.
-* "c" are the constraints (c[i] <= 0).
+* "fc" are the result with function values; fc[0] it the funktion value, followed by the (equality constraints (fc[i>0] == 0) und the no-equality constraints (fc[i>0] <= 0).
 * "lb" is the lower bound
 * "ub" is the upper bound
 * "xInit" is the initial value
@@ -114,6 +114,8 @@ This library can be installed with [vcpkg](https://github.com/microsoft/vcpkg). 
 
 On LINUX the **NLOpt** package can be install with the package managers of the system as well.
 
+The file [.github/workflows/build.yml](https://github.com/knut-o/nloptwr/blob/main/.github/workflows/build.yml) shows how NLoptWr can be build and tested. 
+ 
 ### LINUX
 
 The sources can be downloaded
@@ -132,7 +134,7 @@ After a successful compilation the tests can be launched:
 
 ```bash
 ctest
-../NLOptWrtest/NLOptWr_test6_grafik.sh
+../lib/test/NLOptWrtest/NLOptWr_test6_grafik.sh
 ```
 This script generates a file
 [nloptwr_test6.pdf](docu/nloptwr_test6.pdf)
