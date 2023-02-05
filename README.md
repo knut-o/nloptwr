@@ -76,7 +76,7 @@ The emun class <b>NLOptWr::SSTRAT</b> can have following valid values:
  * ***GM*** = Global meta search strategy is chosen
  * ***LM*** = Local meta search strategy is chosen (sometimes a global search strategy is selected)
 
-The selected methods also depends on the number of parameters (see ***NLOptWr::NLOptWrSearchAlgoParam3*** and ***NLOptWr::NLOptWrParamFactory***).
+The selected methods also depends on the number of parameters (see ***NLOptWr::NLOptWrSearchAlgoParamD*** and ***NLOptWr::NLOptWrParamFactory***).
 
 ### Calculation of gradients
 
